@@ -238,6 +238,8 @@ dependencies {
   implementation(project(":feature:downloadmanager"))
   implementation(project(":feature:qarilist"))
   implementation(project(":feature:sync"))
+  implementation(project(":feature:wird"))
+  implementation(project(":feature:divinenames"))
 
   // android auto support
   implementation(project(":feature:autoquran"))

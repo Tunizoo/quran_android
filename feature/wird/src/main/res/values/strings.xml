@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="wird_title">Daily Wird</string>
+  <string name="wird_back">Back</string>
+  <string name="wird_ok">OK</string>
+  <string name="wird_cancel">Cancel</string>
+  <string name="wird_settings_entry">Goal, reminder and achievements</string>
+  <string name="wird_settings_summary">Set a daily reading goal, get smart reminders and track your khatma</string>
+
+  <string name="wird_today_title">Today</string>
+  <string name="wird_today_progress">%1$d of %2$d pages</string>
+  <string name="wird_goal_completed">You completed today\'s wird. May Allah accept it.</string>
+  <string name="wird_empty_hint">Open the mushaf and start reading. Every page you stay on counts toward your wird.</string>
+  <plurals name="wird_remaining_pages">
+    <item quantity="one">%d page left today</item>
+    <item quantity="other">%d pages left today</item>
+  </plurals>
+
+  <string name="wird_streak_title">Streak</string>
+  <plurals name="wird_streak_days">
+    <item quantity="one">%d day in a row</item>
+    <item quantity="other">%d days in a row</item>
+  </plurals>
+  <string name="wird_streak_at_risk">Finish today\'s wird to keep your streak</string>
+  <string name="wird_best_streak">Best: %d</string>
+
+  <string name="wird_khatma_title">Khatma #%d</string>
+  <string name="wird_khatma_progress">%1$d / %2$d pages (%3$d%%)</string>
+  <plurals name="wird_khatma_completed_count">
+    <item quantity="one">%d khatma completed</item>
+    <item quantity="other">%d khatmas completed</item>
+  </plurals>
+  <string name="wird_last_week">Last 7 days</string>
+
+  <string name="wird_goal_title">Daily goal</string>
+  <plurals name="wird_goal_pages">
+    <item quantity="one">%d page per day</item>
+    <item quantity="other">%d pages per day</item>
+  </plurals>
+  <string name="wird_goal_preset_juz">Juz (20)</string>
+
+  <string name="wird_reminder_title">Reminder</string>
+  <string name="wird_reminder_enabled">Remind me if I haven\'t finished my wird</string>
+  <string name="wird_reminder_time">Time</string>
+  <string name="wird_reminder_mode_fixed">Fixed time</string>
+  <string name="wird_reminder_mode_adaptive">Smart</string>
+  <string name="wird_reminder_mode_fixed_desc">Reminds you at the chosen time, only on days you haven\'t reached your goal.</string>
+  <string name="wird_reminder_mode_adaptive_desc">Learns when you usually read and reminds you an hour after that time if you haven\'t started. Uses the fixed time until it has a few days of history.</string>
+  <string name="wird_reminder_permission_denied">Notifications are disabled for this app. Enable them in system settings to receive reminders.</string>
+
+  <string name="wird_achievements_title">Achievements</string>
+  <string name="wird_achievement_locked">Not unlocked yet</string>
+  <string name="wird_achievement_unlocked_on">Unlocked %s</string>
+
+  <string name="wird_notification_channel_reminder">Daily wird reminders</string>
+  <string name="wird_notification_channel_achievements">Wird achievements</string>
+  <string name="wird_notification_title">Your daily wird</string>
+  <string name="wird_notification_start">Read a few pages today and keep your khatma going.</string>
+  <string name="wird_notification_remaining">%d pages left to reach today\'s goal.</string>
+  <string name="wird_notification_streak_risk">Don\'t break your %1$d-day streak! %2$d pages left today.</string>
+  <string name="wird_achievement_notification_title">New achievement</string>
+  <string name="wird_khatma_completed_title">Khatma completed!</string>
+  <string name="wird_khatma_completed_text">May Allah accept it. You completed khatma #%d.</string>
+
+  <string name="wird_ach_first_page_title">First page</string>
+  <string name="wird_ach_first_page_desc">Read your first page</string>
+  <string name="wird_ach_first_goal_title">On target</string>
+  <string name="wird_ach_first_goal_desc">Reach your daily goal for the first time</string>
+  <string name="wird_ach_streak_3_title">Three in a row</string>
+  <string name="wird_ach_streak_3_desc">Reach your goal 3 days in a row</string>
+  <string name="wird_ach_streak_7_title">A full week</string>
+  <string name="wird_ach_streak_7_desc">Reach your goal 7 days in a row</string>
+  <string name="wird_ach_streak_30_title">A full month</string>
+  <string name="wird_ach_streak_30_desc">Reach your goal 30 days in a row</string>
+  <string name="wird_ach_streak_100_title">Steadfast</string>
+  <string name="wird_ach_streak_100_desc">Reach your goal 100 days in a row</string>
+  <string name="wird_ach_pages_100_title">100 pages</string>
+  <string name="wird_ach_pages_100_desc">Read 100 pages in total</string>
+  <string name="wird_ach_pages_300_title">Halfway there</string>
+  <string name="wird_ach_pages_300_desc">Read 300 pages in total</string>
+  <string name="wird_ach_pages_1000_title">A thousand pages</string>
+  <string name="wird_ach_pages_1000_desc">Read 1000 pages in total</string>
+  <string name="wird_ach_juz_in_a_day_title">A juz in a day</string>
+  <string name="wird_ach_juz_in_a_day_desc">Read 20 pages in a single day</string>
+  <string name="wird_ach_fajr_reader_title">Fajr reader</string>
+  <string name="wird_ach_fajr_reader_desc">Read between 4:00 and 7:00 in the morning</string>
+  <string name="wird_ach_khatma_1_title">First khatma</string>
+  <string name="wird_ach_khatma_1_desc">Complete the whole mushaf</string>
+  <string name="wird_ach_khatma_3_title">Three khatmas</string>
+  <string name="wird_ach_khatma_3_desc">Complete the mushaf three times</string>
+</resources>

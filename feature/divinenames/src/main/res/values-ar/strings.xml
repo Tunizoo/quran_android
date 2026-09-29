@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="divine_names_title">أسماء الله وصفاته</string>
+  <string name="divine_names_back">رجوع</string>
+  <string name="divine_names_search">ابحث عن اسم</string>
+  <string name="divine_names_methodology">الشروح على منهج السلف الصالح: إثبات ما أثبته الله لنفسه من غير تحريف ولا تعطيل، ومن غير تكييف ولا تمثيل.</string>
+  <string name="divine_names_from_sunnah">من السنة</string>
+  <string name="divine_names_kind_name">اسم من أسماء الله</string>
+  <string name="divine_names_kind_attribute">صفة من صفات الله</string>
+  <string name="divine_names_sheet_location">%1$s · %2$d:%3$d</string>
+  <string name="divine_names_sheet_open_index">فتح الفهرس</string>
+
+  <string name="divine_names_pref_highlight">تلوين أسماء الله وصفاته</string>
+  <string name="divine_names_pref_highlight_summary">الأسماء بالذهبي والصفات بالأصفر في صفحة المصحف. انقر مرتين على الكلمة الملونة لقراءة شرحها على منهج السلف.</string>
+  <string name="divine_names_pref_index">فهرس الأسماء</string>
+  <string name="divine_names_pref_index_summary">تصفح الأسماء الحسنى مع معانيها وأدلتها</string>
+
+  <string name="divine_names_panel_no_selection">اختر آية لعرض ما فيها من أسماء الله وصفاته.</string>
+  <string name="divine_names_panel_empty">لا يرد في الآية المحددة اسم من أسماء الله ولا صفة من صفاته.</string>
+  <string name="divine_names_panel_open_index">فتح الفهرس الكامل</string>
+  <plurals name="divine_names_panel_occurrences">
+    <item quantity="zero">لا يرد في التحديد</item>
+    <item quantity="one">يرد مرة واحدة في التحديد</item>
+    <item quantity="two">يرد مرتين في التحديد</item>
+    <item quantity="few">يرد %d مرات في التحديد</item>
+    <item quantity="many">يرد %d مرة في التحديد</item>
+    <item quantity="other">يرد %d مرة في التحديد</item>
+  </plurals>
+</resources>

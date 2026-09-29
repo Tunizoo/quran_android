@@ -5,6 +5,7 @@ import androidx.work.Configuration
 import androidx.work.WorkManager
 import com.quran.labs.androidquran.core.worker.QuranWorkerFactory
 import com.quran.labs.androidquran.di.component.application.ApplicationComponent
+import com.quran.labs.androidquran.feature.reading.bridge.WirdReadingBridge
 import com.quran.labs.androidquran.util.QuranSettings
 import com.quran.labs.androidquran.util.RecordingLogTree
 import com.quran.labs.androidquran.util.ThemeUtil
@@ -23,6 +24,7 @@ open class QuranApplication : Application(), QuranApplicationComponentProvider {
   @Inject lateinit var quranWorkerFactory: QuranWorkerFactory
   @Inject lateinit var bookmarksWidgetSubscriber: BookmarksWidgetSubscriber
   @Inject lateinit var quranSettings: QuranSettings
+  @Inject lateinit var wirdReadingBridge: WirdReadingBridge
 
   override fun provideQuranApplicationComponent(): QuranApplicationComponent {
     return applicationComponent
@@ -35,6 +37,7 @@ open class QuranApplication : Application(), QuranApplicationComponentProvider {
     applicationComponent.inject(this)
     initializeWorkManager()
     bookmarksWidgetSubscriber.subscribeBookmarksWidgetIfNecessary()
+    wirdReadingBridge.start()
 
     // theme setup
     val theme = quranSettings.currentTheme()

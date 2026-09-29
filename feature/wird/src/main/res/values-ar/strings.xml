@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="wird_title">الورد اليومي</string>
+  <string name="wird_back">رجوع</string>
+  <string name="wird_ok">موافق</string>
+  <string name="wird_cancel">إلغاء</string>
+  <string name="wird_settings_entry">الهدف والتذكير والإنجازات</string>
+  <string name="wird_settings_summary">حدّد هدفًا يوميًا للقراءة، واستقبل تذكيرات ذكية، وتابع ختمتك</string>
+
+  <string name="wird_today_title">اليوم</string>
+  <string name="wird_today_progress">%1$d من %2$d صفحة</string>
+  <string name="wird_goal_completed">أتممت وردك اليوم، تقبّل الله منك.</string>
+  <string name="wird_empty_hint">افتح المصحف وابدأ القراءة؛ كل صفحة تمكث فيها تُحتسب في وردك.</string>
+  <plurals name="wird_remaining_pages">
+    <item quantity="zero">لم يتبقَّ شيء لليوم</item>
+    <item quantity="one">بقيت صفحة واحدة لليوم</item>
+    <item quantity="two">بقيت صفحتان لليوم</item>
+    <item quantity="few">بقيت %d صفحات لليوم</item>
+    <item quantity="many">بقيت %d صفحة لليوم</item>
+    <item quantity="other">بقيت %d صفحة لليوم</item>
+  </plurals>
+
+  <string name="wird_streak_title">المواظبة</string>
+  <plurals name="wird_streak_days">
+    <item quantity="zero">لا أيام متتالية بعد</item>
+    <item quantity="one">يوم واحد متتالٍ</item>
+    <item quantity="two">يومان متتاليان</item>
+    <item quantity="few">%d أيام متتالية</item>
+    <item quantity="many">%d يومًا متتاليًا</item>
+    <item quantity="other">%d يوم متتالٍ</item>
+  </plurals>
+  <string name="wird_streak_at_risk">أتمم ورد اليوم لتحافظ على مواظبتك</string>
+  <string name="wird_best_streak">الأفضل: %d</string>
+
+  <string name="wird_khatma_title">الختمة رقم %d</string>
+  <string name="wird_khatma_progress">%1$d / %2$d صفحة (%3$d%%)</string>
+  <plurals name="wird_khatma_completed_count">
+    <item quantity="zero">لا ختمات مكتملة بعد</item>
+    <item quantity="one">ختمة واحدة مكتملة</item>
+    <item quantity="two">ختمتان مكتملتان</item>
+    <item quantity="few">%d ختمات مكتملة</item>
+    <item quantity="many">%d ختمة مكتملة</item>
+    <item quantity="other">%d ختمة مكتملة</item>
+  </plurals>
+  <string name="wird_last_week">آخر ٧ أيام</string>
+
+  <string name="wird_goal_title">الهدف اليومي</string>
+  <plurals name="wird_goal_pages">
+    <item quantity="zero">بلا هدف</item>
+    <item quantity="one">صفحة واحدة يوميًا</item>
+    <item quantity="two">صفحتان يوميًا</item>
+    <item quantity="few">%d صفحات يوميًا</item>
+    <item quantity="many">%d صفحة يوميًا</item>
+    <item quantity="other">%d صفحة يوميًا</item>
+  </plurals>
+  <string name="wird_goal_preset_juz">جزء (٢٠)</string>
+
+  <string name="wird_reminder_title">التذكير</string>
+  <string name="wird_reminder_enabled">ذكّرني إن لم أُتمم وردي</string>
+  <string name="wird_reminder_time">الوقت</string>
+  <string name="wird_reminder_mode_fixed">وقت ثابت</string>
+  <string name="wird_reminder_mode_adaptive">ذكي</string>
+  <string name="wird_reminder_mode_fixed_desc">يذكّرك في الوقت المحدد، فقط في الأيام التي لم تبلغ فيها هدفك.</string>
+  <string name="wird_reminder_mode_adaptive_desc">يتعلّم وقت قراءتك المعتاد ويذكّرك بعده بساعة إن لم تبدأ. يستخدم الوقت الثابت حتى يجمع بضعة أيام من السجل.</string>
+  <string name="wird_reminder_permission_denied">الإشعارات معطّلة لهذا التطبيق. فعّلها من إعدادات النظام لتصلك التذكيرات.</string>
+
+  <string name="wird_achievements_title">الإنجازات</string>
+  <string name="wird_achievement_locked">لم يُفتح بعد</string>
+  <string name="wird_achievement_unlocked_on">فُتح في %s</string>
+
+  <string name="wird_notification_channel_reminder">تذكيرات الورد اليومي</string>
+  <string name="wird_notification_channel_achievements">إنجازات الورد</string>
+  <string name="wird_notification_title">وردك اليومي</string>
+  <string name="wird_notification_start">اقرأ بضع صفحات اليوم وواصل ختمتك.</string>
+  <string name="wird_notification_remaining">بقي %d صفحة لتبلغ هدف اليوم.</string>
+  <string name="wird_notification_streak_risk">لا تقطع مواظبتك (%1$d يومًا)! بقي %2$d صفحة اليوم.</string>
+  <string name="wird_achievement_notification_title">إنجاز جديد</string>
+  <string name="wird_khatma_completed_title">تمّت الختمة!</string>
+  <string name="wird_khatma_completed_text">تقبّل الله منك، أكملت الختمة رقم %d.</string>
+
+  <string name="wird_ach_first_page_title">أول صفحة</string>
+  <string name="wird_ach_first_page_desc">قرأت أول صفحة لك</string>
+  <string name="wird_ach_first_goal_title">على الهدف</string>
+  <string name="wird_ach_first_goal_desc">بلغت هدفك اليومي لأول مرة</string>
+  <string name="wird_ach_streak_3_title">ثلاثة متتالية</string>
+  <string name="wird_ach_streak_3_desc">بلغت هدفك ٣ أيام متتالية</string>
+  <string name="wird_ach_streak_7_title">أسبوع كامل</string>
+  <string name="wird_ach_streak_7_desc">بلغت هدفك ٧ أيام متتالية</string>
+  <string name="wird_ach_streak_30_title">شهر كامل</string>
+  <string name="wird_ach_streak_30_desc">بلغت هدفك ٣٠ يومًا متتاليًا</string>
+  <string name="wird_ach_streak_100_title">ثبات</string>
+  <string name="wird_ach_streak_100_desc">بلغت هدفك ١٠٠ يوم متتالٍ</string>
+  <string name="wird_ach_pages_100_title">مئة صفحة</string>
+  <string name="wird_ach_pages_100_desc">قرأت ١٠٠ صفحة إجمالًا</string>
+  <string name="wird_ach_pages_300_title">منتصف الطريق</string>
+  <string name="wird_ach_pages_300_desc">قرأت ٣٠٠ صفحة إجمالًا</string>
+  <string name="wird_ach_pages_1000_title">ألف صفحة</string>
+  <string name="wird_ach_pages_1000_desc">قرأت ١٠٠٠ صفحة إجمالًا</string>
+  <string name="wird_ach_juz_in_a_day_title">جزء في يوم</string>
+  <string name="wird_ach_juz_in_a_day_desc">قرأت ٢٠ صفحة في يوم واحد</string>
+  <string name="wird_ach_fajr_reader_title">قارئ الفجر</string>
+  <string name="wird_ach_fajr_reader_desc">قرأت بين الرابعة والسابعة صباحًا</string>
+  <string name="wird_ach_khatma_1_title">أول ختمة</string>
+  <string name="wird_ach_khatma_1_desc">أكملت المصحف كاملًا</string>
+  <string name="wird_ach_khatma_3_title">ثلاث ختمات</string>
+  <string name="wird_ach_khatma_3_desc">أكملت المصحف ثلاث مرات</string>
+</resources>

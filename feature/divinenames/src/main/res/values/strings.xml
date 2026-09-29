@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="divine_names_title">Names and attributes of Allah</string>
+  <string name="divine_names_back">Back</string>
+  <string name="divine_names_search">Search a name</string>
+  <string name="divine_names_methodology">Explanations follow the methodology of the Salaf: affirming what Allah affirmed for Himself without distortion, denial, asking how, or likening to creation.</string>
+  <string name="divine_names_from_sunnah">From the Sunnah</string>
+  <string name="divine_names_kind_name">Name of Allah</string>
+  <string name="divine_names_kind_attribute">Attribute of Allah</string>
+  <string name="divine_names_sheet_location">%1$s · %2$d:%3$d</string>
+  <string name="divine_names_sheet_open_index">Open the index</string>
+
+  <string name="divine_names_pref_highlight">Highlight the names and attributes of Allah</string>
+  <string name="divine_names_pref_highlight_summary">Names in gold and attributes in yellow on the mushaf page. Double tap a highlighted word to read its explanation.</string>
+  <string name="divine_names_pref_index">Index of the names</string>
+  <string name="divine_names_pref_index_summary">Browse all the names with their meanings and evidence</string>
+
+  <string name="divine_names_panel_no_selection">Select an ayah to see the names and attributes of Allah it contains.</string>
+  <string name="divine_names_panel_empty">No name or attribute of Allah appears in the selected ayah.</string>
+  <string name="divine_names_panel_open_index">Open the full index</string>
+  <plurals name="divine_names_panel_occurrences">
+    <item quantity="one">Appears once in the selection</item>
+    <item quantity="other">Appears %d times in the selection</item>
+  </plurals>
+</resources>

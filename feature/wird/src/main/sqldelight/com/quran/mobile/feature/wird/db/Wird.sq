@@ -1,0 +1,97 @@
+-- A page counts toward the daily wird once per (local) day. `day` is the local epoch day,
+-- `minute_of_day` is the local minute the page was recorded (used for the adaptive reminder
+-- and for the "fajr reader" achievement).
+CREATE TABLE IF NOT EXISTS wird_page_view(
+  day INTEGER NOT NULL,
+  page INTEGER NOT NULL,
+  viewed_at INTEGER NOT NULL,
+  minute_of_day INTEGER NOT NULL,
+  PRIMARY KEY(day, page)
+);
+
+CREATE INDEX IF NOT EXISTS wird_page_view_day ON wird_page_view(day);
+
+-- Distinct pages read within a given khatma. When the count reaches the mushaf page count the
+-- khatma is recorded in wird_khatma and a new one begins.
+CREATE TABLE IF NOT EXISTS wird_khatma_page(
+  khatma INTEGER NOT NULL,
+  page INTEGER NOT NULL,
+  PRIMARY KEY(khatma, page)
+);
+
+CREATE TABLE IF NOT EXISTS wird_khatma(
+  number INTEGER NOT NULL PRIMARY KEY,
+  completed_at INTEGER NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS wird_achievement(
+  id TEXT NOT NULL PRIMARY KEY,
+  unlocked_at INTEGER NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS wird_settings(
+  id INTEGER NOT NULL PRIMARY KEY,
+  pages_per_day INTEGER NOT NULL,
+  reminder_enabled INTEGER NOT NULL,
+  reminder_minute_of_day INTEGER NOT NULL,
+  reminder_mode INTEGER NOT NULL
+);
+
+changes:
+SELECT changes();
+
+insertPageView:
+INSERT OR IGNORE INTO wird_page_view(day, page, viewed_at, minute_of_day) VALUES (?, ?, ?, ?);
+
+pagesForDay:
+SELECT COUNT(*) FROM wird_page_view WHERE day = ?;
+
+dailyCounts:
+SELECT day, COUNT(*) AS pages, MIN(minute_of_day) AS first_minute
+FROM wird_page_view
+GROUP BY day
+ORDER BY day DESC;
+
+totalPages:
+SELECT COUNT(*) FROM wird_page_view;
+
+earlyMorningViews:
+SELECT COUNT(*) FROM wird_page_view WHERE minute_of_day >= ? AND minute_of_day < ?;
+
+recentFirstMinutes:
+SELECT MIN(minute_of_day) AS first_minute FROM wird_page_view GROUP BY day ORDER BY day DESC LIMIT ?;
+
+currentKhatmaNumber:
+SELECT COALESCE(MAX(number), 0) + 1 FROM wird_khatma;
+
+insertKhatmaPage:
+INSERT OR IGNORE INTO wird_khatma_page(khatma, page) VALUES (?, ?);
+
+khatmaPageCount:
+SELECT COUNT(*) FROM wird_khatma_page WHERE khatma = ?;
+
+completeKhatma:
+INSERT OR IGNORE INTO wird_khatma(number, completed_at) VALUES (?, ?);
+
+completedKhatmas:
+SELECT * FROM wird_khatma ORDER BY number ASC;
+
+unlockedAchievements:
+SELECT * FROM wird_achievement ORDER BY unlocked_at DESC;
+
+unlockAchievement:
+INSERT OR IGNORE INTO wird_achievement(id, unlocked_at) VALUES (?, ?);
+
+settings:
+SELECT * FROM wird_settings WHERE id = 1;
+
+upsertSettings:
+INSERT OR REPLACE INTO wird_settings(id, pages_per_day, reminder_enabled, reminder_minute_of_day, reminder_mode)
+VALUES (1, ?, ?, ?, ?);
+
+clearProgress {
+  DELETE FROM wird_page_view;
+  DELETE FROM wird_khatma_page;
+  DELETE FROM wird_khatma;
+  DELETE FROM wird_achievement;
+}

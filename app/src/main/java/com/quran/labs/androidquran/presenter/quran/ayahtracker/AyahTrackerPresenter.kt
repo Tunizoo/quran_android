@@ -1,6 +1,7 @@
 package com.quran.labs.androidquran.presenter.quran.ayahtracker
 
 import android.app.Activity
+import android.graphics.Matrix
 import android.graphics.RectF
 import android.view.MotionEvent
 import android.widget.ImageView
@@ -36,6 +37,7 @@ import com.quran.labs.androidquran.util.QuranSettings
 import com.quran.mobile.translation.model.LocalTranslation
 import com.quran.page.common.data.AyahCoordinates
 import com.quran.page.common.data.PageCoordinates
+import com.quran.page.common.touch.PageDoubleTapHandler
 import com.quran.reading.common.ReadingEventPresenter
 import com.quran.recitation.events.RecitationEventPresenter
 import com.quran.recitation.presenter.RecitationHighlightsPresenter
@@ -64,6 +66,7 @@ class AyahTrackerPresenter @Inject constructor(
   private val recitationEventPresenter: RecitationEventPresenter,
   private val recitationPopupPresenter: RecitationPopupPresenter,
   private val recitationHighlightsPresenter: RecitationHighlightsPresenter,
+  private val pageDoubleTapHandlers: Set<@JvmSuppressWildcards PageDoubleTapHandler>,
 ) : AyahTracker, Presenter<AyahInteractionHandler>, PopupContainer, RecitationPage {
   // we may bind and unbind several times, and each time we unbind, we cancel
   // the scope, which means we can't launch new coroutines in that same scope.
@@ -264,6 +267,9 @@ class AyahTrackerPresenter @Inject constructor(
     ayahCoordinatesError: Boolean
   ): Boolean {
     if (eventType === DOUBLE_TAP) {
+      if (handleDoubleTap(activity, event, page)) {
+        return true
+      }
       readingEventPresenter.onAyahSelection(AyahSelection.None)
     } else if (eventType == LONG_PRESS ||
       readingEventPresenter.currentAyahSelection() != AyahSelection.None
@@ -282,6 +288,17 @@ class AyahTrackerPresenter @Inject constructor(
       readingEventPresenter.onClick()
     }
     return true
+  }
+
+  private fun handleDoubleTap(activity: Activity, event: MotionEvent, page: Int): Boolean {
+    if (pageDoubleTapHandlers.isEmpty()) return false
+    val imageView = getQuranPageImageView(page) ?: return false
+    if (imageView.drawable == null) return false
+    val inverse = Matrix()
+    if (!imageView.imageMatrix.invert(inverse)) return false
+    val point = floatArrayOf(event.x - imageView.paddingLeft, event.y - imageView.paddingTop)
+    inverse.mapPoints(point)
+    return pageDoubleTapHandlers.any { it.onDoubleTap(activity, page, imageView, point[0], point[1]) }
   }
 
   private fun handleAyahSelection(
