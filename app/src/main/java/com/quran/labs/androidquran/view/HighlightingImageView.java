@@ -38,8 +38,10 @@ import com.quran.page.common.data.AyahBounds;
 import com.quran.page.common.data.AyahCoordinates;
 import com.quran.page.common.data.PageCoordinates;
 import com.quran.page.common.draw.ImageDrawHelper;
+import com.quran.page.common.draw.OrderedImageDrawHelper;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -78,7 +80,10 @@ public class HighlightingImageView extends AppCompatImageView {
   private PageCoordinates pageCoordinates;
   private AyahCoordinates ayahCoordinates;
   private Map<AyahHighlight, List<AyahBounds>> highlightCoordinates;
-  private Set<ImageDrawHelper> imageDrawHelpers;
+  // helpers with a negative draw order repaint the page and run under the highlights;
+  // the others run after the highlights and the overlay text
+  private List<ImageDrawHelper> underHighlightDrawHelpers;
+  private List<ImageDrawHelper> imageDrawHelpers;
   private ValueAnimator animator;
 
   private int topSafeOffset = 0;
@@ -191,8 +196,21 @@ public class HighlightingImageView extends AppCompatImageView {
   }
 
   public void setPageData(PageCoordinates pageCoordinates, Set<ImageDrawHelper> imageDrawHelpers) {
-    this.imageDrawHelpers = imageDrawHelpers;
+    // helpers that repaint the page run first (negative order), highlights stay on top
+    List<ImageDrawHelper> ordered = new ArrayList<>(imageDrawHelpers);
+    Collections.sort(ordered, (a, b) -> Integer.compare(drawOrder(a), drawOrder(b)));
+    List<ImageDrawHelper> under = new ArrayList<>();
+    List<ImageDrawHelper> over = new ArrayList<>();
+    for (ImageDrawHelper helper : ordered) {
+      (drawOrder(helper) < 0 ? under : over).add(helper);
+    }
+    this.underHighlightDrawHelpers = under;
+    this.imageDrawHelpers = over;
     this.pageCoordinates = pageCoordinates;
+  }
+
+  private static int drawOrder(ImageDrawHelper helper) {
+    return helper instanceof OrderedImageDrawHelper ? ((OrderedImageDrawHelper) helper).getDrawOrder() : 0;
   }
 
   public void setAyahData(AyahCoordinates ayahCoordinates) {
@@ -519,6 +537,13 @@ public class HighlightingImageView extends AppCompatImageView {
 
     // Restore the canvas to remove any clippings so the remaining highlights/drawers don't get clipped
     canvas.restore();
+
+    // helpers that repaint parts of the page run before the highlights are drawn over it
+    if (underHighlightDrawHelpers != null && pageCoordinates != null) {
+      for (ImageDrawHelper imageDrawHelper : underHighlightDrawHelpers) {
+        imageDrawHelper.draw(pageCoordinates, canvas, this);
+      }
+    }
 
     // Draw remaining highlights (other than HIDE, COLOR)
     if (pageCoordinates != null) {

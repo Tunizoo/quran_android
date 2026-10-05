@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="tajweed_title">Tajweed colours</string>
+  <string name="tajweed_pref_enable">Colour the tajweed rules</string>
+  <string name="tajweed_pref_enable_summary">Repaint the words of the page with the colours of the well known Tajweed Quran. The legend is shown under the page. Madani pages only; the natural madd of two counts is not coloured.</string>
+  <string name="tajweed_pref_legend_title">Colour legend</string>
+  <string name="tajweed_pref_legend_summary">Dark red: necessary madd (6 counts). Red: obligatory madd (4–5). Orange: permissible madd (2, 4 or 6). Green: ghunnah and its places (ikhfa, idgham with ghunnah, iqlab). Blue: qalqalah. Grey: letters that are not pronounced (hamzat al-wasl, lam shamsiyah, idgham without ghunnah).</string>
+
+  <string name="tajweed_legend_madd_necessary">Madd 6</string>
+  <string name="tajweed_legend_madd_obligatory">Madd 4–5</string>
+  <string name="tajweed_legend_madd_permissible">Madd 2–4–6</string>
+  <string name="tajweed_legend_ghunnah">Ghunnah</string>
+  <string name="tajweed_legend_qalqalah">Qalqalah</string>
+  <string name="tajweed_legend_silent">Silent</string>
+</resources>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="tajweed_title">Couleurs du tajwid</string>
+  <string name="tajweed_pref_enable">Colorer les règles de tajwid</string>
+  <string name="tajweed_pref_enable_summary">Redessine les mots de la page avec les couleurs du célèbre Coran du tajwid. La légende est affichée sous la page. Pages madani uniquement ; le madd naturel de deux temps n’est pas coloré.</string>
+  <string name="tajweed_pref_legend_title">Légende des couleurs</string>
+  <string name="tajweed_pref_legend_summary">Rouge foncé : madd nécessaire (6 temps). Rouge : madd obligatoire (4–5). Orange : madd permis (2, 4 ou 6). Vert : ghunna et ses cas (ikhfa, idgham avec ghunna, iqlab). Bleu : qalqala. Gris : lettres non prononcées (hamza de liaison, lam solaire, idgham sans ghunna).</string>
+
+  <string name="tajweed_legend_madd_necessary">Madd 6</string>
+  <string name="tajweed_legend_madd_obligatory">Madd 4–5</string>
+  <string name="tajweed_legend_madd_permissible">Madd 2–4–6</string>
+  <string name="tajweed_legend_ghunnah">Ghunna</string>
+  <string name="tajweed_legend_qalqalah">Qalqala</string>
+  <string name="tajweed_legend_silent">Non prononcé</string>
+</resources>

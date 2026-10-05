@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="tajweed_title">ألوان التجويد</string>
+  <string name="tajweed_pref_enable">تلوين أحكام التجويد</string>
+  <string name="tajweed_pref_enable_summary">إعادة رسم كلمات الصفحة بألوان مصحف التجويد المعروف، مع مفتاح الألوان أسفل الصفحة. للمصحف المدني فقط، ولا يُلوَّن المد الطبيعي بحركتين.</string>
+  <string name="tajweed_pref_legend_title">مفتاح الألوان</string>
+  <string name="tajweed_pref_legend_summary">أحمر غامق: المد اللازم (٦ حركات). أحمر: المد الواجب المتصل (٤ أو ٥). برتقالي: المد الجائز (٢ أو ٤ أو ٦). أخضر: الغنة ومواضعها (الإخفاء، الإدغام بغنة، الإقلاب). أزرق: القلقلة. رمادي: حروف لا تُلفظ (همزة الوصل، اللام الشمسية، الإدغام بغير غنة).</string>
+
+  <string name="tajweed_legend_madd_necessary">مد لازم ٦</string>
+  <string name="tajweed_legend_madd_obligatory">مد واجب ٤-٥</string>
+  <string name="tajweed_legend_madd_permissible">مد جائز ٢-٤-٦</string>
+  <string name="tajweed_legend_ghunnah">غنة</string>
+  <string name="tajweed_legend_qalqalah">قلقلة</string>
+  <string name="tajweed_legend_silent">لا يُلفظ</string>
+</resources>

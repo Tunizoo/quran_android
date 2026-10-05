@@ -220,6 +220,7 @@ dependencies {
   implementation(project(":common:bookmark"))
   implementation(project(":common:data"))
   implementation(project(":common:di"))
+  implementation(project(":common:glyphbounds"))
   implementation(project(":common:download"))
   implementation(project(":common:networking"))
   implementation(project(":common:pages"))
@@ -240,6 +241,7 @@ dependencies {
   implementation(project(":feature:sync"))
   implementation(project(":feature:wird"))
   implementation(project(":feature:divinenames"))
+  implementation(project(":feature:tajweed"))
 
   // android auto support
   implementation(project(":feature:autoquran"))
