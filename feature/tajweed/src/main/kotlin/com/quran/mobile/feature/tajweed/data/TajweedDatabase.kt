@@ -100,6 +100,6 @@ class TajweedDatabase @Inject constructor(
     const val DATABASE_NAME = "tajweed.db"
 
     /** Bump whenever the bundled asset changes so existing installs pick up the new copy. */
-    const val BUNDLED_VERSION = "5"
+    const val BUNDLED_VERSION = "6"
   }
 }

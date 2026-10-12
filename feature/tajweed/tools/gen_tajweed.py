@@ -102,7 +102,7 @@ def madd_spans(text):
         start = i - 1
         letter = None
         while start > 0 and text[start] in MARKS:
-            if text[start] == "ٰ" and letter is None:
+            if text[start] in "ٰۥۦ" and letter is None:
                 letter = text[start]
             start -= 1
         if letter is None:
@@ -112,15 +112,15 @@ def madd_spans(text):
         if letter not in MADD_LETTERS:
             # muqatta'at letters (alif-lam-mim, ayn-sin-qaf): six counts, except ayn which may be shortened
             rule = "madda_permissible" if letter == "\u0639" else "madda_necessary"
-        elif nxt is None or (nxt == "\u0627" and base_after(text, j) is None):
-            # end of word (possibly followed by a silent alef): the separated madd before a hamza
-            rule = "madda_permissible"
-        elif nxt in HAMZA or nxt == "\u0640":
-            # yaa-ayyuha and haa-antum / haa-ulaa are written as one word but the madd is separated
-            if letter == "\u0670" and text[0] in "\u064a\u0647" and start <= 4:
-                rule = "madda_permissible"
-            else:
-                rule = "madda_obligatory"
+        elif nxt is None or (nxt == "ا" and base_after(text, j) is None):
+            # end of word (possibly followed by a silent alef): the separated madd (munfasil) before
+            # the hamza of the next word, four or five counts in Hafs like the connected madd, so the
+            # printed tajweed mushaf gives both the same red
+            rule = "madda_obligatory"
+        elif nxt in HAMZA or nxt == "ـ":
+            # the connected madd (muttasil), and the separated madd written inside one word
+            # (yaa-ayyuha, haa-antum, haa-ulaa): four or five counts
+            rule = "madda_obligatory"
         else:
             after = marks_after(text, j)
             if SHADDA in after or any(c in after for c in SUKUN):
@@ -129,6 +129,34 @@ def madd_spans(text):
                 rule = "madda_obligatory"
         result.append((start, i + 1, rule))
     return result
+
+
+TANWEEN = set("ًࣰٌࣱٍࣲ")
+
+
+def letter_start(text, b):
+    """Moves a span start back onto the base letter when it begins on a diacritic."""
+    while b > 0 and text[b] in MARKS:
+        b -= 1
+    return b
+
+
+def silent_start(text, b, e):
+    """Start of the grey part of a merged noon/tanween: the noon itself, or the letter carrying the
+    tanween (plus a following silent alef); nothing before it is silent."""
+    last_carrier = None
+    i = b
+    while i < e:
+        ch = text[i]
+        if ch == "ن":
+            last_carrier = i
+        elif ch in TANWEEN:
+            j = i - 1
+            while j > b and text[j] in MARKS:
+                j -= 1
+            last_carrier = j
+        i += 1
+    return last_carrier if last_carrier is not None else b
 
 
 def refine(words):
@@ -148,7 +176,7 @@ def refine(words):
                         new.append((b, e, "ghunnah"))
                     # merged letter without ghunnah stays in the text colour
                 else:
-                    new.append((b, e, "slnt"))
+                    new.append((silent_start(text, b, e), e, "slnt"))
             elif rule in IKHFA:
                 m = list(NOONISH.finditer(seg))
                 if not m:
@@ -156,7 +184,7 @@ def refine(words):
                 end = b + m[-1].end()
                 while end < e and text[end] in MARKS:
                     end += 1
-                new.append((b, end, rule))
+                new.append((letter_start(text, b), end, rule))
             elif rule.startswith("madda_") and rule != "madda_normal":
                 if rule == "madda_permissible" and wi == len(words) - 1:
                     new.append((b, e, rule))  # madd before the stop at the end of the ayah

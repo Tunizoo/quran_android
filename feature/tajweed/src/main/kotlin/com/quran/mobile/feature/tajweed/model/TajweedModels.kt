@@ -23,7 +23,7 @@ enum class TajweedColorGroup(val dayColor: Int, val nightColor: Int, val labelRe
   QALQALAH(0xFF1A73E8.toInt(), 0xFF74C0FC.toInt(), R.string.tajweed_legend_qalqalah),
 
   /** حروف لا تُلفظ (hamzat wasl, lam shamsiyah, silent letters, idgham without ghunnah): grey. */
-  SILENT(0xFF9E9E9E.toInt(), 0xFF8A8A8A.toInt(), R.string.tajweed_legend_silent);
+  SILENT(0xFF9E9E9E.toInt(), 0xFFB8B8B8.toInt(), R.string.tajweed_legend_silent);
 
   fun color(night: Boolean): Int = if (night) nightColor else dayColor
 
