@@ -3,6 +3,7 @@ LANG = "tr"
 
 WIRD = {
     "wird_title": "Günlük Vird",
+    "wird_open": "Aç",
     "wird_back": "Geri",
     "wird_ok": "Tamam",
     "wird_cancel": "İptal",

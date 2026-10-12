@@ -12,6 +12,7 @@ MODULES = {
     "wird": os.path.join(ROOT, "feature", "wird", "src", "main", "res"),
     "divinenames": os.path.join(ROOT, "feature", "divinenames", "src", "main", "res"),
     "tajweed": os.path.join(ROOT, "feature", "tajweed", "src", "main", "res"),
+    "memorization": os.path.join(ROOT, "feature", "memorization", "src", "main", "res"),
 }
 
 
@@ -48,7 +49,12 @@ def main():
         name = os.path.splitext(os.path.basename(path))[0]
         module = importlib.import_module(name)
         lang = module.LANG
-        for mod_name, (strings, plurals) in module.MODULES.items():
+        modules = dict(module.MODULES)
+        # feature/memorization strings live in memo_strings.py, keyed by language
+        import memo_strings
+        if lang in memo_strings.MEMO:
+            modules["memorization"] = (memo_strings.MEMO[lang], memo_strings.MEMO_PLURALS.get(lang, {}))
+        for mod_name, (strings, plurals) in modules.items():
             expected = english_keys(mod_name)
             provided = set(strings) | set(plurals)
             missing = sorted(expected - provided)

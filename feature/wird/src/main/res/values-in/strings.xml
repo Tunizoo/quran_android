@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
   <string name="wird_title">Wirid Harian</string>
+  <string name="wird_open">Buka</string>
   <string name="wird_back">Kembali</string>
   <string name="wird_ok">OK</string>
   <string name="wird_cancel">Batal</string>

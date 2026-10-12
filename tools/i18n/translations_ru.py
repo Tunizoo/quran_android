@@ -3,6 +3,7 @@ LANG = "ru"
 
 WIRD = {
     "wird_title": "Ежедневный вирд",
+    "wird_open": "Открыть",
     "wird_back": "Назад",
     "wird_ok": "ОК",
     "wird_cancel": "Отмена",

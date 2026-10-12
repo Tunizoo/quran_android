@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="memo_title">Memorization</string>
+  <string name="memo_back">Back</string>
+  <string name="memo_cancel">Cancel</string>
+  <string name="memo_add">Add</string>
+  <string name="memo_delete">Delete</string>
+  <string name="memo_settings_entry">Portions, reviews and schedule</string>
+  <string name="memo_settings_summary">Hide the words of a portion, listen to it, test yourself and review it on a spaced schedule</string>
+  <string name="memo_menu_reader">Memorization mode</string>
+
+  <string name="memo_bar_title">Memorization</string>
+  <string name="memo_bar_close">End session</string>
+  <string name="memo_listen">Listen</string>
+  <string name="memo_listen_times">×%d</string>
+  <string name="memo_hidden">Hidden</string>
+  <string name="memo_show">Shown</string>
+  <string name="memo_hint">First word</string>
+  <string name="memo_next_word">Word</string>
+  <string name="memo_next_ayah">Ayah</string>
+  <string name="memo_reveal_all">All</string>
+  <string name="memo_hide_again">Hide</string>
+  <string name="memo_tap_hint">Tap a covered word to peek at it.</string>
+  <string name="memo_completed">You revealed the whole portion. How did it go?</string>
+  <string name="memo_rate_prompt">Rate your recall when you are done:</string>
+  <string name="memo_grade_again">Again</string>
+  <string name="memo_grade_hard">Hard</string>
+  <string name="memo_grade_good">Good</string>
+  <string name="memo_grade_easy">Easy</string>
+  <string name="memo_save_portion">Add to my portions</string>
+  <string name="memo_saved">Portion added. It is due for review today.</string>
+  <plurals name="memo_next_review_days">
+    <item quantity="one">Next review in %d day</item>
+    <item quantity="other">Next review in %d days</item>
+  </plurals>
+
+  <string name="memo_stats">%1$d portions · %2$d due today · %3$d reviews in total</string>
+  <string name="memo_due_today_title">Due today</string>
+  <string name="memo_due_none">No reviews due today.</string>
+  <string name="memo_review_button">Review</string>
+  <string name="memo_all_items_title">My portions</string>
+  <string name="memo_items_empty">Add a portion of the Quran to start memorising it. You can also open memorization mode from the reader menu.</string>
+  <string name="memo_add_portion">Add a portion</string>
+  <string name="memo_sura">Sura</string>
+  <string name="memo_from_ayah">From ayah</string>
+  <string name="memo_to_ayah">To ayah</string>
+  <string name="memo_invalid_range">Enter a valid ayah range</string>
+  <string name="memo_due_today">Due today</string>
+  <plurals name="memo_due_in">
+    <item quantity="one">Due in %d day</item>
+    <item quantity="other">Due in %d days</item>
+  </plurals>
+  <plurals name="memo_overdue">
+    <item quantity="one">%d day overdue</item>
+    <item quantity="other">%d days overdue</item>
+  </plurals>
+  <plurals name="memo_repetitions">
+    <item quantity="one">%d review</item>
+    <item quantity="other">%d reviews</item>
+  </plurals>
+  <string name="memo_delete_confirm">Delete this portion and its review history?</string>
+  <string name="memo_range_format">%1$s %2$d–%3$d</string>
+  <string name="memo_range_format_cross">%1$s %2$d – %3$s %4$d</string>
+
+  <string name="memo_wird_card_title">Memorization reviews</string>
+  <plurals name="memo_wird_due">
+    <item quantity="one">%d portion due for review today</item>
+    <item quantity="other">%d portions due for review today</item>
+  </plurals>
+  <string name="memo_wird_none">No reviews due today</string>
+  <string name="memo_wird_open">Open</string>
+</resources>

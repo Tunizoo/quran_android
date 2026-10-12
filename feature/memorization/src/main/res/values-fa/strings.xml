@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="memo_title">حفظ</string>
+  <string name="memo_back">بازگشت</string>
+  <string name="memo_cancel">لغو</string>
+  <string name="memo_add">افزودن</string>
+  <string name="memo_delete">حذف</string>
+  <string name="memo_settings_entry">بخش‌ها، مرورها و برنامه</string>
+  <string name="memo_settings_summary">واژه‌های یک بخش را پنهان کنید، به آن گوش دهید، خود را بیازمایید و با برنامهٔ فاصله‌دار مرور کنید</string>
+  <string name="memo_menu_reader">حالت حفظ</string>
+  <string name="memo_bar_title">حفظ</string>
+  <string name="memo_bar_close">پایان جلسه</string>
+  <string name="memo_listen">گوش دادن</string>
+  <string name="memo_listen_times">×%d</string>
+  <string name="memo_hidden">پنهان</string>
+  <string name="memo_show">نمایان</string>
+  <string name="memo_hint">واژهٔ نخست</string>
+  <string name="memo_next_word">واژه</string>
+  <string name="memo_next_ayah">آیه</string>
+  <string name="memo_reveal_all">همه</string>
+  <string name="memo_hide_again">پنهان کردن</string>
+  <string name="memo_tap_hint">برای دیدن یک واژهٔ پنهان روی آن بزنید.</string>
+  <string name="memo_completed">همهٔ بخش را آشکار کردید. چطور بود؟</string>
+  <string name="memo_rate_prompt">پس از پایان، حفظ خود را ارزیابی کنید:</string>
+  <string name="memo_grade_again">دوباره</string>
+  <string name="memo_grade_hard">دشوار</string>
+  <string name="memo_grade_good">خوب</string>
+  <string name="memo_grade_easy">آسان</string>
+  <string name="memo_save_portion">افزودن به بخش‌های من</string>
+  <string name="memo_saved">بخش افزوده شد. مرور آن امروز است.</string>
+  <string name="memo_stats">%1$d بخش · %2$d موعد امروز · در مجموع %3$d مرور</string>
+  <string name="memo_due_today_title">موعد امروز</string>
+  <string name="memo_due_none">امروز مروری در موعد نیست.</string>
+  <string name="memo_review_button">مرور</string>
+  <string name="memo_all_items_title">بخش‌های من</string>
+  <string name="memo_items_empty">بخشی از قرآن را بیفزایید تا حفظ آن را آغاز کنید. حالت حفظ را از منوی مصحف نیز می‌توانید باز کنید.</string>
+  <string name="memo_add_portion">افزودن بخش</string>
+  <string name="memo_sura">سوره</string>
+  <string name="memo_from_ayah">از آیه</string>
+  <string name="memo_to_ayah">تا آیه</string>
+  <string name="memo_invalid_range">بازهٔ معتبری از آیات وارد کنید</string>
+  <string name="memo_due_today">موعد امروز</string>
+  <string name="memo_delete_confirm">این بخش و سابقهٔ مرورهای آن حذف شود؟</string>
+  <string name="memo_range_format">%1$s %2$d–%3$d</string>
+  <string name="memo_range_format_cross">%1$s %2$d – %3$s %4$d</string>
+  <string name="memo_wird_card_title">مرورهای حفظ</string>
+  <string name="memo_wird_none">امروز مروری در موعد نیست</string>
+  <string name="memo_wird_open">باز کردن</string>
+  <plurals name="memo_next_review_days">
+    <item quantity="one">مرور بعدی %d روز دیگر</item>
+    <item quantity="other">مرور بعدی %d روز دیگر</item>
+  </plurals>
+  <plurals name="memo_due_in">
+    <item quantity="one">موعد %d روز دیگر</item>
+    <item quantity="other">موعد %d روز دیگر</item>
+  </plurals>
+  <plurals name="memo_overdue">
+    <item quantity="one">%d روز گذشته از موعد</item>
+    <item quantity="other">%d روز گذشته از موعد</item>
+  </plurals>
+  <plurals name="memo_repetitions">
+    <item quantity="one">%d مرور</item>
+    <item quantity="other">%d مرور</item>
+  </plurals>
+  <plurals name="memo_wird_due">
+    <item quantity="one">امروز %d بخش در موعد مرور است</item>
+    <item quantity="other">امروز %d بخش در موعد مرور است</item>
+  </plurals>
+</resources>

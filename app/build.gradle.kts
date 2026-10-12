@@ -242,6 +242,7 @@ dependencies {
   implementation(project(":feature:wird"))
   implementation(project(":feature:divinenames"))
   implementation(project(":feature:tajweed"))
+  implementation(project(":feature:memorization"))
 
   // android auto support
   implementation(project(":feature:autoquran"))

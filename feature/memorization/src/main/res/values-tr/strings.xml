@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="memo_title">Ezber</string>
+  <string name="memo_back">Geri</string>
+  <string name="memo_cancel">İptal</string>
+  <string name="memo_add">Ekle</string>
+  <string name="memo_delete">Sil</string>
+  <string name="memo_settings_entry">Bölümler, tekrarlar ve program</string>
+  <string name="memo_settings_summary">Bir bölümün kelimelerini gizleyin, dinleyin, kendinizi sınayın ve aralıklı bir programla tekrar edin</string>
+  <string name="memo_menu_reader">Ezber modu</string>
+  <string name="memo_bar_title">Ezber</string>
+  <string name="memo_bar_close">Oturumu bitir</string>
+  <string name="memo_listen">Dinle</string>
+  <string name="memo_listen_times">×%d</string>
+  <string name="memo_hidden">Gizli</string>
+  <string name="memo_show">Görünür</string>
+  <string name="memo_hint">İlk kelime</string>
+  <string name="memo_next_word">Kelime</string>
+  <string name="memo_next_ayah">Ayet</string>
+  <string name="memo_reveal_all">Tümü</string>
+  <string name="memo_hide_again">Gizle</string>
+  <string name="memo_tap_hint">Gizli bir kelimeye dokunarak ona göz atın.</string>
+  <string name="memo_completed">Bölümün tamamını açtınız. Nasıl gitti?</string>
+  <string name="memo_rate_prompt">Bitirince ezberinizi değerlendirin:</string>
+  <string name="memo_grade_again">Tekrar</string>
+  <string name="memo_grade_hard">Zor</string>
+  <string name="memo_grade_good">İyi</string>
+  <string name="memo_grade_easy">Kolay</string>
+  <string name="memo_save_portion">Bölümlerime ekle</string>
+  <string name="memo_saved">Bölüm eklendi. Tekrarı bugün.</string>
+  <string name="memo_stats">%1$d bölüm · bugün %2$d tekrar · toplam %3$d tekrar</string>
+  <string name="memo_due_today_title">Bugün tekrar</string>
+  <string name="memo_due_none">Bugün tekrar edilecek bölüm yok.</string>
+  <string name="memo_review_button">Tekrar et</string>
+  <string name="memo_all_items_title">Bölümlerim</string>
+  <string name="memo_items_empty">Ezberlemeye başlamak için Kur’an’dan bir bölüm ekleyin. Ezber modunu mushaf menüsünden de açabilirsiniz.</string>
+  <string name="memo_add_portion">Bölüm ekle</string>
+  <string name="memo_sura">Sure</string>
+  <string name="memo_from_ayah">Başlangıç ayeti</string>
+  <string name="memo_to_ayah">Bitiş ayeti</string>
+  <string name="memo_invalid_range">Geçerli bir ayet aralığı girin</string>
+  <string name="memo_due_today">Bugün</string>
+  <string name="memo_delete_confirm">Bu bölüm ve tekrar geçmişi silinsin mi?</string>
+  <string name="memo_range_format">%1$s %2$d–%3$d</string>
+  <string name="memo_range_format_cross">%1$s %2$d – %3$s %4$d</string>
+  <string name="memo_wird_card_title">Ezber tekrarları</string>
+  <string name="memo_wird_none">Bugün tekrar edilecek bölüm yok</string>
+  <string name="memo_wird_open">Aç</string>
+  <plurals name="memo_next_review_days">
+    <item quantity="one">Sonraki tekrar %d gün sonra</item>
+    <item quantity="other">Sonraki tekrar %d gün sonra</item>
+  </plurals>
+  <plurals name="memo_due_in">
+    <item quantity="one">%d gün sonra</item>
+    <item quantity="other">%d gün sonra</item>
+  </plurals>
+  <plurals name="memo_overdue">
+    <item quantity="one">%d gün gecikti</item>
+    <item quantity="other">%d gün gecikti</item>
+  </plurals>
+  <plurals name="memo_repetitions">
+    <item quantity="one">%d tekrar</item>
+    <item quantity="other">%d tekrar</item>
+  </plurals>
+  <plurals name="memo_wird_due">
+    <item quantity="one">Bugün tekrar edilecek %d bölüm var</item>
+    <item quantity="other">Bugün tekrar edilecek %d bölüm var</item>
+  </plurals>
+</resources>

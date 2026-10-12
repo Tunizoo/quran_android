@@ -3,6 +3,7 @@ LANG = "fa"
 
 WIRD = {
     "wird_title": "وِرد روزانه",
+    "wird_open": "باز کردن",
     "wird_back": "بازگشت",
     "wird_ok": "تأیید",
     "wird_cancel": "لغو",

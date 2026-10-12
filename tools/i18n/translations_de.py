@@ -3,6 +3,7 @@ LANG = "de"
 
 WIRD = {
     "wird_title": "Tägliches Wird",
+    "wird_open": "Öffnen",
     "wird_back": "Zurück",
     "wird_ok": "OK",
     "wird_cancel": "Abbrechen",

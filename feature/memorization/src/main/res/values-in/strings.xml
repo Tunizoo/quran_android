@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="memo_title">Hafalan</string>
+  <string name="memo_back">Kembali</string>
+  <string name="memo_cancel">Batal</string>
+  <string name="memo_add">Tambah</string>
+  <string name="memo_delete">Hapus</string>
+  <string name="memo_settings_entry">Bagian, ulangan, dan jadwal</string>
+  <string name="memo_settings_summary">Sembunyikan kata-kata suatu bagian, dengarkan, uji diri Anda, dan ulangi dengan jadwal berjarak</string>
+  <string name="memo_menu_reader">Mode hafalan</string>
+  <string name="memo_bar_title">Hafalan</string>
+  <string name="memo_bar_close">Akhiri sesi</string>
+  <string name="memo_listen">Dengarkan</string>
+  <string name="memo_listen_times">×%d</string>
+  <string name="memo_hidden">Tersembunyi</string>
+  <string name="memo_show">Tampak</string>
+  <string name="memo_hint">Kata pertama</string>
+  <string name="memo_next_word">Kata</string>
+  <string name="memo_next_ayah">Ayat</string>
+  <string name="memo_reveal_all">Semua</string>
+  <string name="memo_hide_again">Sembunyikan</string>
+  <string name="memo_tap_hint">Ketuk kata yang tertutup untuk mengintipnya.</string>
+  <string name="memo_completed">Anda telah membuka seluruh bagian. Bagaimana hasilnya?</string>
+  <string name="memo_rate_prompt">Nilai hafalan Anda setelah selesai:</string>
+  <string name="memo_grade_again">Ulangi</string>
+  <string name="memo_grade_hard">Sulit</string>
+  <string name="memo_grade_good">Baik</string>
+  <string name="memo_grade_easy">Mudah</string>
+  <string name="memo_save_portion">Tambahkan ke bagian saya</string>
+  <string name="memo_saved">Bagian ditambahkan. Ulangannya jatuh tempo hari ini.</string>
+  <string name="memo_stats">%1$d bagian · %2$d jatuh tempo hari ini · %3$d ulangan total</string>
+  <string name="memo_due_today_title">Jatuh tempo hari ini</string>
+  <string name="memo_due_none">Tidak ada ulangan hari ini.</string>
+  <string name="memo_review_button">Ulangi</string>
+  <string name="memo_all_items_title">Bagian saya</string>
+  <string name="memo_items_empty">Tambahkan bagian Al-Qur’an untuk mulai menghafalnya. Anda juga dapat membuka mode hafalan dari menu mushaf.</string>
+  <string name="memo_add_portion">Tambah bagian</string>
+  <string name="memo_sura">Surah</string>
+  <string name="memo_from_ayah">Dari ayat</string>
+  <string name="memo_to_ayah">Sampai ayat</string>
+  <string name="memo_invalid_range">Masukkan rentang ayat yang valid</string>
+  <string name="memo_due_today">Jatuh tempo hari ini</string>
+  <string name="memo_delete_confirm">Hapus bagian ini beserta riwayat ulangannya?</string>
+  <string name="memo_range_format">%1$s %2$d–%3$d</string>
+  <string name="memo_range_format_cross">%1$s %2$d – %3$s %4$d</string>
+  <string name="memo_wird_card_title">Ulangan hafalan</string>
+  <string name="memo_wird_none">Tidak ada ulangan hari ini</string>
+  <string name="memo_wird_open">Buka</string>
+  <plurals name="memo_next_review_days">
+    <item quantity="one">Ulangan berikutnya dalam %d hari</item>
+    <item quantity="other">Ulangan berikutnya dalam %d hari</item>
+  </plurals>
+  <plurals name="memo_due_in">
+    <item quantity="one">Jatuh tempo dalam %d hari</item>
+    <item quantity="other">Jatuh tempo dalam %d hari</item>
+  </plurals>
+  <plurals name="memo_overdue">
+    <item quantity="one">Terlambat %d hari</item>
+    <item quantity="other">Terlambat %d hari</item>
+  </plurals>
+  <plurals name="memo_repetitions">
+    <item quantity="one">%d ulangan</item>
+    <item quantity="other">%d ulangan</item>
+  </plurals>
+  <plurals name="memo_wird_due">
+    <item quantity="one">%d bagian perlu diulang hari ini</item>
+    <item quantity="other">%d bagian perlu diulang hari ini</item>
+  </plurals>
+</resources>

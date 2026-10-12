@@ -3,6 +3,7 @@ LANG = "ur"
 
 WIRD = {
     "wird_title": "روزانہ کا وِرد",
+    "wird_open": "کھولیں",
     "wird_back": "واپس",
     "wird_ok": "ٹھیک ہے",
     "wird_cancel": "منسوخ",

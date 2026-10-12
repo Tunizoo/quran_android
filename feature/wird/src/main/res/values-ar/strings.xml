@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
   <string name="wird_title">الورد اليومي</string>
+  <string name="wird_open">افتح</string>
   <string name="wird_back">رجوع</string>
   <string name="wird_ok">موافق</string>
   <string name="wird_cancel">إلغاء</string>

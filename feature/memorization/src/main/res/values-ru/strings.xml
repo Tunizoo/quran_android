@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="memo_title">Заучивание</string>
+  <string name="memo_back">Назад</string>
+  <string name="memo_cancel">Отмена</string>
+  <string name="memo_add">Добавить</string>
+  <string name="memo_delete">Удалить</string>
+  <string name="memo_settings_entry">Отрывки, повторения и расписание</string>
+  <string name="memo_settings_summary">Скрывайте слова отрывка, слушайте его, проверяйте себя и повторяйте по интервальному расписанию</string>
+  <string name="memo_menu_reader">Режим заучивания</string>
+  <string name="memo_bar_title">Заучивание</string>
+  <string name="memo_bar_close">Завершить сеанс</string>
+  <string name="memo_listen">Слушать</string>
+  <string name="memo_listen_times">×%d</string>
+  <string name="memo_hidden">Скрыто</string>
+  <string name="memo_show">Показано</string>
+  <string name="memo_hint">Первое слово</string>
+  <string name="memo_next_word">Слово</string>
+  <string name="memo_next_ayah">Аят</string>
+  <string name="memo_reveal_all">Всё</string>
+  <string name="memo_hide_again">Скрыть</string>
+  <string name="memo_tap_hint">Нажмите на скрытое слово, чтобы подсмотреть его.</string>
+  <string name="memo_completed">Вы открыли весь отрывок. Как прошло?</string>
+  <string name="memo_rate_prompt">Оцените, как вы помните отрывок, когда закончите:</string>
+  <string name="memo_grade_again">Снова</string>
+  <string name="memo_grade_hard">Трудно</string>
+  <string name="memo_grade_good">Хорошо</string>
+  <string name="memo_grade_easy">Легко</string>
+  <string name="memo_save_portion">В мои отрывки</string>
+  <string name="memo_saved">Отрывок добавлен. Повторение назначено на сегодня.</string>
+  <string name="memo_stats">%1$d отрывков · %2$d на сегодня · %3$d повторений всего</string>
+  <string name="memo_due_today_title">На сегодня</string>
+  <string name="memo_due_none">На сегодня повторений нет.</string>
+  <string name="memo_review_button">Повторить</string>
+  <string name="memo_all_items_title">Мои отрывки</string>
+  <string name="memo_items_empty">Добавьте отрывок Корана, чтобы начать его заучивать. Режим заучивания можно также открыть из меню мусхафа.</string>
+  <string name="memo_add_portion">Добавить отрывок</string>
+  <string name="memo_sura">Сура</string>
+  <string name="memo_from_ayah">С аята</string>
+  <string name="memo_to_ayah">По аят</string>
+  <string name="memo_invalid_range">Введите правильный диапазон аятов</string>
+  <string name="memo_due_today">На сегодня</string>
+  <string name="memo_delete_confirm">Удалить этот отрывок и историю его повторений?</string>
+  <string name="memo_range_format">%1$s %2$d–%3$d</string>
+  <string name="memo_range_format_cross">%1$s %2$d – %3$s %4$d</string>
+  <string name="memo_wird_card_title">Повторения заученного</string>
+  <string name="memo_wird_none">На сегодня повторений нет</string>
+  <string name="memo_wird_open">Открыть</string>
+  <plurals name="memo_next_review_days">
+    <item quantity="one">Следующее повторение через %d день</item>
+    <item quantity="few">Следующее повторение через %d дня</item>
+    <item quantity="many">Следующее повторение через %d дней</item>
+    <item quantity="other">Следующее повторение через %d дня</item>
+  </plurals>
+  <plurals name="memo_due_in">
+    <item quantity="one">Через %d день</item>
+    <item quantity="few">Через %d дня</item>
+    <item quantity="many">Через %d дней</item>
+    <item quantity="other">Через %d дня</item>
+  </plurals>
+  <plurals name="memo_overdue">
+    <item quantity="one">Просрочено на %d день</item>
+    <item quantity="few">Просрочено на %d дня</item>
+    <item quantity="many">Просрочено на %d дней</item>
+    <item quantity="other">Просрочено на %d дня</item>
+  </plurals>
+  <plurals name="memo_repetitions">
+    <item quantity="one">%d повторение</item>
+    <item quantity="few">%d повторения</item>
+    <item quantity="many">%d повторений</item>
+    <item quantity="other">%d повторения</item>
+  </plurals>
+  <plurals name="memo_wird_due">
+    <item quantity="one">%d отрывок к повторению сегодня</item>
+    <item quantity="few">%d отрывка к повторению сегодня</item>
+    <item quantity="many">%d отрывков к повторению сегодня</item>
+    <item quantity="other">%d отрывка к повторению сегодня</item>
+  </plurals>
+</resources>

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="memo_title">حفظ</string>
+  <string name="memo_back">واپس</string>
+  <string name="memo_cancel">منسوخ</string>
+  <string name="memo_add">شامل کریں</string>
+  <string name="memo_delete">حذف کریں</string>
+  <string name="memo_settings_entry">حصے، دہرائیاں اور نظام الاوقات</string>
+  <string name="memo_settings_summary">کسی حصے کے الفاظ چھپائیں، اسے سنیں، خود کو آزمائیں اور وقفوں والے نظام الاوقات سے دہرائیں</string>
+  <string name="memo_menu_reader">حفظ کا موڈ</string>
+  <string name="memo_bar_title">حفظ</string>
+  <string name="memo_bar_close">نشست ختم کریں</string>
+  <string name="memo_listen">سنیں</string>
+  <string name="memo_listen_times">×%d</string>
+  <string name="memo_hidden">چھپا ہوا</string>
+  <string name="memo_show">ظاہر</string>
+  <string name="memo_hint">پہلا لفظ</string>
+  <string name="memo_next_word">لفظ</string>
+  <string name="memo_next_ayah">آیت</string>
+  <string name="memo_reveal_all">سب</string>
+  <string name="memo_hide_again">چھپائیں</string>
+  <string name="memo_tap_hint">کسی چھپے ہوئے لفظ کو دیکھنے کے لیے اس پر ٹیپ کریں۔</string>
+  <string name="memo_completed">آپ نے پورا حصہ ظاہر کر دیا۔ کیسا رہا؟</string>
+  <string name="memo_rate_prompt">مکمل ہونے پر اپنے حفظ کی درجہ بندی کریں:</string>
+  <string name="memo_grade_again">دوبارہ</string>
+  <string name="memo_grade_hard">مشکل</string>
+  <string name="memo_grade_good">اچھا</string>
+  <string name="memo_grade_easy">آسان</string>
+  <string name="memo_save_portion">میرے حصوں میں شامل کریں</string>
+  <string name="memo_saved">حصہ شامل ہو گیا۔ اس کی دہرائی آج ہے۔</string>
+  <string name="memo_stats">%1$d حصے · %2$d آج واجب · کل %3$d دہرائیاں</string>
+  <string name="memo_due_today_title">آج کی دہرائیاں</string>
+  <string name="memo_due_none">آج کوئی دہرائی واجب نہیں۔</string>
+  <string name="memo_review_button">دہرائیں</string>
+  <string name="memo_all_items_title">میرے حصے</string>
+  <string name="memo_items_empty">حفظ شروع کرنے کے لیے قرآن کا کوئی حصہ شامل کریں۔ آپ مصحف کے مینو سے بھی حفظ کا موڈ کھول سکتے ہیں۔</string>
+  <string name="memo_add_portion">حصہ شامل کریں</string>
+  <string name="memo_sura">سورت</string>
+  <string name="memo_from_ayah">آیت سے</string>
+  <string name="memo_to_ayah">آیت تک</string>
+  <string name="memo_invalid_range">آیات کی درست حد درج کریں</string>
+  <string name="memo_due_today">آج واجب</string>
+  <string name="memo_delete_confirm">یہ حصہ اور اس کی دہرائیوں کا ریکارڈ حذف کریں؟</string>
+  <string name="memo_range_format">%1$s %2$d–%3$d</string>
+  <string name="memo_range_format_cross">%1$s %2$d – %3$s %4$d</string>
+  <string name="memo_wird_card_title">حفظ کی دہرائیاں</string>
+  <string name="memo_wird_none">آج کوئی دہرائی واجب نہیں</string>
+  <string name="memo_wird_open">کھولیں</string>
+  <plurals name="memo_next_review_days">
+    <item quantity="one">اگلی دہرائی %d دن بعد</item>
+    <item quantity="other">اگلی دہرائی %d دن بعد</item>
+  </plurals>
+  <plurals name="memo_due_in">
+    <item quantity="one">%d دن بعد واجب</item>
+    <item quantity="other">%d دن بعد واجب</item>
+  </plurals>
+  <plurals name="memo_overdue">
+    <item quantity="one">%d دن تاخیر</item>
+    <item quantity="other">%d دن تاخیر</item>
+  </plurals>
+  <plurals name="memo_repetitions">
+    <item quantity="one">%d دہرائی</item>
+    <item quantity="other">%d دہرائیاں</item>
+  </plurals>
+  <plurals name="memo_wird_due">
+    <item quantity="one">آج %d حصے کی دہرائی واجب ہے</item>
+    <item quantity="other">آج %d حصوں کی دہرائی واجب ہے</item>
+  </plurals>
+</resources>

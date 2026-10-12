@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="memo_title">الحفظ</string>
+  <string name="memo_back">رجوع</string>
+  <string name="memo_cancel">إلغاء</string>
+  <string name="memo_add">إضافة</string>
+  <string name="memo_delete">حذف</string>
+  <string name="memo_settings_entry">المقاطع والمراجعات والجدول</string>
+  <string name="memo_settings_summary">إخفاء كلمات المقطع والاستماع إليه واختبار نفسك ومراجعته بجدول متباعد</string>
+  <string name="memo_menu_reader">وضع الحفظ</string>
+
+  <string name="memo_bar_title">الحفظ</string>
+  <string name="memo_bar_close">إنهاء الجلسة</string>
+  <string name="memo_listen">استماع</string>
+  <string name="memo_listen_times">×%d</string>
+  <string name="memo_hidden">مخفي</string>
+  <string name="memo_show">ظاهر</string>
+  <string name="memo_hint">أول كلمة</string>
+  <string name="memo_next_word">كلمة</string>
+  <string name="memo_next_ayah">آية</string>
+  <string name="memo_reveal_all">الكل</string>
+  <string name="memo_hide_again">إخفاء</string>
+  <string name="memo_tap_hint">انقر على كلمة مخفية لإظهارها.</string>
+  <string name="memo_completed">أظهرت المقطع كاملًا. كيف كان حفظك؟</string>
+  <string name="memo_rate_prompt">قيّم حفظك عند الانتهاء:</string>
+  <string name="memo_grade_again">أعد</string>
+  <string name="memo_grade_hard">صعب</string>
+  <string name="memo_grade_good">جيد</string>
+  <string name="memo_grade_easy">سهل</string>
+  <string name="memo_save_portion">أضف إلى مقاطعي</string>
+  <string name="memo_saved">أُضيف المقطع، وموعد مراجعته اليوم.</string>
+  <plurals name="memo_next_review_days">
+    <item quantity="zero">المراجعة القادمة اليوم</item>
+    <item quantity="one">المراجعة القادمة غدًا</item>
+    <item quantity="two">المراجعة القادمة بعد يومين</item>
+    <item quantity="few">المراجعة القادمة بعد %d أيام</item>
+    <item quantity="many">المراجعة القادمة بعد %d يومًا</item>
+    <item quantity="other">المراجعة القادمة بعد %d يوم</item>
+  </plurals>
+
+  <string name="memo_stats">المقاطع: %1$d، المستحق اليوم: %2$d، المراجعات: %3$d</string>
+  <string name="memo_due_today_title">مراجعات اليوم</string>
+  <string name="memo_due_none">لا مراجعات مستحقة اليوم.</string>
+  <string name="memo_review_button">راجع</string>
+  <string name="memo_all_items_title">مقاطعي</string>
+  <string name="memo_items_empty">أضف مقطعًا من القرآن لتبدأ حفظه. يمكنك أيضًا فتح وضع الحفظ من قائمة المصحف.</string>
+  <string name="memo_add_portion">إضافة مقطع</string>
+  <string name="memo_sura">السورة</string>
+  <string name="memo_from_ayah">من الآية</string>
+  <string name="memo_to_ayah">إلى الآية</string>
+  <string name="memo_invalid_range">أدخل نطاق آيات صحيحًا</string>
+  <string name="memo_due_today">مستحق اليوم</string>
+  <plurals name="memo_due_in">
+    <item quantity="zero">مستحق اليوم</item>
+    <item quantity="one">مستحق غدًا</item>
+    <item quantity="two">مستحق بعد يومين</item>
+    <item quantity="few">مستحق بعد %d أيام</item>
+    <item quantity="many">مستحق بعد %d يومًا</item>
+    <item quantity="other">مستحق بعد %d يوم</item>
+  </plurals>
+  <plurals name="memo_overdue">
+    <item quantity="zero">متأخر</item>
+    <item quantity="one">متأخر يومًا</item>
+    <item quantity="two">متأخر يومين</item>
+    <item quantity="few">متأخر %d أيام</item>
+    <item quantity="many">متأخر %d يومًا</item>
+    <item quantity="other">متأخر %d يوم</item>
+  </plurals>
+  <plurals name="memo_repetitions">
+    <item quantity="zero">لا مراجعات</item>
+    <item quantity="one">مراجعة واحدة</item>
+    <item quantity="two">مراجعتان</item>
+    <item quantity="few">%d مراجعات</item>
+    <item quantity="many">%d مراجعة</item>
+    <item quantity="other">%d مراجعة</item>
+  </plurals>
+  <string name="memo_delete_confirm">هل تحذف هذا المقطع وسجل مراجعاته؟</string>
+  <string name="memo_range_format">%1$s %2$d–%3$d</string>
+  <string name="memo_range_format_cross">%1$s %2$d – %3$s %4$d</string>
+
+  <string name="memo_wird_card_title">مراجعات الحفظ</string>
+  <plurals name="memo_wird_due">
+    <item quantity="zero">لا مراجعات مستحقة اليوم</item>
+    <item quantity="one">مقطع واحد مستحق للمراجعة اليوم</item>
+    <item quantity="two">مقطعان مستحقان للمراجعة اليوم</item>
+    <item quantity="few">%d مقاطع مستحقة للمراجعة اليوم</item>
+    <item quantity="many">%d مقطعًا مستحقًا للمراجعة اليوم</item>
+    <item quantity="other">%d مقطع مستحق للمراجعة اليوم</item>
+  </plurals>
+  <string name="memo_wird_none">لا مراجعات مستحقة اليوم</string>
+  <string name="memo_wird_open">افتح</string>
+</resources>

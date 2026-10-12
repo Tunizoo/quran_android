@@ -81,6 +81,7 @@ import com.quran.mobile.feature.wird.model.ReminderMode
 import com.quran.mobile.feature.wird.model.UnlockedAchievement
 import com.quran.mobile.feature.wird.model.WirdSettings
 import com.quran.mobile.feature.wird.model.WirdSummary
+import com.quran.mobile.feature.wird.state.DailyReviewCard
 import com.quran.mobile.feature.wird.state.WirdEvent
 import com.quran.mobile.feature.wird.state.WirdState
 import java.text.SimpleDateFormat
@@ -126,6 +127,7 @@ fun WirdScreen(
     ) {
       if (summary != null) {
         item { TodayCard(summary) }
+        items(state.dailyReviews, key = { it.titleResId }) { card -> DailyReviewCardView(card) }
         item { StreakCard(summary) }
         item { KhatmaCard(summary) }
         item { RecentDaysCard(summary) }
@@ -232,6 +234,24 @@ private fun ProgressRing(
       }
     }
     content()
+  }
+}
+
+@Composable
+private fun DailyReviewCardView(card: DailyReviewCard) {
+  SectionCard {
+    Row(verticalAlignment = Alignment.CenterVertically) {
+      Column(modifier = Modifier.weight(1f)) {
+        Text(
+          text = stringResource(card.titleResId),
+          style = MaterialTheme.typography.titleMedium,
+          fontWeight = FontWeight.Bold
+        )
+        Text(text = card.text, style = MaterialTheme.typography.bodyMedium)
+      }
+      Spacer(Modifier.width(8.dp))
+      TextButton(onClick = card.open) { Text(stringResource(R.string.wird_open)) }
+    }
   }
 }
 

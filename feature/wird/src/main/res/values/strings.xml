@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
   <string name="wird_title">Daily Wird</string>
+  <string name="wird_open">Open</string>
   <string name="wird_back">Back</string>
   <string name="wird_ok">OK</string>
   <string name="wird_cancel">Cancel</string>

@@ -1,12 +1,17 @@
 package com.quran.mobile.feature.wird.presenter
 
+import android.content.Context
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import com.quran.data.di.AppCoroutineScope
+import com.quran.mobile.di.DailyReviewProvider
+import com.quran.mobile.di.qualifier.ApplicationContext
 import com.quran.mobile.feature.wird.data.WirdRepository
 import com.quran.mobile.feature.wird.model.WirdSettings
 import com.quran.mobile.feature.wird.reminder.WirdReminderScheduler
+import com.quran.mobile.feature.wird.state.DailyReviewCard
 import com.quran.mobile.feature.wird.state.WirdEvent
 import com.quran.mobile.feature.wird.state.WirdState
 import dev.zacsweers.metro.Inject
@@ -15,6 +20,8 @@ import kotlinx.coroutines.launch
 class WirdPresenter @Inject constructor(
   private val repository: WirdRepository,
   private val reminderScheduler: WirdReminderScheduler,
+  private val dailyReviewProviders: Set<@JvmSuppressWildcards DailyReviewProvider>,
+  @ApplicationContext private val context: Context,
   private val appCoroutineScope: AppCoroutineScope
 ) {
 
@@ -22,6 +29,11 @@ class WirdPresenter @Inject constructor(
   fun present(): WirdState {
     val summary by repository.summary.collectAsState(initial = null)
     val settings by repository.settings.collectAsState(initial = WirdSettings.DEFAULT)
+    val providers = remember { dailyReviewProviders.sortedBy { it.order } }
+    val dailyReviews = providers.map { provider ->
+      val count by provider.dueCount.collectAsState(initial = 0)
+      DailyReviewCard(provider.titleResId, provider.describe(context, count)) { provider.open(context) }
+    }
 
     val eventSink: (WirdEvent) -> Unit = { event ->
       val transform: (WirdSettings) -> WirdSettings = when (event) {
@@ -36,6 +48,6 @@ class WirdPresenter @Inject constructor(
       }
     }
 
-    return WirdState(summary = summary, settings = settings, eventSink = eventSink)
+    return WirdState(summary = summary, settings = settings, dailyReviews = dailyReviews, eventSink = eventSink)
   }
 }

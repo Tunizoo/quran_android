@@ -1,0 +1,61 @@
+-- A portion the user is memorising, scheduled with a simplified SM-2 algorithm.
+-- `due_day` and `last_review_day` are local epoch days (see MemorizationClock).
+CREATE TABLE IF NOT EXISTS memo_item(
+  id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+  start_sura INTEGER NOT NULL,
+  start_ayah INTEGER NOT NULL,
+  end_sura INTEGER NOT NULL,
+  end_ayah INTEGER NOT NULL,
+  ease REAL NOT NULL,
+  interval_days INTEGER NOT NULL,
+  repetitions INTEGER NOT NULL,
+  due_day INTEGER NOT NULL,
+  last_review_day INTEGER,
+  created_at INTEGER NOT NULL
+);
+
+CREATE INDEX IF NOT EXISTS memo_item_due ON memo_item(due_day);
+
+CREATE TABLE IF NOT EXISTS memo_review(
+  id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+  item_id INTEGER NOT NULL,
+  day INTEGER NOT NULL,
+  quality INTEGER NOT NULL,
+  reviewed_at INTEGER NOT NULL
+);
+
+CREATE INDEX IF NOT EXISTS memo_review_item ON memo_review(item_id);
+
+allItems:
+SELECT * FROM memo_item ORDER BY due_day ASC, start_sura ASC, start_ayah ASC;
+
+itemById:
+SELECT * FROM memo_item WHERE id = ?;
+
+dueCount:
+SELECT COUNT(*) FROM memo_item WHERE due_day <= ?;
+
+insertItem:
+INSERT INTO memo_item(start_sura, start_ayah, end_sura, end_ayah, ease, interval_days, repetitions, due_day, last_review_day, created_at)
+VALUES (?, ?, ?, ?, ?, ?, ?, ?, NULL, ?);
+
+lastInsertId:
+SELECT last_insert_rowid();
+
+updateSchedule:
+UPDATE memo_item SET ease = ?, interval_days = ?, repetitions = ?, due_day = ?, last_review_day = ? WHERE id = ?;
+
+deleteItem:
+DELETE FROM memo_item WHERE id = ?;
+
+deleteReviewsOfItem:
+DELETE FROM memo_review WHERE item_id = ?;
+
+insertReview:
+INSERT INTO memo_review(item_id, day, quality, reviewed_at) VALUES (?, ?, ?, ?);
+
+reviewCount:
+SELECT COUNT(*) FROM memo_review;
+
+reviewCountForDay:
+SELECT COUNT(*) FROM memo_review WHERE day = ?;

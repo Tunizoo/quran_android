@@ -1,6 +1,7 @@
 package com.quran.labs.androidquran.ui
 
 import android.Manifest
+import android.app.Activity
 import android.app.ProgressDialog
 import android.app.SearchManager
 import android.content.ComponentName
@@ -134,6 +135,9 @@ import com.quran.mobile.feature.qarilist.QariListWrapper
 import com.quran.mobile.feature.qarilist.di.QariListWrapperInjector
 import com.quran.mobile.translation.model.LocalTranslation
 import com.quran.page.common.data.QuranNaming
+import com.quran.page.common.extension.ReaderHost
+import com.quran.page.common.extension.ReaderOverlay
+import com.quran.page.common.extension.ReaderOverlayProvider
 import com.quran.page.common.factory.PageViewFactoryProvider
 import com.quran.page.common.toolbar.AyahToolBar
 import com.quran.page.common.toolbar.di.AyahToolBarInjector
@@ -246,6 +250,10 @@ class PagerActivity : AppCompatActivity(), AudioBarListener, OnBookmarkTagsUpdat
   @Inject lateinit var downloadInfoStreams: DownloadInfoStreams
   @Inject lateinit var qariManager: CurrentQariManager
   @Inject lateinit var downloadBridge: DownloadBridge
+  @Inject lateinit var readerOverlayProviders: Set<@JvmSuppressWildcards ReaderOverlayProvider>
+
+  /** Overlays contributed by feature modules (e.g. the memorization bar), in provider order. */
+  private val readerOverlays = ArrayList<ReaderOverlay>()
 
   private lateinit var audioStatusRepositoryBridge: AudioStatusRepositoryBridge
   private lateinit var readingEventPresenterBridge: ReadingEventPresenterBridge
@@ -563,6 +571,8 @@ class PagerActivity : AppCompatActivity(), AudioBarListener, OnBookmarkTagsUpdat
           refreshActionBarSpinner()
         }
 
+        readerOverlays.forEach { it.onPageChanged(page) }
+
         // If we're more than 1 page away from ayah selection end ayah mode
         val suraAyah: SuraAyah? = selectionStart
         if (suraAyah != null) {
@@ -575,6 +585,7 @@ class PagerActivity : AppCompatActivity(), AudioBarListener, OnBookmarkTagsUpdat
       }
     }
     viewPager.addOnPageChangeListener(onPageChangeListener)
+    attachReaderOverlays()
 
     setUiVisibilityListener()
     audioStatusBar.visibility = View.VISIBLE
@@ -1118,8 +1129,60 @@ class PagerActivity : AppCompatActivity(), AudioBarListener, OnBookmarkTagsUpdat
     handler.removeCallbacksAndMessages(null)
     scope.cancel()
     dismissProgressDialog()
+    readerOverlays.forEach { it.onDestroy() }
+    readerOverlays.clear()
     super.onDestroy()
   }
+
+  // region Reader overlays (feature modules)
+
+  private val readerHost = object : ReaderHost {
+    override val activity: Activity get() = this@PagerActivity
+
+    override fun currentPage(): Int = this@PagerActivity.currentPage
+
+    override fun selectedAyahRange(): Pair<SuraAyah, SuraAyah>? {
+      val start = selectionStart ?: return null
+      val end = selectionEnd ?: start
+      return if (end.after(start)) start to end else end to start
+    }
+
+    override fun clearSelection() {
+      if (selectionStart != null) endAyahMode()
+    }
+
+    override fun playRange(start: SuraAyah, end: SuraAyah, verseRepeat: Int, rangeRepeat: Int) {
+      val page = quranInfo.getPageFromSuraAyah(start.sura, start.ayah)
+      playFromAyah(start, end, page, verseRepeat, rangeRepeat, true, 1.0f)
+    }
+
+    override fun refreshPages() = refreshQuranPages()
+  }
+
+  /** Creates the overlays of the contributed providers and places them above the audio bar. */
+  private fun attachReaderOverlays() {
+    val root = viewPager.parent as? ViewGroup ?: return
+    readerOverlayProviders.sortedBy { it.order }.forEach { provider ->
+      val overlay = provider.createOverlay(readerHost)
+      readerOverlays.add(overlay)
+      val params = FrameLayout.LayoutParams(
+        ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, Gravity.BOTTOM
+      )
+      root.addView(overlay.view, root.indexOfChild(audioStatusBar), params)
+    }
+    if (readerOverlays.isNotEmpty()) {
+      // keep the overlays above the audio bar whenever it is shown or resized
+      audioStatusBar.addOnLayoutChangeListener { _, _, _, _, _, _, _, _, _ -> offsetReaderOverlays() }
+      offsetReaderOverlays()
+    }
+  }
+
+  private fun offsetReaderOverlays() {
+    val offset = if (audioStatusBar.visibility == View.VISIBLE) -audioStatusBar.height.toFloat() else 0f
+    readerOverlays.forEach { it.view.translationY = offset }
+  }
+
+  // endregion
 
   private fun onSessionEnd() {
     onEndSessionBackCallback.isEnabled = false
@@ -1155,6 +1218,12 @@ class PagerActivity : AppCompatActivity(), AudioBarListener, OnBookmarkTagsUpdat
     // due to inflation plus due to the search view specific setup work. we can
     // directly modify the bookmark item using a reference to this instead.
     bookmarksMenuItem = menu.findItem(R.id.favorite_item)
+
+    readerOverlayProviders.sortedBy { it.order }.forEachIndexed { index, provider ->
+      if (provider.menuTitleResId != 0) {
+        menu.add(Menu.NONE, READER_OVERLAY_MENU_ID_BASE + index, Menu.NONE, provider.menuTitleResId)
+      }
+    }
     return true
   }
 
@@ -1189,6 +1258,11 @@ class PagerActivity : AppCompatActivity(), AudioBarListener, OnBookmarkTagsUpdat
 
   override fun onOptionsItemSelected(item: MenuItem): Boolean {
     val itemId = item.itemId
+    val overlayIndex = itemId - READER_OVERLAY_MENU_ID_BASE
+    if (overlayIndex in readerOverlays.indices) {
+      readerOverlays[overlayIndex].onMenuSelected()
+      return true
+    }
     if (itemId == R.id.favorite_item) {
       readingBookmarkPresenter.togglePageReadingBookmark(currentPage)
       return true
@@ -2026,6 +2100,8 @@ class PagerActivity : AppCompatActivity(), AudioBarListener, OnBookmarkTagsUpdat
   }
 
   companion object {
+    private const val READER_OVERLAY_MENU_ID_BASE = 0x7a00
+
     private const val AUDIO_DOWNLOAD_KEY = "AUDIO_DOWNLOAD_KEY"
     private const val LAST_READ_PAGE = "LAST_READ_PAGE"
     private const val LAST_READING_MODE_IS_TRANSLATION = "LAST_READING_MODE_IS_TRANSLATION"

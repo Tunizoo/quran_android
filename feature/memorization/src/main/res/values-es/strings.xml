@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="memo_title">Memorización</string>
+  <string name="memo_back">Atrás</string>
+  <string name="memo_cancel">Cancelar</string>
+  <string name="memo_add">Añadir</string>
+  <string name="memo_delete">Eliminar</string>
+  <string name="memo_settings_entry">Pasajes, repasos y programa</string>
+  <string name="memo_settings_summary">Oculta las palabras de un pasaje, escúchalo, ponte a prueba y repásalo con un programa espaciado</string>
+  <string name="memo_menu_reader">Modo memorización</string>
+  <string name="memo_bar_title">Memorización</string>
+  <string name="memo_bar_close">Terminar sesión</string>
+  <string name="memo_listen">Escuchar</string>
+  <string name="memo_listen_times">×%d</string>
+  <string name="memo_hidden">Oculto</string>
+  <string name="memo_show">Visible</string>
+  <string name="memo_hint">Primera palabra</string>
+  <string name="memo_next_word">Palabra</string>
+  <string name="memo_next_ayah">Aleya</string>
+  <string name="memo_reveal_all">Todo</string>
+  <string name="memo_hide_again">Ocultar</string>
+  <string name="memo_tap_hint">Toca una palabra oculta para verla.</string>
+  <string name="memo_completed">Has descubierto todo el pasaje. ¿Cómo te ha ido?</string>
+  <string name="memo_rate_prompt">Valora tu memoria cuando termines:</string>
+  <string name="memo_grade_again">Otra vez</string>
+  <string name="memo_grade_hard">Difícil</string>
+  <string name="memo_grade_good">Bien</string>
+  <string name="memo_grade_easy">Fácil</string>
+  <string name="memo_save_portion">Añadir a mis pasajes</string>
+  <string name="memo_saved">Pasaje añadido. Su repaso toca hoy.</string>
+  <string name="memo_stats">%1$d pasajes · %2$d para hoy · %3$d repasos en total</string>
+  <string name="memo_due_today_title">Para hoy</string>
+  <string name="memo_due_none">No hay repasos pendientes hoy.</string>
+  <string name="memo_review_button">Repasar</string>
+  <string name="memo_all_items_title">Mis pasajes</string>
+  <string name="memo_items_empty">Añade un pasaje del Corán para empezar a memorizarlo. También puedes abrir el modo memorización desde el menú del mushaf.</string>
+  <string name="memo_add_portion">Añadir un pasaje</string>
+  <string name="memo_sura">Sura</string>
+  <string name="memo_from_ayah">Desde la aleya</string>
+  <string name="memo_to_ayah">Hasta la aleya</string>
+  <string name="memo_invalid_range">Introduce un rango de aleyas válido</string>
+  <string name="memo_due_today">Para hoy</string>
+  <string name="memo_delete_confirm">¿Eliminar este pasaje y su historial de repasos?</string>
+  <string name="memo_range_format">%1$s %2$d–%3$d</string>
+  <string name="memo_range_format_cross">%1$s %2$d – %3$s %4$d</string>
+  <string name="memo_wird_card_title">Repasos de memorización</string>
+  <string name="memo_wird_none">No hay repasos pendientes hoy</string>
+  <string name="memo_wird_open">Abrir</string>
+  <plurals name="memo_next_review_days">
+    <item quantity="one">Próximo repaso en %d día</item>
+    <item quantity="other">Próximo repaso en %d días</item>
+  </plurals>
+  <plurals name="memo_due_in">
+    <item quantity="one">Toca en %d día</item>
+    <item quantity="other">Toca en %d días</item>
+  </plurals>
+  <plurals name="memo_overdue">
+    <item quantity="one">%d día de retraso</item>
+    <item quantity="other">%d días de retraso</item>
+  </plurals>
+  <plurals name="memo_repetitions">
+    <item quantity="one">%d repaso</item>
+    <item quantity="other">%d repasos</item>
+  </plurals>
+  <plurals name="memo_wird_due">
+    <item quantity="one">%d pasaje por repasar hoy</item>
+    <item quantity="other">%d pasajes por repasar hoy</item>
+  </plurals>
+</resources>

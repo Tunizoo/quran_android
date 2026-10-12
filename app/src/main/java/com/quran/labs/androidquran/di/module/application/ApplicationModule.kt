@@ -24,11 +24,14 @@ import com.quran.labs.androidquran.presenter.ContentResolverOps
 import com.quran.labs.androidquran.util.QuranFileUtils
 import com.quran.labs.androidquran.util.QuranSettings
 import com.quran.labs.androidquran.util.SettingsImpl
+import com.quran.mobile.di.DailyReviewProvider
 import com.quran.mobile.di.ExtraPreferencesProvider
 import com.quran.mobile.di.ExtraScreenProvider
 import com.quran.mobile.di.qualifier.ApplicationContext
 import dev.zacsweers.metro.BindingContainer
+import com.quran.page.common.extension.ReaderOverlayProvider
 import com.quran.page.common.touch.PageDoubleTapHandler
+import com.quran.page.common.touch.PageTapHandler
 import dev.zacsweers.metro.ElementsIntoSet
 import dev.zacsweers.metro.Named
 import dev.zacsweers.metro.Provides
@@ -129,6 +132,24 @@ object ApplicationModule {
   @Provides
   @ElementsIntoSet
   fun providePageDoubleTapHandlers(): Set<PageDoubleTapHandler> {
+    return emptySet()
+  }
+
+  @Provides
+  @ElementsIntoSet
+  fun provideDailyReviewProviders(): Set<DailyReviewProvider> {
+    return emptySet()
+  }
+
+  @Provides
+  @ElementsIntoSet
+  fun providePageTapHandlers(): Set<PageTapHandler> {
+    return emptySet()
+  }
+
+  @Provides
+  @ElementsIntoSet
+  fun provideReaderOverlayProviders(): Set<ReaderOverlayProvider> {
     return emptySet()
   }
 

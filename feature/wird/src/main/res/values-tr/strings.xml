@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
   <string name="wird_title">Günlük Vird</string>
+  <string name="wird_open">Aç</string>
   <string name="wird_back">Geri</string>
   <string name="wird_ok">Tamam</string>
   <string name="wird_cancel">İptal</string>

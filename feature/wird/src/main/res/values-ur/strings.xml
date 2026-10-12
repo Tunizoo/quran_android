@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
   <string name="wird_title">روزانہ کا وِرد</string>
+  <string name="wird_open">کھولیں</string>
   <string name="wird_back">واپس</string>
   <string name="wird_ok">ٹھیک ہے</string>
   <string name="wird_cancel">منسوخ</string>

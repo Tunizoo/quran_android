@@ -38,6 +38,7 @@ import com.quran.mobile.translation.model.LocalTranslation
 import com.quran.page.common.data.AyahCoordinates
 import com.quran.page.common.data.PageCoordinates
 import com.quran.page.common.touch.PageDoubleTapHandler
+import com.quran.page.common.touch.PageTapHandler
 import com.quran.reading.common.ReadingEventPresenter
 import com.quran.recitation.events.RecitationEventPresenter
 import com.quran.recitation.presenter.RecitationHighlightsPresenter
@@ -67,6 +68,7 @@ class AyahTrackerPresenter @Inject constructor(
   private val recitationPopupPresenter: RecitationPopupPresenter,
   private val recitationHighlightsPresenter: RecitationHighlightsPresenter,
   private val pageDoubleTapHandlers: Set<@JvmSuppressWildcards PageDoubleTapHandler>,
+  private val pageTapHandlers: Set<@JvmSuppressWildcards PageTapHandler>,
 ) : AyahTracker, Presenter<AyahInteractionHandler>, PopupContainer, RecitationPage {
   // we may bind and unbind several times, and each time we unbind, we cancel
   // the scope, which means we can't launch new coroutines in that same scope.
@@ -271,6 +273,8 @@ class AyahTrackerPresenter @Inject constructor(
         return true
       }
       readingEventPresenter.onAyahSelection(AyahSelection.None)
+    } else if (eventType == SINGLE_TAP && handleSingleTap(activity, event, page)) {
+      // consumed by a feature (e.g. revealing a hidden word in memorization mode)
     } else if (eventType == LONG_PRESS ||
       readingEventPresenter.currentAyahSelection() != AyahSelection.None
     ) {
@@ -292,13 +296,25 @@ class AyahTrackerPresenter @Inject constructor(
 
   private fun handleDoubleTap(activity: Activity, event: MotionEvent, page: Int): Boolean {
     if (pageDoubleTapHandlers.isEmpty()) return false
-    val imageView = getQuranPageImageView(page) ?: return false
-    if (imageView.drawable == null) return false
+    val (imageView, point) = pagePoint(event, page) ?: return false
+    return pageDoubleTapHandlers.any { it.onDoubleTap(activity, page, imageView, point[0], point[1]) }
+  }
+
+  private fun handleSingleTap(activity: Activity, event: MotionEvent, page: Int): Boolean {
+    if (pageTapHandlers.isEmpty()) return false
+    val (imageView, point) = pagePoint(event, page) ?: return false
+    return pageTapHandlers.any { it.onSingleTap(activity, page, imageView, point[0], point[1]) }
+  }
+
+  /** The page image view and the event position mapped into page image pixels. */
+  private fun pagePoint(event: MotionEvent, page: Int): Pair<ImageView, FloatArray>? {
+    val imageView = getQuranPageImageView(page) ?: return null
+    if (imageView.drawable == null) return null
     val inverse = Matrix()
-    if (!imageView.imageMatrix.invert(inverse)) return false
+    if (!imageView.imageMatrix.invert(inverse)) return null
     val point = floatArrayOf(event.x - imageView.paddingLeft, event.y - imageView.paddingTop)
     inverse.mapPoints(point)
-    return pageDoubleTapHandlers.any { it.onDoubleTap(activity, page, imageView, point[0], point[1]) }
+    return imageView to point
   }
 
   private fun handleAyahSelection(

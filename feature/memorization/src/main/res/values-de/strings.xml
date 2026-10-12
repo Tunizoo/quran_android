@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="memo_title">Auswendiglernen</string>
+  <string name="memo_back">Zurück</string>
+  <string name="memo_cancel">Abbrechen</string>
+  <string name="memo_add">Hinzufügen</string>
+  <string name="memo_delete">Löschen</string>
+  <string name="memo_settings_entry">Abschnitte, Wiederholungen und Zeitplan</string>
+  <string name="memo_settings_summary">Wörter eines Abschnitts verbergen, anhören, sich selbst prüfen und nach einem gestaffelten Zeitplan wiederholen</string>
+  <string name="memo_menu_reader">Lernmodus</string>
+  <string name="memo_bar_title">Auswendiglernen</string>
+  <string name="memo_bar_close">Sitzung beenden</string>
+  <string name="memo_listen">Anhören</string>
+  <string name="memo_listen_times">×%d</string>
+  <string name="memo_hidden">Verborgen</string>
+  <string name="memo_show">Sichtbar</string>
+  <string name="memo_hint">Erstes Wort</string>
+  <string name="memo_next_word">Wort</string>
+  <string name="memo_next_ayah">Vers</string>
+  <string name="memo_reveal_all">Alles</string>
+  <string name="memo_hide_again">Verbergen</string>
+  <string name="memo_tap_hint">Tippe auf ein verdecktes Wort, um es kurz zu sehen.</string>
+  <string name="memo_completed">Du hast den ganzen Abschnitt aufgedeckt. Wie lief es?</string>
+  <string name="memo_rate_prompt">Bewerte dein Erinnern, wenn du fertig bist:</string>
+  <string name="memo_grade_again">Nochmal</string>
+  <string name="memo_grade_hard">Schwer</string>
+  <string name="memo_grade_good">Gut</string>
+  <string name="memo_grade_easy">Leicht</string>
+  <string name="memo_save_portion">Zu meinen Abschnitten</string>
+  <string name="memo_saved">Abschnitt hinzugefügt. Die Wiederholung ist heute fällig.</string>
+  <string name="memo_stats">%1$d Abschnitte · %2$d heute fällig · %3$d Wiederholungen insgesamt</string>
+  <string name="memo_due_today_title">Heute fällig</string>
+  <string name="memo_due_none">Heute sind keine Wiederholungen fällig.</string>
+  <string name="memo_review_button">Wiederholen</string>
+  <string name="memo_all_items_title">Meine Abschnitte</string>
+  <string name="memo_items_empty">Füge einen Abschnitt des Korans hinzu, um ihn auswendig zu lernen. Den Lernmodus kannst du auch im Menü des Mushaf öffnen.</string>
+  <string name="memo_add_portion">Abschnitt hinzufügen</string>
+  <string name="memo_sura">Sure</string>
+  <string name="memo_from_ayah">Von Vers</string>
+  <string name="memo_to_ayah">Bis Vers</string>
+  <string name="memo_invalid_range">Gib einen gültigen Versbereich ein</string>
+  <string name="memo_due_today">Heute fällig</string>
+  <string name="memo_delete_confirm">Diesen Abschnitt und seinen Wiederholungsverlauf löschen?</string>
+  <string name="memo_range_format">%1$s %2$d–%3$d</string>
+  <string name="memo_range_format_cross">%1$s %2$d – %3$s %4$d</string>
+  <string name="memo_wird_card_title">Wiederholungen zum Auswendiglernen</string>
+  <string name="memo_wird_none">Heute sind keine Wiederholungen fällig</string>
+  <string name="memo_wird_open">Öffnen</string>
+  <plurals name="memo_next_review_days">
+    <item quantity="one">Nächste Wiederholung in %d Tag</item>
+    <item quantity="other">Nächste Wiederholung in %d Tagen</item>
+  </plurals>
+  <plurals name="memo_due_in">
+    <item quantity="one">Fällig in %d Tag</item>
+    <item quantity="other">Fällig in %d Tagen</item>
+  </plurals>
+  <plurals name="memo_overdue">
+    <item quantity="one">%d Tag überfällig</item>
+    <item quantity="other">%d Tage überfällig</item>
+  </plurals>
+  <plurals name="memo_repetitions">
+    <item quantity="one">%d Wiederholung</item>
+    <item quantity="other">%d Wiederholungen</item>
+  </plurals>
+  <plurals name="memo_wird_due">
+    <item quantity="one">%d Abschnitt ist heute zur Wiederholung fällig</item>
+    <item quantity="other">%d Abschnitte sind heute zur Wiederholung fällig</item>
+  </plurals>
+</resources>

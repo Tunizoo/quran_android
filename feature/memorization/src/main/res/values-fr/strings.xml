@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="memo_title">Mémorisation</string>
+  <string name="memo_back">Retour</string>
+  <string name="memo_cancel">Annuler</string>
+  <string name="memo_add">Ajouter</string>
+  <string name="memo_delete">Supprimer</string>
+  <string name="memo_settings_entry">Passages, révisions et programme</string>
+  <string name="memo_settings_summary">Masquer les mots d’un passage, l’écouter, se tester et le réviser selon un programme espacé</string>
+  <string name="memo_menu_reader">Mode mémorisation</string>
+
+  <string name="memo_bar_title">Mémorisation</string>
+  <string name="memo_bar_close">Terminer la session</string>
+  <string name="memo_listen">Écouter</string>
+  <string name="memo_listen_times">×%d</string>
+  <string name="memo_hidden">Masqué</string>
+  <string name="memo_show">Visible</string>
+  <string name="memo_hint">Premier mot</string>
+  <string name="memo_next_word">Mot</string>
+  <string name="memo_next_ayah">Verset</string>
+  <string name="memo_reveal_all">Tout</string>
+  <string name="memo_hide_again">Masquer</string>
+  <string name="memo_tap_hint">Touchez un mot masqué pour le dévoiler.</string>
+  <string name="memo_completed">Vous avez dévoilé tout le passage. Comment cela s’est-il passé ?</string>
+  <string name="memo_rate_prompt">Évaluez votre mémorisation quand vous avez fini :</string>
+  <string name="memo_grade_again">À revoir</string>
+  <string name="memo_grade_hard">Difficile</string>
+  <string name="memo_grade_good">Bien</string>
+  <string name="memo_grade_easy">Facile</string>
+  <string name="memo_save_portion">Ajouter à mes passages</string>
+  <string name="memo_saved">Passage ajouté. Sa révision est prévue aujourd’hui.</string>
+  <plurals name="memo_next_review_days">
+    <item quantity="one">Prochaine révision dans %d jour</item>
+    <item quantity="other">Prochaine révision dans %d jours</item>
+  </plurals>
+
+  <string name="memo_stats">%1$d passages · %2$d à réviser aujourd’hui · %3$d révisions au total</string>
+  <string name="memo_due_today_title">À réviser aujourd’hui</string>
+  <string name="memo_due_none">Aucune révision prévue aujourd’hui.</string>
+  <string name="memo_review_button">Réviser</string>
+  <string name="memo_all_items_title">Mes passages</string>
+  <string name="memo_items_empty">Ajoutez un passage du Coran pour commencer à le mémoriser. Vous pouvez aussi ouvrir le mode mémorisation depuis le menu du mushaf.</string>
+  <string name="memo_add_portion">Ajouter un passage</string>
+  <string name="memo_sura">Sourate</string>
+  <string name="memo_from_ayah">Du verset</string>
+  <string name="memo_to_ayah">Au verset</string>
+  <string name="memo_invalid_range">Saisissez un intervalle de versets valide</string>
+  <string name="memo_due_today">À réviser aujourd’hui</string>
+  <plurals name="memo_due_in">
+    <item quantity="one">À réviser dans %d jour</item>
+    <item quantity="other">À réviser dans %d jours</item>
+  </plurals>
+  <plurals name="memo_overdue">
+    <item quantity="one">En retard de %d jour</item>
+    <item quantity="other">En retard de %d jours</item>
+  </plurals>
+  <plurals name="memo_repetitions">
+    <item quantity="one">%d révision</item>
+    <item quantity="other">%d révisions</item>
+  </plurals>
+  <string name="memo_delete_confirm">Supprimer ce passage et l’historique de ses révisions ?</string>
+  <string name="memo_range_format">%1$s %2$d–%3$d</string>
+  <string name="memo_range_format_cross">%1$s %2$d – %3$s %4$d</string>
+
+  <string name="memo_wird_card_title">Révisions de mémorisation</string>
+  <plurals name="memo_wird_due">
+    <item quantity="one">%d passage à réviser aujourd’hui</item>
+    <item quantity="other">%d passages à réviser aujourd’hui</item>
+  </plurals>
+  <string name="memo_wird_none">Aucune révision prévue aujourd’hui</string>
+  <string name="memo_wird_open">Ouvrir</string>
+</resources>

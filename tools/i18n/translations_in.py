@@ -3,6 +3,7 @@ LANG = "in"  # Indonesian (Android resource qualifier "in")
 
 WIRD = {
     "wird_title": "Wirid Harian",
+    "wird_open": "Buka",
     "wird_back": "Kembali",
     "wird_ok": "OK",
     "wird_cancel": "Batal",

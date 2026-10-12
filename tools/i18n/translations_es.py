@@ -3,6 +3,7 @@ LANG = "es"
 
 WIRD = {
     "wird_title": "Wird diario",
+    "wird_open": "Abrir",
     "wird_back": "Atrás",
     "wird_ok": "Aceptar",
     "wird_cancel": "Cancelar",
