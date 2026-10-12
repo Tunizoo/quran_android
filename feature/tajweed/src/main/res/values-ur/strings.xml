@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="tajweed_title">تجوید کے رنگ</string>
+  <string name="tajweed_pref_enable">تجوید کے قواعد رنگین کریں</string>
+  <string name="tajweed_pref_enable_summary">صفحے کے الفاظ مشہور تجویدی مصحف کے رنگوں سے دوبارہ لکھے جاتے ہیں۔ رنگوں کی وضاحت صفحے کے نیچے دکھائی جاتی ہے۔ صرف مدنی مصحف؛ دو حرکت کا مدِ طبعی رنگین نہیں ہوتا۔</string>
+  <string name="tajweed_pref_legend_title">رنگوں کی وضاحت</string>
+  <string name="tajweed_pref_legend_summary">گہرا سرخ: مدِ لازم (6 حرکات)۔ سرخ: مدِ متصل و منفصل (4–5 حرکات)۔ نارنجی: مدِ عارض اور مدِ لین (2، 4 یا 6)۔ سبز: غنہ اور اس کے مقامات (اخفاء، ادغام بالغنہ، اقلاب)۔ نیلا: قلقلہ۔ سرمئی: وہ حروف جو پڑھے نہیں جاتے (ہمزہ وصل، لام شمسی، ادغام بلا غنہ)۔</string>
+  <string name="tajweed_legend_madd_necessary">مد 6</string>
+  <string name="tajweed_legend_madd_obligatory">مد 4–5</string>
+  <string name="tajweed_legend_madd_permissible">مد 2–4–6</string>
+  <string name="tajweed_legend_ghunnah">غنہ</string>
+  <string name="tajweed_legend_qalqalah">قلقلہ</string>
+  <string name="tajweed_legend_silent">پڑھا نہیں جاتا</string>
+</resources>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="divine_names_title">اللہ کے اسماء و صفات</string>
+  <string name="divine_names_back">واپس</string>
+  <string name="divine_names_search">نام تلاش کریں</string>
+  <string name="divine_names_methodology">تشریحات سلف کے منہج پر ہیں: جو اللہ نے اپنے لیے ثابت کیا اسے بغیر تحریف، بغیر تعطیل، بغیر کیفیت پوچھے اور بغیر مخلوق سے تشبیہ کے ثابت ماننا۔</string>
+  <string name="divine_names_from_sunnah">سنت سے</string>
+  <string name="divine_names_kind_name">اللہ کا نام</string>
+  <string name="divine_names_kind_attribute">اللہ کی صفت</string>
+  <string name="divine_names_sheet_location">%1$s · %2$d:%3$d</string>
+  <string name="divine_names_sheet_open_index">فہرست کھولیں</string>
+  <string name="divine_names_pref_highlight">اللہ کے اسماء و صفات کو رنگین کریں</string>
+  <string name="divine_names_pref_highlight_summary">مصحف کے صفحے پر اسماء سنہری اور صفات پیلے رنگ میں۔ کسی رنگین لفظ پر دو بار ٹیپ کر کے سلف کے منہج پر اس کی تشریح پڑھیں۔</string>
+  <string name="divine_names_pref_index">اسماء کی فہرست</string>
+  <string name="divine_names_pref_index_summary">تمام اسماء ان کے معانی اور دلائل کے ساتھ دیکھیں</string>
+  <string name="divine_names_panel_no_selection">اللہ کے اسماء و صفات دیکھنے کے لیے کوئی آیت منتخب کریں۔</string>
+  <string name="divine_names_panel_empty">منتخب آیت میں اللہ کا کوئی نام یا صفت نہیں ہے۔</string>
+  <string name="divine_names_panel_open_index">مکمل فہرست کھولیں</string>
+  <plurals name="divine_names_panel_occurrences">
+    <item quantity="one">انتخاب میں ایک بار آیا ہے</item>
+    <item quantity="other">انتخاب میں %d بار آیا ہے</item>
+  </plurals>
+</resources>

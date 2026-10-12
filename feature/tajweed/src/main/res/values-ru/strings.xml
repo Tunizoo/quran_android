@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="tajweed_title">Цвета таджвида</string>
+  <string name="tajweed_pref_enable">Раскрашивать правила таджвида</string>
+  <string name="tajweed_pref_enable_summary">Перерисовывает слова страницы в цветах известного Мусхафа таджвида. Легенда показывается под страницей. Только мединские страницы; естественный мадд в две длины не раскрашивается.</string>
+  <string name="tajweed_pref_legend_title">Легенда цветов</string>
+  <string name="tajweed_pref_legend_summary">Тёмно-красный: мадд лязим (6 длин). Красный: слитный и раздельный мадд (4–5 длин). Оранжевый: мадд перед остановкой и мадд лин (2, 4 или 6). Зелёный: гунна и её места (ихфа, идгам с гунной, икляб). Синий: калькаля. Серый: непроизносимые буквы (хамза васль, солнечный лям, идгам без гунны).</string>
+  <string name="tajweed_legend_madd_necessary">Мадд 6</string>
+  <string name="tajweed_legend_madd_obligatory">Мадд 4–5</string>
+  <string name="tajweed_legend_madd_permissible">Мадд 2–4–6</string>
+  <string name="tajweed_legend_ghunnah">Гунна</string>
+  <string name="tajweed_legend_qalqalah">Калькаля</string>
+  <string name="tajweed_legend_silent">Не читается</string>
+</resources>

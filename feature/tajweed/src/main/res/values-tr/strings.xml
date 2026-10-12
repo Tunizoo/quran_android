@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="tajweed_title">Tecvid renkleri</string>
+  <string name="tajweed_pref_enable">Tecvid kurallarını renklendir</string>
+  <string name="tajweed_pref_enable_summary">Sayfanın kelimelerini bilinen Tecvidli Mushaf’ın renkleriyle yeniden çizer. Renk anahtarı sayfanın altında gösterilir. Yalnızca Medine mushafı; iki harekelik tabii med renklendirilmez.</string>
+  <string name="tajweed_pref_legend_title">Renk anahtarı</string>
+  <string name="tajweed_pref_legend_summary">Koyu kırmızı: lâzım med (6 hareke). Kırmızı: muttasıl ve munfasıl med (4–5 hareke). Turuncu: ârız med ve lîn medi (2, 4 veya 6). Yeşil: ğunne ve yerleri (ihfâ, ğunneli idğam, iklâb). Mavi: kalkale. Gri: okunmayan harfler (vasıl hemzesi, şemsî lâm, ğunnesiz idğam).</string>
+  <string name="tajweed_legend_madd_necessary">Med 6</string>
+  <string name="tajweed_legend_madd_obligatory">Med 4–5</string>
+  <string name="tajweed_legend_madd_permissible">Med 2–4–6</string>
+  <string name="tajweed_legend_ghunnah">Ğunne</string>
+  <string name="tajweed_legend_qalqalah">Kalkale</string>
+  <string name="tajweed_legend_silent">Okunmaz</string>
+</resources>

@@ -1,13 +1,11 @@
 package com.quran.mobile.feature.tajweed.draw
 
 import android.content.Context
-import android.content.res.Configuration
 import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.RectF
 import android.text.TextPaint
 import com.quran.mobile.feature.tajweed.model.TajweedColorGroup
-import java.util.Locale
 import kotlin.math.ceil
 
 /**
@@ -16,13 +14,9 @@ import kotlin.math.ceil
  */
 class TajweedLegend(context: Context) {
   private val density = context.resources.displayMetrics.density
-  // the legend is always in Arabic, like the legend printed in the tajweed mushaf, whatever the
-  // app language; the settings screen keeps the localized explanation
-  private val arabic: Context = context.createConfigurationContext(
-    Configuration(context.resources.configuration).apply { setLocale(Locale("ar")) }
-  )
+  // the legend follows the app language like the rest of the interface
   private val labels: Map<TajweedColorGroup, String> =
-    TajweedColorGroup.entries.associateWith { arabic.getString(it.labelResId) }
+    TajweedColorGroup.entries.associateWith { context.getString(it.labelResId) }
 
   private val textPaint = TextPaint(Paint.ANTI_ALIAS_FLAG).apply {
     textSize = 15f * density

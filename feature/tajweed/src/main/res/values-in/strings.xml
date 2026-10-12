@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="tajweed_title">Warna tajwid</string>
+  <string name="tajweed_pref_enable">Warnai hukum tajwid</string>
+  <string name="tajweed_pref_enable_summary">Menggambar ulang kata-kata halaman dengan warna Mushaf Tajwid yang terkenal. Keterangan warna ditampilkan di bawah halaman. Hanya mushaf Madinah; mad thabi’i dua harakat tidak diwarnai.</string>
+  <string name="tajweed_pref_legend_title">Keterangan warna</string>
+  <string name="tajweed_pref_legend_summary">Merah tua: mad lazim (6 harakat). Merah: mad muttashil dan munfashil (4–5 harakat). Oranye: mad ‘aridh lissukun dan mad lin (2, 4, atau 6). Hijau: ghunnah dan tempat-tempatnya (ikhfa, idgham bighunnah, iqlab). Biru: qalqalah. Abu-abu: huruf yang tidak dibaca (hamzah washal, lam syamsiyah, idgham bilaghunnah).</string>
+  <string name="tajweed_legend_madd_necessary">Mad 6</string>
+  <string name="tajweed_legend_madd_obligatory">Mad 4–5</string>
+  <string name="tajweed_legend_madd_permissible">Mad 2–4–6</string>
+  <string name="tajweed_legend_ghunnah">Ghunnah</string>
+  <string name="tajweed_legend_qalqalah">Qalqalah</string>
+  <string name="tajweed_legend_silent">Tidak dibaca</string>
+</resources>

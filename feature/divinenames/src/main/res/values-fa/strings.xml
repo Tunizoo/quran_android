@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="divine_names_title">نام‌ها و صفات خداوند</string>
+  <string name="divine_names_back">بازگشت</string>
+  <string name="divine_names_search">جستجوی نام</string>
+  <string name="divine_names_methodology">شرح‌ها بر روش سلف است: اثبات آنچه خداوند برای خود ثابت کرده، بدون تحریف، بدون تعطیل، بدون پرسش از چگونگی و بدون تشبیه به آفریدگان.</string>
+  <string name="divine_names_from_sunnah">از سنت</string>
+  <string name="divine_names_kind_name">نام خداوند</string>
+  <string name="divine_names_kind_attribute">صفت خداوند</string>
+  <string name="divine_names_sheet_location">%1$s · %2$d:%3$d</string>
+  <string name="divine_names_sheet_open_index">باز کردن فهرست</string>
+  <string name="divine_names_pref_highlight">رنگ‌آمیزی نام‌ها و صفات خداوند</string>
+  <string name="divine_names_pref_highlight_summary">نام‌ها طلایی و صفات زرد در صفحهٔ مصحف. برای خواندن شرح بر روش سلف، دو بار روی واژهٔ رنگی بزنید.</string>
+  <string name="divine_names_pref_index">فهرست نام‌ها</string>
+  <string name="divine_names_pref_index_summary">همهٔ نام‌ها را با معنا و دلیلشان مرور کنید</string>
+  <string name="divine_names_panel_no_selection">برای دیدن نام‌ها و صفات خداوند در آیه، آیه‌ای را انتخاب کنید.</string>
+  <string name="divine_names_panel_empty">در آیهٔ انتخاب‌شده نام یا صفتی از خداوند نیست.</string>
+  <string name="divine_names_panel_open_index">باز کردن فهرست کامل</string>
+  <plurals name="divine_names_panel_occurrences">
+    <item quantity="one">یک بار در انتخاب آمده است</item>
+    <item quantity="other">%d بار در انتخاب آمده است</item>
+  </plurals>
+</resources>

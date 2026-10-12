@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="tajweed_title">رنگ‌های تجوید</string>
+  <string name="tajweed_pref_enable">رنگ‌آمیزی احکام تجوید</string>
+  <string name="tajweed_pref_enable_summary">واژه‌های صفحه با رنگ‌های مصحف تجوید معروف بازنویسی می‌شوند. راهنمای رنگ‌ها زیر صفحه نمایش داده می‌شود. فقط مصحف مدینه؛ مد طبیعی دو حرکتی رنگی نمی‌شود.</string>
+  <string name="tajweed_pref_legend_title">راهنمای رنگ‌ها</string>
+  <string name="tajweed_pref_legend_summary">قرمز تیره: مد لازم (۶ حرکت). قرمز: مد متصل و منفصل (۴–۵ حرکت). نارنجی: مد عارض و مد لین (۲، ۴ یا ۶). سبز: غنه و جایگاه‌های آن (اخفا، ادغام با غنه، اقلاب). آبی: قلقله. خاکستری: حروفی که خوانده نمی‌شوند (همزهٔ وصل، لام شمسی، ادغام بی‌غنه).</string>
+  <string name="tajweed_legend_madd_necessary">مد ۶</string>
+  <string name="tajweed_legend_madd_obligatory">مد ۴–۵</string>
+  <string name="tajweed_legend_madd_permissible">مد ۲–۴–۶</string>
+  <string name="tajweed_legend_ghunnah">غنه</string>
+  <string name="tajweed_legend_qalqalah">قلقله</string>
+  <string name="tajweed_legend_silent">خوانده نمی‌شود</string>
+</resources>

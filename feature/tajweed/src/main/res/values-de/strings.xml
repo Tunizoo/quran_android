@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="tajweed_title">Tadschwid-Farben</string>
+  <string name="tajweed_pref_enable">Tadschwid-Regeln einfärben</string>
+  <string name="tajweed_pref_enable_summary">Zeichnet die Wörter der Seite in den Farben des bekannten Tadschwid-Mushaf neu. Die Legende wird unter der Seite angezeigt. Nur Medina-Seiten; der natürliche Madd von zwei Längen wird nicht eingefärbt.</string>
+  <string name="tajweed_pref_legend_title">Farblegende</string>
+  <string name="tajweed_pref_legend_summary">Dunkelrot: Madd Lazim (6 Längen). Rot: verbundener und getrennter Madd (4–5 Längen). Orange: Madd vor einer Pause und Madd Lin (2, 4 oder 6). Grün: Ghunna und ihre Stellen (Ikhfa, Idgham mit Ghunna, Iqlab). Blau: Qalqala. Grau: nicht ausgesprochene Buchstaben (Hamzat al-Wasl, Lam Schamsiya, Idgham ohne Ghunna).</string>
+  <string name="tajweed_legend_madd_necessary">Madd 6</string>
+  <string name="tajweed_legend_madd_obligatory">Madd 4–5</string>
+  <string name="tajweed_legend_madd_permissible">Madd 2–4–6</string>
+  <string name="tajweed_legend_ghunnah">Ghunna</string>
+  <string name="tajweed_legend_qalqalah">Qalqala</string>
+  <string name="tajweed_legend_silent">Stumm</string>
+</resources>

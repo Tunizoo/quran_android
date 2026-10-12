@@ -10,7 +10,7 @@ import androidx.core.os.LocaleListCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updateLayoutParams
-import androidx.preference.CheckBoxPreference
+import androidx.preference.ListPreference
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.PreferenceGroup
@@ -27,6 +27,7 @@ import com.quran.labs.androidquran.util.ThemeUtil
 import com.quran.mobile.di.ExtraPreferencesProvider
 import com.quran.mobile.feature.downloadmanager.AudioManagerActivity
 import dev.zacsweers.metro.Inject
+import java.util.Locale
 
 class QuranSettingsFragment : PreferenceFragmentCompat() {
 
@@ -48,24 +49,21 @@ class QuranSettingsFragment : PreferenceFragmentCompat() {
       hideUnsupportedOrientationPreferences()
     }
 
-    // handle Arabic names preference
-    val arabicPref: Preference? = findPreference(ARABIC_KEY)
-    if (arabicPref is CheckBoxPreference) {
-      arabicPref.isChecked = isCurrentlyArabic()
-    }
-
-    arabicPref?.setOnPreferenceClickListener {
-      val localeList = if (isCurrentlyArabic()) {
-        val locales = LocaleListCompat.getDefault()
-        val tags = locales.toLanguageTags().split(",")
-          .filter { it != "ar" && !it.startsWith("ar-") }
-        val tagString = tags.joinToString(",").ifEmpty { "en" }
-        LocaleListCompat.forLanguageTags(tagString)
-      } else {
-        LocaleListCompat.forLanguageTags("ar-EG")
+    // app language: every language the app ships, applied through the per-app locale API so
+    // that the whole interface (including the new features) switches at once
+    val languagePref: ListPreference? = findPreference(LANGUAGE_KEY)
+    languagePref?.let { pref ->
+      val systemDefault = getString(R.string.prefs_app_language_system)
+      pref.entries = (listOf(systemDefault) + SUPPORTED_LANGUAGES.map { nativeName(it) }).toTypedArray()
+      pref.entryValues = (listOf("") + SUPPORTED_LANGUAGES).toTypedArray()
+      pref.value = currentLanguageTag()
+      pref.onPreferenceChangeListener = Preference.OnPreferenceChangeListener { _, newValue ->
+        val tag = newValue as String
+        AppCompatDelegate.setApplicationLocales(
+          if (tag.isEmpty()) LocaleListCompat.getEmptyLocaleList() else LocaleListCompat.forLanguageTags(tag)
+        )
+        true
       }
-      AppCompatDelegate.setApplicationLocales(localeList)
-      true
     }
 
     // handle theme preference
@@ -144,9 +142,19 @@ class QuranSettingsFragment : PreferenceFragmentCompat() {
     return super.onPreferenceTreeClick(preference)
   }
 
-  private fun isCurrentlyArabic(): Boolean {
-    val locale = QuranUtils.getCurrentLocale()
-    return locale.language == "ar"
+  /** The language tag the user picked for the app, or "" when the app follows the system. */
+  private fun currentLanguageTag(): String {
+    val locales = AppCompatDelegate.getApplicationLocales()
+    if (locales.isEmpty()) return ""
+    val language = locales.get(0)?.language ?: return ""
+    return SUPPORTED_LANGUAGES.firstOrNull { it == language || it.startsWith("$language-") } ?: ""
+  }
+
+  /** The name of a language written in that language, e.g. "Français", "العربية". */
+  private fun nativeName(tag: String): String {
+    val locale = Locale.forLanguageTag(tag)
+    val name = locale.getDisplayLanguage(locale)
+    return name.replaceFirstChar { if (it.isLowerCase()) it.titlecase(locale) else it.toString() }
   }
 
   private fun hideUnsupportedOrientationPreferences() {
@@ -163,6 +171,13 @@ class QuranSettingsFragment : PreferenceFragmentCompat() {
   }
 
   companion object {
-    private const val ARABIC_KEY = "useArabicNames"
+    private const val LANGUAGE_KEY = "appLanguage"
+
+    /** Languages the app has translations for (see localeFilters in app/build.gradle.kts). */
+    private val SUPPORTED_LANGUAGES = listOf(
+      "ar", "en", "az", "bg", "bn", "bs", "cs", "da", "de", "el", "es", "et", "fa", "fi", "fr", "hi", "hr",
+      "hu", "in", "it", "ja", "kk", "ko", "ku", "lt", "lv", "ms", "nl", "pl", "ps", "pt", "ro", "ru", "sk",
+      "sl", "sq", "sr", "sv", "th", "tr", "ug", "uk", "ur", "uz", "vi", "zh"
+    )
   }
 }

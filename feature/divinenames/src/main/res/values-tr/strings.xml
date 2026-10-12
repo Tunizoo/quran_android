@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="divine_names_title">Allah’ın isimleri ve sıfatları</string>
+  <string name="divine_names_back">Geri</string>
+  <string name="divine_names_search">İsim ara</string>
+  <string name="divine_names_methodology">Açıklamalar Selef’in yolunu izler: Allah’ın kendisi için sabit kıldığını tahrif, ta’til, keyfiyet sorma ve yaratılmışlara benzetme olmaksızın kabul etmek.</string>
+  <string name="divine_names_from_sunnah">Sünnetten</string>
+  <string name="divine_names_kind_name">Allah’ın ismi</string>
+  <string name="divine_names_kind_attribute">Allah’ın sıfatı</string>
+  <string name="divine_names_sheet_location">%1$s · %2$d:%3$d</string>
+  <string name="divine_names_sheet_open_index">Dizini aç</string>
+  <string name="divine_names_pref_highlight">Allah’ın isim ve sıfatlarını renklendir</string>
+  <string name="divine_names_pref_highlight_summary">Mushaf sayfasında isimler altın, sıfatlar sarı renkte. Renkli bir kelimeye iki kez dokunarak Selef yöntemine göre açıklamasını okuyun.</string>
+  <string name="divine_names_pref_index">İsimler dizini</string>
+  <string name="divine_names_pref_index_summary">Tüm isimleri anlamları ve delilleriyle inceleyin</string>
+  <string name="divine_names_panel_no_selection">İçindeki Allah’ın isim ve sıfatlarını görmek için bir ayet seçin.</string>
+  <string name="divine_names_panel_empty">Seçili ayette Allah’ın ismi veya sıfatı geçmiyor.</string>
+  <string name="divine_names_panel_open_index">Tam dizini aç</string>
+  <plurals name="divine_names_panel_occurrences">
+    <item quantity="one">Seçimde bir kez geçiyor</item>
+    <item quantity="other">Seçimde %d kez geçiyor</item>
+  </plurals>
+</resources>

@@ -9,13 +9,12 @@
       android:title="@string/prefs_category_display_settings"
       app:iconSpaceReserved="false">
 
-    <CheckBoxPreference
-        android:defaultValue="false"
-        android:disableDependentsState="false"
-        android:key="@string/use_arabic_names"
+    <androidx.preference.ListPreference
+        android:key="appLanguage"
         android:persistent="false"
-        android:summary="@string/prefs_use_arabic_summary_on"
-        android:title="@string/prefs_use_arabic_title"
+        android:dialogTitle="@string/prefs_app_language_title"
+        android:summary="%s"
+        android:title="@string/prefs_app_language_title"
         app:iconSpaceReserved="false"/>
 
     <androidx.preference.ListPreference

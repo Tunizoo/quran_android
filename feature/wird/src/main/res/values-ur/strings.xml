@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="wird_title">روزانہ کا وِرد</string>
+  <string name="wird_back">واپس</string>
+  <string name="wird_ok">ٹھیک ہے</string>
+  <string name="wird_cancel">منسوخ</string>
+  <string name="wird_settings_entry">ہدف، یاددہانی اور کامیابیاں</string>
+  <string name="wird_settings_summary">روزانہ تلاوت کا ہدف مقرر کریں، ذہین یاددہانیاں پائیں اور اپنے ختمِ قرآن کی پیروی کریں</string>
+  <string name="wird_today_title">آج</string>
+  <string name="wird_today_progress">%2$d میں سے %1$d صفحات</string>
+  <string name="wird_goal_completed">آپ نے آج کا وِرد مکمل کر لیا۔ اللہ قبول فرمائے۔</string>
+  <string name="wird_empty_hint">مصحف کھولیں اور تلاوت شروع کریں۔ جس صفحے پر آپ ٹھہرتے ہیں وہ آپ کے وِرد میں شمار ہوتا ہے۔</string>
+  <string name="wird_streak_title">تسلسل</string>
+  <string name="wird_streak_at_risk">اپنا تسلسل برقرار رکھنے کے لیے آج کا وِرد مکمل کریں</string>
+  <string name="wird_best_streak">بہترین: %d</string>
+  <string name="wird_khatma_title">ختم نمبر %d</string>
+  <string name="wird_khatma_progress">%1$d / %2$d صفحات (%3$d%%)</string>
+  <string name="wird_last_week">گزشتہ 7 دن</string>
+  <string name="wird_goal_title">روزانہ کا ہدف</string>
+  <string name="wird_goal_preset_juz">ایک پارہ (20)</string>
+  <string name="wird_reminder_title">یاددہانی</string>
+  <string name="wird_reminder_enabled">اگر میں نے وِرد مکمل نہ کیا ہو تو یاد دلائیں</string>
+  <string name="wird_reminder_time">وقت</string>
+  <string name="wird_reminder_mode_fixed">مقررہ وقت</string>
+  <string name="wird_reminder_mode_adaptive">ذہین</string>
+  <string name="wird_reminder_mode_fixed_desc">صرف ان دنوں منتخب وقت پر یاد دلاتا ہے جب آپ نے ہدف پورا نہ کیا ہو۔</string>
+  <string name="wird_reminder_mode_adaptive_desc">یہ جان لیتا ہے کہ آپ عام طور پر کب تلاوت کرتے ہیں، اور اگر آپ نے شروع نہ کیا ہو تو اس کے ایک گھنٹے بعد یاد دلاتا ہے۔ چند دنوں کا ریکارڈ بننے تک مقررہ وقت استعمال کرتا ہے۔</string>
+  <string name="wird_reminder_permission_denied">اس ایپ کے لیے اطلاعات بند ہیں۔ یاددہانیاں پانے کے لیے سسٹم کی ترتیبات میں انہیں چالو کریں۔</string>
+  <string name="wird_achievements_title">کامیابیاں</string>
+  <string name="wird_achievement_locked">ابھی حاصل نہیں ہوئی</string>
+  <string name="wird_achievement_unlocked_on">%s کو حاصل ہوئی</string>
+  <string name="wird_notification_channel_reminder">روزانہ وِرد کی یاددہانیاں</string>
+  <string name="wird_notification_channel_achievements">وِرد کی کامیابیاں</string>
+  <string name="wird_notification_title">آپ کا روزانہ کا وِرد</string>
+  <string name="wird_notification_start">آج چند صفحات پڑھیں اور اپنا ختمِ قرآن جاری رکھیں۔</string>
+  <string name="wird_notification_remaining">آج کے ہدف تک پہنچنے کے لیے %d صفحات باقی ہیں۔</string>
+  <string name="wird_notification_streak_risk">اپنا %1$d دن کا تسلسل نہ توڑیں! آج %2$d صفحات باقی ہیں۔</string>
+  <string name="wird_achievement_notification_title">نئی کامیابی</string>
+  <string name="wird_khatma_completed_title">ختمِ قرآن مکمل!</string>
+  <string name="wird_khatma_completed_text">اللہ قبول فرمائے۔ آپ نے ختم نمبر %d مکمل کر لیا۔</string>
+  <string name="wird_ach_first_page_title">پہلا صفحہ</string>
+  <string name="wird_ach_first_page_desc">اپنا پہلا صفحہ پڑھیں</string>
+  <string name="wird_ach_first_goal_title">ہدف پر</string>
+  <string name="wird_ach_first_goal_desc">پہلی بار اپنا روزانہ کا ہدف پورا کریں</string>
+  <string name="wird_ach_streak_3_title">لگاتار تین</string>
+  <string name="wird_ach_streak_3_desc">لگاتار 3 دن اپنا ہدف پورا کریں</string>
+  <string name="wird_ach_streak_7_title">پورا ہفتہ</string>
+  <string name="wird_ach_streak_7_desc">لگاتار 7 دن اپنا ہدف پورا کریں</string>
+  <string name="wird_ach_streak_30_title">پورا مہینہ</string>
+  <string name="wird_ach_streak_30_desc">لگاتار 30 دن اپنا ہدف پورا کریں</string>
+  <string name="wird_ach_streak_100_title">استقامت</string>
+  <string name="wird_ach_streak_100_desc">لگاتار 100 دن اپنا ہدف پورا کریں</string>
+  <string name="wird_ach_pages_100_title">100 صفحات</string>
+  <string name="wird_ach_pages_100_desc">کل 100 صفحات پڑھیں</string>
+  <string name="wird_ach_pages_300_title">آدھا راستہ</string>
+  <string name="wird_ach_pages_300_desc">کل 300 صفحات پڑھیں</string>
+  <string name="wird_ach_pages_1000_title">ایک ہزار صفحات</string>
+  <string name="wird_ach_pages_1000_desc">کل 1000 صفحات پڑھیں</string>
+  <string name="wird_ach_juz_in_a_day_title">ایک دن میں ایک پارہ</string>
+  <string name="wird_ach_juz_in_a_day_desc">ایک ہی دن میں 20 صفحات پڑھیں</string>
+  <string name="wird_ach_fajr_reader_title">فجر کا قاری</string>
+  <string name="wird_ach_fajr_reader_desc">صبح 4:00 اور 7:00 کے درمیان تلاوت کریں</string>
+  <string name="wird_ach_khatma_1_title">پہلا ختم</string>
+  <string name="wird_ach_khatma_1_desc">پورا مصحف مکمل کریں</string>
+  <string name="wird_ach_khatma_3_title">تین ختم</string>
+  <string name="wird_ach_khatma_3_desc">مصحف تین بار مکمل کریں</string>
+  <plurals name="wird_remaining_pages">
+    <item quantity="one">آج %d صفحہ باقی ہے</item>
+    <item quantity="other">آج %d صفحات باقی ہیں</item>
+  </plurals>
+  <plurals name="wird_streak_days">
+    <item quantity="one">لگاتار %d دن</item>
+    <item quantity="other">لگاتار %d دن</item>
+  </plurals>
+  <plurals name="wird_khatma_completed_count">
+    <item quantity="one">%d ختم مکمل</item>
+    <item quantity="other">%d ختم مکمل</item>
+  </plurals>
+  <plurals name="wird_goal_pages">
+    <item quantity="one">روزانہ %d صفحہ</item>
+    <item quantity="other">روزانہ %d صفحات</item>
+  </plurals>
+</resources>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="divine_names_title">Noms et attributs d’Allah</string>
+  <string name="divine_names_back">Retour</string>
+  <string name="divine_names_search">Rechercher un nom</string>
+  <string name="divine_names_methodology">Les explications suivent la méthode des Salaf : affirmer ce qu’Allah a affirmé de Lui-même, sans altération, sans négation, sans en demander le comment et sans assimilation à la création.</string>
+  <string name="divine_names_from_sunnah">De la Sunna</string>
+  <string name="divine_names_kind_name">Nom d’Allah</string>
+  <string name="divine_names_kind_attribute">Attribut d’Allah</string>
+  <string name="divine_names_sheet_location">%1$s · %2$d:%3$d</string>
+  <string name="divine_names_sheet_open_index">Ouvrir l’index</string>
+
+  <string name="divine_names_pref_highlight">Colorer les noms et attributs d’Allah</string>
+  <string name="divine_names_pref_highlight_summary">Les noms en doré et les attributs en jaune sur la page du mushaf. Touchez deux fois un mot coloré pour lire son explication selon la méthode des Salaf.</string>
+  <string name="divine_names_pref_index">Index des noms</string>
+  <string name="divine_names_pref_index_summary">Parcourir tous les noms avec leur sens et leurs preuves</string>
+
+  <string name="divine_names_panel_no_selection">Sélectionnez un verset pour voir les noms et attributs d’Allah qu’il contient.</string>
+  <string name="divine_names_panel_empty">Aucun nom ni attribut d’Allah n’apparaît dans le verset sélectionné.</string>
+  <string name="divine_names_panel_open_index">Ouvrir l’index complet</string>
+  <plurals name="divine_names_panel_occurrences">
+    <item quantity="one">Apparaît une fois dans la sélection</item>
+    <item quantity="other">Apparaît %d fois dans la sélection</item>
+  </plurals>
+</resources>

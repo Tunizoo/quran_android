@@ -72,7 +72,8 @@ fun DivineNamesScreen(
   val filtered = remember(names, query) {
     val all = names.orEmpty()
     if (query.isBlank()) all else all.filter {
-      it.arabic.contains(query) || it.transliteration.contains(query, ignoreCase = true)
+      it.arabic.contains(query) || it.transliteration.contains(query, ignoreCase = true) ||
+        it.meaning.contains(query, ignoreCase = true)
     }
   }
 
@@ -196,7 +197,7 @@ fun DivineNameDetails(name: DivineName, modifier: Modifier = Modifier) {
   Column(modifier = modifier.padding(top = 12.dp)) {
     Text(
       text = name.meaning,
-      style = MaterialTheme.typography.bodyMedium.copy(textDirection = TextDirection.Rtl, lineHeight = 24.sp)
+      style = MaterialTheme.typography.bodyMedium.copy(textDirection = TextDirection.Content, lineHeight = 24.sp)
     )
     if (name.evidence.isNotBlank() || name.evidenceRef.isNotBlank()) {
       Spacer(Modifier.height(10.dp))
@@ -212,7 +213,7 @@ fun DivineNameDetails(name: DivineName, modifier: Modifier = Modifier) {
       if (name.evidenceRef.isNotBlank()) {
         Text(
           text = name.evidenceRef,
-          style = MaterialTheme.typography.labelMedium,
+          style = MaterialTheme.typography.labelMedium.copy(textDirection = TextDirection.Content),
           color = MaterialTheme.colorScheme.onSurfaceVariant
         )
       }
@@ -221,14 +222,14 @@ fun DivineNameDetails(name: DivineName, modifier: Modifier = Modifier) {
       Spacer(Modifier.height(8.dp))
       Text(
         text = name.note,
-        style = MaterialTheme.typography.bodySmall.copy(textDirection = TextDirection.Rtl),
+        style = MaterialTheme.typography.bodySmall.copy(textDirection = TextDirection.Content),
         color = MaterialTheme.colorScheme.onSurfaceVariant
       )
     }
     Spacer(Modifier.height(8.dp))
     Text(
       text = name.sources,
-      style = MaterialTheme.typography.labelSmall.copy(textDirection = TextDirection.Rtl),
+      style = MaterialTheme.typography.labelSmall.copy(textDirection = TextDirection.Content),
       color = MaterialTheme.colorScheme.outline
     )
   }

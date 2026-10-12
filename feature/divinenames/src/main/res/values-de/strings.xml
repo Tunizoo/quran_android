@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="divine_names_title">Namen und Eigenschaften Allahs</string>
+  <string name="divine_names_back">Zurück</string>
+  <string name="divine_names_search">Namen suchen</string>
+  <string name="divine_names_methodology">Die Erklärungen folgen der Methode der Salaf: bejahen, was Allah für sich selbst bejaht hat, ohne Umdeutung, ohne Leugnung, ohne nach dem Wie zu fragen und ohne Gleichsetzung mit der Schöpfung.</string>
+  <string name="divine_names_from_sunnah">Aus der Sunna</string>
+  <string name="divine_names_kind_name">Name Allahs</string>
+  <string name="divine_names_kind_attribute">Eigenschaft Allahs</string>
+  <string name="divine_names_sheet_location">%1$s · %2$d:%3$d</string>
+  <string name="divine_names_sheet_open_index">Verzeichnis öffnen</string>
+  <string name="divine_names_pref_highlight">Namen und Eigenschaften Allahs hervorheben</string>
+  <string name="divine_names_pref_highlight_summary">Namen in Gold und Eigenschaften in Gelb auf der Mushaf-Seite. Tippe zweimal auf ein hervorgehobenes Wort, um seine Erklärung nach der Methode der Salaf zu lesen.</string>
+  <string name="divine_names_pref_index">Verzeichnis der Namen</string>
+  <string name="divine_names_pref_index_summary">Alle Namen mit Bedeutung und Belegen durchsehen</string>
+  <string name="divine_names_panel_no_selection">Wähle einen Vers, um die darin enthaltenen Namen und Eigenschaften Allahs zu sehen.</string>
+  <string name="divine_names_panel_empty">Im gewählten Vers kommt kein Name und keine Eigenschaft Allahs vor.</string>
+  <string name="divine_names_panel_open_index">Vollständiges Verzeichnis öffnen</string>
+  <plurals name="divine_names_panel_occurrences">
+    <item quantity="one">Kommt in der Auswahl einmal vor</item>
+    <item quantity="other">Kommt in der Auswahl %d-mal vor</item>
+  </plurals>
+</resources>

@@ -12,6 +12,7 @@ dependencies {
   implementation(project(":common:ui:core"))
 
   implementation(libs.androidx.activity.compose)
+  implementation(libs.androidx.appcompat)
   implementation(libs.androidx.core.ktx)
   implementation(libs.androidx.preference.ktx)
   implementation(libs.material)

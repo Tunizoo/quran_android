@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="wird_title">وِرد روزانه</string>
+  <string name="wird_back">بازگشت</string>
+  <string name="wird_ok">تأیید</string>
+  <string name="wird_cancel">لغو</string>
+  <string name="wird_settings_entry">هدف، یادآوری و دستاوردها</string>
+  <string name="wird_settings_summary">هدف تلاوت روزانه تعیین کنید، یادآوری هوشمند دریافت کنید و ختم قرآن خود را دنبال کنید</string>
+  <string name="wird_today_title">امروز</string>
+  <string name="wird_today_progress">%1$d از %2$d صفحه</string>
+  <string name="wird_goal_completed">وِرد امروز را کامل کردید. خداوند قبول کند.</string>
+  <string name="wird_empty_hint">مصحف را باز کنید و تلاوت را آغاز کنید. هر صفحه‌ای که در آن می‌مانید در وِرد شما حساب می‌شود.</string>
+  <string name="wird_streak_title">پیوستگی</string>
+  <string name="wird_streak_at_risk">برای حفظ پیوستگی، وِرد امروز را کامل کنید</string>
+  <string name="wird_best_streak">بهترین: %d</string>
+  <string name="wird_khatma_title">ختم شمارهٔ %d</string>
+  <string name="wird_khatma_progress">%1$d / %2$d صفحه (%3$d٪)</string>
+  <string name="wird_last_week">۷ روز گذشته</string>
+  <string name="wird_goal_title">هدف روزانه</string>
+  <string name="wird_goal_preset_juz">یک جزء (۲۰)</string>
+  <string name="wird_reminder_title">یادآوری</string>
+  <string name="wird_reminder_enabled">اگر وِردم را تمام نکرده‌ام یادآوری کن</string>
+  <string name="wird_reminder_time">زمان</string>
+  <string name="wird_reminder_mode_fixed">زمان ثابت</string>
+  <string name="wird_reminder_mode_adaptive">هوشمند</string>
+  <string name="wird_reminder_mode_fixed_desc">فقط در روزهایی که به هدف نرسیده‌اید، در زمان انتخابی یادآوری می‌کند.</string>
+  <string name="wird_reminder_mode_adaptive_desc">یاد می‌گیرد معمولاً چه زمانی تلاوت می‌کنید و اگر شروع نکرده باشید یک ساعت بعد یادآوری می‌کند. تا چند روز سابقه، از زمان ثابت استفاده می‌کند.</string>
+  <string name="wird_reminder_permission_denied">اعلان‌های این برنامه خاموش است. برای دریافت یادآوری، آن را در تنظیمات سیستم روشن کنید.</string>
+  <string name="wird_achievements_title">دستاوردها</string>
+  <string name="wird_achievement_locked">هنوز باز نشده</string>
+  <string name="wird_achievement_unlocked_on">باز شده در %s</string>
+  <string name="wird_notification_channel_reminder">یادآوری‌های وِرد روزانه</string>
+  <string name="wird_notification_channel_achievements">دستاوردهای وِرد</string>
+  <string name="wird_notification_title">وِرد روزانهٔ شما</string>
+  <string name="wird_notification_start">امروز چند صفحه بخوانید و ختم قرآن خود را ادامه دهید.</string>
+  <string name="wird_notification_remaining">برای رسیدن به هدف امروز %d صفحه مانده است.</string>
+  <string name="wird_notification_streak_risk">پیوستگی %1$d روزهٔ خود را قطع نکنید! امروز %2$d صفحه مانده است.</string>
+  <string name="wird_achievement_notification_title">دستاورد جدید</string>
+  <string name="wird_khatma_completed_title">ختم قرآن کامل شد!</string>
+  <string name="wird_khatma_completed_text">خداوند قبول کند. ختم شمارهٔ %d را کامل کردید.</string>
+  <string name="wird_ach_first_page_title">نخستین صفحه</string>
+  <string name="wird_ach_first_page_desc">نخستین صفحهٔ خود را بخوانید</string>
+  <string name="wird_ach_first_goal_title">به هدف</string>
+  <string name="wird_ach_first_goal_desc">برای نخستین بار به هدف روزانه برسید</string>
+  <string name="wird_ach_streak_3_title">سه روز پیاپی</string>
+  <string name="wird_ach_streak_3_desc">۳ روز پیاپی به هدف برسید</string>
+  <string name="wird_ach_streak_7_title">یک هفتهٔ کامل</string>
+  <string name="wird_ach_streak_7_desc">۷ روز پیاپی به هدف برسید</string>
+  <string name="wird_ach_streak_30_title">یک ماه کامل</string>
+  <string name="wird_ach_streak_30_desc">۳۰ روز پیاپی به هدف برسید</string>
+  <string name="wird_ach_streak_100_title">استقامت</string>
+  <string name="wird_ach_streak_100_desc">۱۰۰ روز پیاپی به هدف برسید</string>
+  <string name="wird_ach_pages_100_title">۱۰۰ صفحه</string>
+  <string name="wird_ach_pages_100_desc">در مجموع ۱۰۰ صفحه بخوانید</string>
+  <string name="wird_ach_pages_300_title">نیمهٔ راه</string>
+  <string name="wird_ach_pages_300_desc">در مجموع ۳۰۰ صفحه بخوانید</string>
+  <string name="wird_ach_pages_1000_title">هزار صفحه</string>
+  <string name="wird_ach_pages_1000_desc">در مجموع ۱۰۰۰ صفحه بخوانید</string>
+  <string name="wird_ach_juz_in_a_day_title">یک جزء در یک روز</string>
+  <string name="wird_ach_juz_in_a_day_desc">در یک روز ۲۰ صفحه بخوانید</string>
+  <string name="wird_ach_fajr_reader_title">قاری سحر</string>
+  <string name="wird_ach_fajr_reader_desc">بین ساعت ۴:۰۰ تا ۷:۰۰ صبح تلاوت کنید</string>
+  <string name="wird_ach_khatma_1_title">نخستین ختم</string>
+  <string name="wird_ach_khatma_1_desc">تمام مصحف را به پایان برسانید</string>
+  <string name="wird_ach_khatma_3_title">سه ختم</string>
+  <string name="wird_ach_khatma_3_desc">مصحف را سه بار به پایان برسانید</string>
+  <plurals name="wird_remaining_pages">
+    <item quantity="one">امروز %d صفحه مانده است</item>
+    <item quantity="other">امروز %d صفحه مانده است</item>
+  </plurals>
+  <plurals name="wird_streak_days">
+    <item quantity="one">%d روز پیاپی</item>
+    <item quantity="other">%d روز پیاپی</item>
+  </plurals>
+  <plurals name="wird_khatma_completed_count">
+    <item quantity="one">%d ختم کامل شده</item>
+    <item quantity="other">%d ختم کامل شده</item>
+  </plurals>
+  <plurals name="wird_goal_pages">
+    <item quantity="one">%d صفحه در روز</item>
+    <item quantity="other">%d صفحه در روز</item>
+  </plurals>
+</resources>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="tajweed_title">Colores del tayuid</string>
+  <string name="tajweed_pref_enable">Colorear las reglas del tayuid</string>
+  <string name="tajweed_pref_enable_summary">Vuelve a dibujar las palabras de la página con los colores del conocido Mushaf del Tayuid. La leyenda se muestra bajo la página. Solo páginas de Medina; el madd natural de dos tiempos no se colorea.</string>
+  <string name="tajweed_pref_legend_title">Leyenda de colores</string>
+  <string name="tajweed_pref_legend_summary">Rojo oscuro: madd lázim (6 tiempos). Rojo: madd unido y separado (4–5 tiempos). Naranja: madd ante una parada y madd lin (2, 4 o 6). Verde: gunna y sus lugares (ijfa, idgam con gunna, iqlab). Azul: qalqala. Gris: letras que no se pronuncian (hamza de unión, lam solar, idgam sin gunna).</string>
+  <string name="tajweed_legend_madd_necessary">Madd 6</string>
+  <string name="tajweed_legend_madd_obligatory">Madd 4–5</string>
+  <string name="tajweed_legend_madd_permissible">Madd 2–4–6</string>
+  <string name="tajweed_legend_ghunnah">Gunna</string>
+  <string name="tajweed_legend_qalqalah">Qalqala</string>
+  <string name="tajweed_legend_silent">Muda</string>
+</resources>

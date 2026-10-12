@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="divine_names_title">Имена и атрибуты Аллаха</string>
+  <string name="divine_names_back">Назад</string>
+  <string name="divine_names_search">Найти имя</string>
+  <string name="divine_names_methodology">Пояснения следуют методу саляфов: утверждать то, что Аллах утвердил о Себе, без искажения, без отрицания, без вопроса «как» и без уподобления творениям.</string>
+  <string name="divine_names_from_sunnah">Из Сунны</string>
+  <string name="divine_names_kind_name">Имя Аллаха</string>
+  <string name="divine_names_kind_attribute">Атрибут Аллаха</string>
+  <string name="divine_names_sheet_location">%1$s · %2$d:%3$d</string>
+  <string name="divine_names_sheet_open_index">Открыть указатель</string>
+  <string name="divine_names_pref_highlight">Выделять имена и атрибуты Аллаха</string>
+  <string name="divine_names_pref_highlight_summary">Имена золотым, атрибуты жёлтым на странице мусхафа. Дважды коснитесь выделенного слова, чтобы прочитать пояснение по методу саляфов.</string>
+  <string name="divine_names_pref_index">Указатель имён</string>
+  <string name="divine_names_pref_index_summary">Просмотреть все имена с их значением и доказательствами</string>
+  <string name="divine_names_panel_no_selection">Выберите аят, чтобы увидеть имена и атрибуты Аллаха в нём.</string>
+  <string name="divine_names_panel_empty">В выбранном аяте нет имён или атрибутов Аллаха.</string>
+  <string name="divine_names_panel_open_index">Открыть полный указатель</string>
+  <plurals name="divine_names_panel_occurrences">
+    <item quantity="one">Встречается в выделении %d раз</item>
+    <item quantity="few">Встречается в выделении %d раза</item>
+    <item quantity="many">Встречается в выделении %d раз</item>
+    <item quantity="other">Встречается в выделении %d раза</item>
+  </plurals>
+</resources>

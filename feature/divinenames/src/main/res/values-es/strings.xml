@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="divine_names_title">Nombres y atributos de Allah</string>
+  <string name="divine_names_back">Atrás</string>
+  <string name="divine_names_search">Buscar un nombre</string>
+  <string name="divine_names_methodology">Las explicaciones siguen el método de los Salaf: afirmar lo que Allah afirmó de Sí mismo, sin tergiversación, sin negación, sin preguntar el cómo y sin asemejarlo a la creación.</string>
+  <string name="divine_names_from_sunnah">De la Sunna</string>
+  <string name="divine_names_kind_name">Nombre de Allah</string>
+  <string name="divine_names_kind_attribute">Atributo de Allah</string>
+  <string name="divine_names_sheet_location">%1$s · %2$d:%3$d</string>
+  <string name="divine_names_sheet_open_index">Abrir el índice</string>
+  <string name="divine_names_pref_highlight">Resaltar los nombres y atributos de Allah</string>
+  <string name="divine_names_pref_highlight_summary">Nombres en dorado y atributos en amarillo en la página del mushaf. Toca dos veces una palabra resaltada para leer su explicación según el método de los Salaf.</string>
+  <string name="divine_names_pref_index">Índice de los nombres</string>
+  <string name="divine_names_pref_index_summary">Explora todos los nombres con su significado y sus pruebas</string>
+  <string name="divine_names_panel_no_selection">Selecciona una aleya para ver los nombres y atributos de Allah que contiene.</string>
+  <string name="divine_names_panel_empty">En la aleya seleccionada no aparece ningún nombre ni atributo de Allah.</string>
+  <string name="divine_names_panel_open_index">Abrir el índice completo</string>
+  <plurals name="divine_names_panel_occurrences">
+    <item quantity="one">Aparece una vez en la selección</item>
+    <item quantity="other">Aparece %d veces en la selección</item>
+  </plurals>
+</resources>

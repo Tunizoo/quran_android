@@ -845,7 +845,7 @@ def main():
                      at["evidence_ref"], at["note"], ATTR_SRC))
     out.executemany("insert or ignore into occurrences(sura,ayah,position,name_id,form,ayah_id) values(?,?,?,?,?,?)",
                     occurrences)
-    out.execute("insert into meta values('version','2')")
+    out.execute("insert into meta values('version','3')")
     out.execute("insert into meta values('mushaf','madani')")
     out.execute("insert into meta values('note','تم توليد المواضع آليًا من نص المصحف مع قواعد استثناء مراجَعة؛ الشروح ملخصات على منهج أهل السنة والجماعة من المراجع المذكورة.')")
     out.commit()
@@ -860,6 +860,10 @@ def main():
     for k, v in sorted(stats.items(), key=lambda x: -x[1]):
         print(f"  {k:12s} {v}")
     print("db size:", os.path.getsize(OUT))
+
+    # translated explanations (translations/<lang>.py) -> `translations` table, meta version 3
+    import gen_translations
+    gen_translations.main()
 
 if __name__ == "__main__":
     main()

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="wird_title">Tägliches Wird</string>
+  <string name="wird_back">Zurück</string>
+  <string name="wird_ok">OK</string>
+  <string name="wird_cancel">Abbrechen</string>
+  <string name="wird_settings_entry">Ziel, Erinnerung und Erfolge</string>
+  <string name="wird_settings_summary">Lege ein tägliches Leseziel fest, erhalte intelligente Erinnerungen und verfolge deine Khatma</string>
+  <string name="wird_today_title">Heute</string>
+  <string name="wird_today_progress">%1$d von %2$d Seiten</string>
+  <string name="wird_goal_completed">Du hast das heutige Wird abgeschlossen. Möge Allah es annehmen.</string>
+  <string name="wird_empty_hint">Öffne den Mushaf und beginne zu lesen. Jede Seite, auf der du bleibst, zählt für dein Wird.</string>
+  <string name="wird_streak_title">Serie</string>
+  <string name="wird_streak_at_risk">Schließe das heutige Wird ab, um deine Serie zu halten</string>
+  <string name="wird_best_streak">Bestwert: %d</string>
+  <string name="wird_khatma_title">Khatma Nr. %d</string>
+  <string name="wird_khatma_progress">%1$d / %2$d Seiten (%3$d %%)</string>
+  <string name="wird_last_week">Letzte 7 Tage</string>
+  <string name="wird_goal_title">Tagesziel</string>
+  <string name="wird_goal_preset_juz">Ein Dschuz (20)</string>
+  <string name="wird_reminder_title">Erinnerung</string>
+  <string name="wird_reminder_enabled">Erinnere mich, wenn ich mein Wird nicht beendet habe</string>
+  <string name="wird_reminder_time">Uhrzeit</string>
+  <string name="wird_reminder_mode_fixed">Feste Uhrzeit</string>
+  <string name="wird_reminder_mode_adaptive">Intelligent</string>
+  <string name="wird_reminder_mode_fixed_desc">Erinnert dich zur gewählten Uhrzeit, nur an Tagen, an denen du dein Ziel noch nicht erreicht hast.</string>
+  <string name="wird_reminder_mode_adaptive_desc">Lernt, wann du üblicherweise liest, und erinnert dich eine Stunde danach, falls du noch nicht begonnen hast. Verwendet die feste Uhrzeit, bis einige Tage Verlauf vorliegen.</string>
+  <string name="wird_reminder_permission_denied">Benachrichtigungen sind für diese App deaktiviert. Aktiviere sie in den Systemeinstellungen, um Erinnerungen zu erhalten.</string>
+  <string name="wird_achievements_title">Erfolge</string>
+  <string name="wird_achievement_locked">Noch nicht freigeschaltet</string>
+  <string name="wird_achievement_unlocked_on">Freigeschaltet am %s</string>
+  <string name="wird_notification_channel_reminder">Erinnerungen an das tägliche Wird</string>
+  <string name="wird_notification_channel_achievements">Wird-Erfolge</string>
+  <string name="wird_notification_title">Dein tägliches Wird</string>
+  <string name="wird_notification_start">Lies heute ein paar Seiten und bring deine Khatma voran.</string>
+  <string name="wird_notification_remaining">Noch %d Seiten bis zum heutigen Ziel.</string>
+  <string name="wird_notification_streak_risk">Unterbrich deine Serie von %1$d Tagen nicht! Heute fehlen noch %2$d Seiten.</string>
+  <string name="wird_achievement_notification_title">Neuer Erfolg</string>
+  <string name="wird_khatma_completed_title">Khatma abgeschlossen!</string>
+  <string name="wird_khatma_completed_text">Möge Allah sie annehmen. Du hast Khatma Nr. %d abgeschlossen.</string>
+  <string name="wird_ach_first_page_title">Erste Seite</string>
+  <string name="wird_ach_first_page_desc">Lies deine erste Seite</string>
+  <string name="wird_ach_first_goal_title">Ziel erreicht</string>
+  <string name="wird_ach_first_goal_desc">Erreiche dein Tagesziel zum ersten Mal</string>
+  <string name="wird_ach_streak_3_title">Drei in Folge</string>
+  <string name="wird_ach_streak_3_desc">Erreiche dein Ziel an 3 Tagen in Folge</string>
+  <string name="wird_ach_streak_7_title">Eine ganze Woche</string>
+  <string name="wird_ach_streak_7_desc">Erreiche dein Ziel an 7 Tagen in Folge</string>
+  <string name="wird_ach_streak_30_title">Ein ganzer Monat</string>
+  <string name="wird_ach_streak_30_desc">Erreiche dein Ziel an 30 Tagen in Folge</string>
+  <string name="wird_ach_streak_100_title">Beständigkeit</string>
+  <string name="wird_ach_streak_100_desc">Erreiche dein Ziel an 100 Tagen in Folge</string>
+  <string name="wird_ach_pages_100_title">100 Seiten</string>
+  <string name="wird_ach_pages_100_desc">Lies insgesamt 100 Seiten</string>
+  <string name="wird_ach_pages_300_title">Auf halbem Weg</string>
+  <string name="wird_ach_pages_300_desc">Lies insgesamt 300 Seiten</string>
+  <string name="wird_ach_pages_1000_title">Tausend Seiten</string>
+  <string name="wird_ach_pages_1000_desc">Lies insgesamt 1000 Seiten</string>
+  <string name="wird_ach_juz_in_a_day_title">Ein Dschuz an einem Tag</string>
+  <string name="wird_ach_juz_in_a_day_desc">Lies 20 Seiten an einem einzigen Tag</string>
+  <string name="wird_ach_fajr_reader_title">Fadschr-Leser</string>
+  <string name="wird_ach_fajr_reader_desc">Lies zwischen 4:00 und 7:00 Uhr morgens</string>
+  <string name="wird_ach_khatma_1_title">Erste Khatma</string>
+  <string name="wird_ach_khatma_1_desc">Lies den ganzen Mushaf zu Ende</string>
+  <string name="wird_ach_khatma_3_title">Drei Khatmas</string>
+  <string name="wird_ach_khatma_3_desc">Lies den Mushaf dreimal zu Ende</string>
+  <plurals name="wird_remaining_pages">
+    <item quantity="one">Heute noch %d Seite</item>
+    <item quantity="other">Heute noch %d Seiten</item>
+  </plurals>
+  <plurals name="wird_streak_days">
+    <item quantity="one">%d Tag in Folge</item>
+    <item quantity="other">%d Tage in Folge</item>
+  </plurals>
+  <plurals name="wird_khatma_completed_count">
+    <item quantity="one">%d Khatma abgeschlossen</item>
+    <item quantity="other">%d Khatmas abgeschlossen</item>
+  </plurals>
+  <plurals name="wird_goal_pages">
+    <item quantity="one">%d Seite pro Tag</item>
+    <item quantity="other">%d Seiten pro Tag</item>
+  </plurals>
+</resources>

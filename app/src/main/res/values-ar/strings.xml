@@ -332,4 +332,6 @@
   </string>
   <string name="comma">"،"</string>
 
+  <string name="prefs_app_language_title">لغة التطبيق</string>
+  <string name="prefs_app_language_system">لغة النظام</string>
 </resources>
