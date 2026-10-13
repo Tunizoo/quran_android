@@ -65,6 +65,37 @@
   <string name="wird_ach_khatma_1_desc">Mushafın tamamını bitirin</string>
   <string name="wird_ach_khatma_3_title">Üç hatim</string>
   <string name="wird_ach_khatma_3_desc">Mushafı üç kez bitirin</string>
+  <string name="wird_ach_memo_first_portion_title">İlk bölüm</string>
+  <string name="wird_ach_memo_first_portion_desc">Ezberlemek için bir bölüm ekleyin</string>
+  <string name="wird_ach_memo_portions_5_title">Beş bölüm</string>
+  <string name="wird_ach_memo_portions_5_desc">Beş bölüm ezberleyin</string>
+  <string name="wird_ach_memo_reviews_10_title">On tekrar</string>
+  <string name="wird_ach_memo_reviews_10_desc">Bölümlerinizi on kez tekrar edin</string>
+  <string name="wird_ach_memo_reviews_50_title">Elli tekrar</string>
+  <string name="wird_ach_memo_reviews_50_desc">Bölümlerinizi elli kez tekrar edin</string>
+  <string name="wird_level_title">Seviye %1$d · %2$s</string>
+  <string name="wird_level_1">Başlangıç</string>
+  <string name="wird_level_2">Devamlı</string>
+  <string name="wird_level_3">Gayretli</string>
+  <string name="wird_level_4">Okuyucu</string>
+  <string name="wird_level_5">Tefekkür eden</string>
+  <string name="wird_level_6">Hafız adayı</string>
+  <string name="wird_level_7">Yetkin</string>
+  <string name="wird_level_8">Kari</string>
+  <string name="wird_level_9">Usta</string>
+  <string name="wird_level_10">Kur’an dostu</string>
+  <string name="wird_level_max">En yüksek seviyeye ulaştınız.</string>
+  <string name="wird_points_how">Puanlar: sayfa başına 10, günlük hedef için 50, başarı başına 100, hatim başına 500, ezberlenen bölüm başına 20, tekrar başına 5–40, haftalık görev için 150.</string>
+  <string name="wird_challenge_title">Haftanın görevi</string>
+  <string name="wird_challenge_pages">Bu hafta %d sayfa okuyun</string>
+  <string name="wird_challenge_goal_days">Bu hafta %d gün günlük hedefinize ulaşın</string>
+  <string name="wird_challenge_reviews">Bu hafta ezberlediğiniz %d bölümü tekrar edin</string>
+  <string name="wird_challenge_progress">%1$d / %2$d</string>
+  <string name="wird_challenge_done">Tamamlandı! +%d puan</string>
+  <string name="wird_level_up_title">Seviye atladınız!</string>
+  <string name="wird_level_up_text">%1$d. seviyeye ulaştınız: %2$s</string>
+  <string name="wird_challenge_completed_title">Haftalık görev tamamlandı</string>
+  <string name="wird_challenge_completed_text">Aferin! %d puan kazandınız.</string>
   <plurals name="wird_remaining_pages">
     <item quantity="one">Bugün %d sayfa kaldı</item>
     <item quantity="other">Bugün %d sayfa kaldı</item>
@@ -80,5 +111,17 @@
   <plurals name="wird_goal_pages">
     <item quantity="one">Günde %d sayfa</item>
     <item quantity="other">Günde %d sayfa</item>
+  </plurals>
+  <plurals name="wird_points_total">
+    <item quantity="one">%d puan</item>
+    <item quantity="other">%d puan</item>
+  </plurals>
+  <plurals name="wird_points_to_next_level">
+    <item quantity="one">Sonraki seviyeye %d puan</item>
+    <item quantity="other">Sonraki seviyeye %d puan</item>
+  </plurals>
+  <plurals name="wird_challenge_days_left">
+    <item quantity="one">%d gün kaldı</item>
+    <item quantity="other">%d gün kaldı</item>
   </plurals>
 </resources>

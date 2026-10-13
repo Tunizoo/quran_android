@@ -5,6 +5,8 @@ import app.cash.sqldelight.coroutines.mapToList
 import app.cash.sqldelight.coroutines.mapToOne
 import com.quran.data.di.AppScope
 import com.quran.data.model.SuraAyah
+import com.quran.mobile.di.RewardEvent
+import com.quran.mobile.di.RewardSink
 import com.quran.mobile.feature.memorization.db.Memo_item
 import com.quran.mobile.feature.memorization.db.MemorizationDatabase
 import com.quran.mobile.feature.memorization.domain.MemorizationClock
@@ -26,7 +28,8 @@ import kotlinx.coroutines.withContext
 @SingleIn(AppScope::class)
 class MemorizationRepository @Inject constructor(
   private val database: MemorizationDatabase,
-  private val clock: MemorizationClock
+  private val clock: MemorizationClock,
+  private val rewardSink: RewardSink
 ) {
   private val queries get() = database.memorizationQueries
 
@@ -78,6 +81,7 @@ class MemorizationRepository @Inject constructor(
       )
       queries.lastInsertId().executeAsOne()
     }
+    rewardSink.earn(RewardEvent.MEMO_PORTION_ADDED, id.toString())
     queries.itemById(id).executeAsOne().toModel()
   }
 
@@ -100,6 +104,13 @@ class MemorizationRepository @Inject constructor(
       )
       queries.insertReview(itemId, today.toLong(), grade.quality.toLong(), clock.nowMillis())
     }
+    val event = when (grade) {
+      Grade.AGAIN -> RewardEvent.MEMO_REVIEW_AGAIN
+      Grade.HARD -> RewardEvent.MEMO_REVIEW_HARD
+      Grade.GOOD -> RewardEvent.MEMO_REVIEW_GOOD
+      Grade.EASY -> RewardEvent.MEMO_REVIEW_EASY
+    }
+    rewardSink.earn(event, itemId.toString())
     queries.itemById(itemId).executeAsOne().toModel()
   }
 

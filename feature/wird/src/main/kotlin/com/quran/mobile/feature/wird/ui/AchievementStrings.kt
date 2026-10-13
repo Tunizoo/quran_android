@@ -21,6 +21,10 @@ object AchievementStrings {
     Achievement.FAJR_READER -> R.string.wird_ach_fajr_reader_title
     Achievement.KHATMA_1 -> R.string.wird_ach_khatma_1_title
     Achievement.KHATMA_3 -> R.string.wird_ach_khatma_3_title
+    Achievement.MEMO_FIRST_PORTION -> R.string.wird_ach_memo_first_portion_title
+    Achievement.MEMO_PORTIONS_5 -> R.string.wird_ach_memo_portions_5_title
+    Achievement.MEMO_REVIEWS_10 -> R.string.wird_ach_memo_reviews_10_title
+    Achievement.MEMO_REVIEWS_50 -> R.string.wird_ach_memo_reviews_50_title
   }
 
   @StringRes
@@ -38,6 +42,10 @@ object AchievementStrings {
     Achievement.FAJR_READER -> R.string.wird_ach_fajr_reader_desc
     Achievement.KHATMA_1 -> R.string.wird_ach_khatma_1_desc
     Achievement.KHATMA_3 -> R.string.wird_ach_khatma_3_desc
+    Achievement.MEMO_FIRST_PORTION -> R.string.wird_ach_memo_first_portion_desc
+    Achievement.MEMO_PORTIONS_5 -> R.string.wird_ach_memo_portions_5_desc
+    Achievement.MEMO_REVIEWS_10 -> R.string.wird_ach_memo_reviews_10_desc
+    Achievement.MEMO_REVIEWS_50 -> R.string.wird_ach_memo_reviews_50_desc
   }
 
   fun emoji(achievement: Achievement): String = when (achievement) {
@@ -54,5 +62,9 @@ object AchievementStrings {
     Achievement.FAJR_READER -> "🌅"
     Achievement.KHATMA_1 -> "🏆"
     Achievement.KHATMA_3 -> "👑"
+    Achievement.MEMO_FIRST_PORTION -> "🧠"
+    Achievement.MEMO_PORTIONS_5 -> "🗂️"
+    Achievement.MEMO_REVIEWS_10 -> "🔁"
+    Achievement.MEMO_REVIEWS_50 -> "🎓"
   }
 }

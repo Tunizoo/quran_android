@@ -65,6 +65,37 @@
   <string name="wird_ach_khatma_1_desc">Прочитайте весь мусхаф</string>
   <string name="wird_ach_khatma_3_title">Три хатмы</string>
   <string name="wird_ach_khatma_3_desc">Прочитайте мусхаф три раза</string>
+  <string name="wird_ach_memo_first_portion_title">Первый отрывок</string>
+  <string name="wird_ach_memo_first_portion_desc">Добавьте отрывок для заучивания</string>
+  <string name="wird_ach_memo_portions_5_title">Пять отрывков</string>
+  <string name="wird_ach_memo_portions_5_desc">Выучите пять отрывков</string>
+  <string name="wird_ach_memo_reviews_10_title">Десять повторений</string>
+  <string name="wird_ach_memo_reviews_10_desc">Повторите свои отрывки десять раз</string>
+  <string name="wird_ach_memo_reviews_50_title">Пятьдесят повторений</string>
+  <string name="wird_ach_memo_reviews_50_desc">Повторите свои отрывки пятьдесят раз</string>
+  <string name="wird_level_title">Уровень %1$d · %2$s</string>
+  <string name="wird_level_1">Новичок</string>
+  <string name="wird_level_2">Постоянный</string>
+  <string name="wird_level_3">Усердный</string>
+  <string name="wird_level_4">Чтец</string>
+  <string name="wird_level_5">Размышляющий</string>
+  <string name="wird_level_6">Заучивающий</string>
+  <string name="wird_level_7">Умелый</string>
+  <string name="wird_level_8">Кари</string>
+  <string name="wird_level_9">Мастер</string>
+  <string name="wird_level_10">Спутник Корана</string>
+  <string name="wird_level_max">Вы достигли высшего уровня.</string>
+  <string name="wird_points_how">Очки: 10 за страницу, 50 за дневную цель, 100 за достижение, 500 за хатму, 20 за выученный отрывок, 5–40 за повторение, 150 за недельное задание.</string>
+  <string name="wird_challenge_title">Задание недели</string>
+  <string name="wird_challenge_pages">Прочитайте %d страниц на этой неделе</string>
+  <string name="wird_challenge_goal_days">Выполните дневную цель %d дней на этой неделе</string>
+  <string name="wird_challenge_reviews">Повторите %d выученных отрывков на этой неделе</string>
+  <string name="wird_challenge_progress">%1$d / %2$d</string>
+  <string name="wird_challenge_done">Выполнено! +%d очков</string>
+  <string name="wird_level_up_title">Новый уровень!</string>
+  <string name="wird_level_up_text">Вы достигли уровня %1$d: %2$s</string>
+  <string name="wird_challenge_completed_title">Задание недели выполнено</string>
+  <string name="wird_challenge_completed_text">Молодец! Вы заработали %d очков.</string>
   <plurals name="wird_remaining_pages">
     <item quantity="one">Сегодня осталась %d страница</item>
     <item quantity="few">Сегодня осталось %d страницы</item>
@@ -88,5 +119,23 @@
     <item quantity="few">%d страницы в день</item>
     <item quantity="many">%d страниц в день</item>
     <item quantity="other">%d страницы в день</item>
+  </plurals>
+  <plurals name="wird_points_total">
+    <item quantity="one">%d очко</item>
+    <item quantity="few">%d очка</item>
+    <item quantity="many">%d очков</item>
+    <item quantity="other">%d очка</item>
+  </plurals>
+  <plurals name="wird_points_to_next_level">
+    <item quantity="one">%d очко до следующего уровня</item>
+    <item quantity="few">%d очка до следующего уровня</item>
+    <item quantity="many">%d очков до следующего уровня</item>
+    <item quantity="other">%d очка до следующего уровня</item>
+  </plurals>
+  <plurals name="wird_challenge_days_left">
+    <item quantity="one">остался %d день</item>
+    <item quantity="few">осталось %d дня</item>
+    <item quantity="many">осталось %d дней</item>
+    <item quantity="other">осталось %d дня</item>
   </plurals>
 </resources>

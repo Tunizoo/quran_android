@@ -24,6 +24,7 @@ class MemorizationDailyReviewProvider @Inject constructor(
     else context.resources.getQuantityString(R.plurals.memo_wird_due, count, count)
 
   override fun open(context: Context) {
-    context.startActivity(Intent(context, MemorizationActivity::class.java))
+    // opened from the wird presenter with the application context
+    context.startActivity(Intent(context, MemorizationActivity::class.java).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
   }
 }

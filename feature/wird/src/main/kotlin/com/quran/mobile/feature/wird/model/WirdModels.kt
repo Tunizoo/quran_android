@@ -1,5 +1,8 @@
 package com.quran.mobile.feature.wird.model
 
+import com.quran.mobile.feature.wird.domain.ChallengeProgress
+import com.quran.mobile.feature.wird.domain.LevelProgress
+
 /** How the daily reminder time is chosen. */
 enum class ReminderMode(val storedValue: Long) {
   /** Fire at the configured minute of the day. */
@@ -57,18 +60,26 @@ data class WirdSummary(
   val completedKhatmas: List<CompletedKhatma>,
   val unlockedAchievements: List<UnlockedAchievement>,
   /** Daily counts for the most recent days, most recent first. */
-  val recentDays: List<DailyCount>
+  val recentDays: List<DailyCount>,
+  val level: LevelProgress,
+  val challenge: ChallengeProgress,
+  val memorizationPortions: Int = 0,
+  val memorizationReviews: Int = 0
 ) {
   val remainingToday: Int get() = (goal - todayPages).coerceAtLeast(0)
   val khatmaProgress: Float
     get() = if (mushafPageCount <= 0) 0f else (khatmaPagesRead.toFloat() / mushafPageCount).coerceIn(0f, 1f)
 }
 
-/** Outcome of recording a page view. */
+/** Outcome of recording a page view or of awarding points. */
 data class RecordResult(
   val wasNewPageToday: Boolean,
   val newAchievements: List<Achievement>,
-  val completedKhatmaNumber: Int?
+  val completedKhatmaNumber: Int?,
+  /** The level reached when this action crossed a level threshold. */
+  val levelReached: Int? = null,
+  /** Set when this action completed the weekly challenge. */
+  val challengeCompleted: Boolean = false
 ) {
   companion object {
     val NONE = RecordResult(wasNewPageToday = false, newAchievements = emptyList(), completedKhatmaNumber = null)

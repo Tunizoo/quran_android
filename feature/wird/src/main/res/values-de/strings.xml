@@ -65,6 +65,37 @@
   <string name="wird_ach_khatma_1_desc">Lies den ganzen Mushaf zu Ende</string>
   <string name="wird_ach_khatma_3_title">Drei Khatmas</string>
   <string name="wird_ach_khatma_3_desc">Lies den Mushaf dreimal zu Ende</string>
+  <string name="wird_ach_memo_first_portion_title">Erster Abschnitt</string>
+  <string name="wird_ach_memo_first_portion_desc">Füge einen Abschnitt zum Auswendiglernen hinzu</string>
+  <string name="wird_ach_memo_portions_5_title">Fünf Abschnitte</string>
+  <string name="wird_ach_memo_portions_5_desc">Lerne fünf Abschnitte auswendig</string>
+  <string name="wird_ach_memo_reviews_10_title">Zehn Wiederholungen</string>
+  <string name="wird_ach_memo_reviews_10_desc">Wiederhole deine Abschnitte zehnmal</string>
+  <string name="wird_ach_memo_reviews_50_title">Fünfzig Wiederholungen</string>
+  <string name="wird_ach_memo_reviews_50_desc">Wiederhole deine Abschnitte fünfzigmal</string>
+  <string name="wird_level_title">Stufe %1$d · %2$s</string>
+  <string name="wird_level_1">Anfänger</string>
+  <string name="wird_level_2">Beständig</string>
+  <string name="wird_level_3">Fleißig</string>
+  <string name="wird_level_4">Rezitierender</string>
+  <string name="wird_level_5">Nachdenkender</string>
+  <string name="wird_level_6">Auswendiglernender</string>
+  <string name="wird_level_7">Geübt</string>
+  <string name="wird_level_8">Qari</string>
+  <string name="wird_level_9">Meister</string>
+  <string name="wird_level_10">Gefährte des Korans</string>
+  <string name="wird_level_max">Du hast die höchste Stufe erreicht.</string>
+  <string name="wird_points_how">Punkte: 10 pro Seite, 50 für das Tagesziel, 100 pro Erfolg, 500 pro Khatma, 20 pro gelerntem Abschnitt, 5–40 pro Wiederholung, 150 für die Wochenaufgabe.</string>
+  <string name="wird_challenge_title">Aufgabe der Woche</string>
+  <string name="wird_challenge_pages">Lies diese Woche %d Seiten</string>
+  <string name="wird_challenge_goal_days">Erreiche dein Tagesziel diese Woche an %d Tagen</string>
+  <string name="wird_challenge_reviews">Wiederhole diese Woche %d gelernte Abschnitte</string>
+  <string name="wird_challenge_progress">%1$d / %2$d</string>
+  <string name="wird_challenge_done">Geschafft! +%d Punkte</string>
+  <string name="wird_level_up_title">Stufe aufgestiegen!</string>
+  <string name="wird_level_up_text">Du hast Stufe %1$d erreicht: %2$s</string>
+  <string name="wird_challenge_completed_title">Wochenaufgabe geschafft</string>
+  <string name="wird_challenge_completed_text">Gut gemacht! Du hast %d Punkte verdient.</string>
   <plurals name="wird_remaining_pages">
     <item quantity="one">Heute noch %d Seite</item>
     <item quantity="other">Heute noch %d Seiten</item>
@@ -80,5 +111,17 @@
   <plurals name="wird_goal_pages">
     <item quantity="one">%d Seite pro Tag</item>
     <item quantity="other">%d Seiten pro Tag</item>
+  </plurals>
+  <plurals name="wird_points_total">
+    <item quantity="one">%d Punkt</item>
+    <item quantity="other">%d Punkte</item>
+  </plurals>
+  <plurals name="wird_points_to_next_level">
+    <item quantity="one">%d Punkt bis zur nächsten Stufe</item>
+    <item quantity="other">%d Punkte bis zur nächsten Stufe</item>
+  </plurals>
+  <plurals name="wird_challenge_days_left">
+    <item quantity="one">noch %d Tag</item>
+    <item quantity="other">noch %d Tage</item>
   </plurals>
 </resources>

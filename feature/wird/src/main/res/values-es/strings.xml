@@ -65,6 +65,37 @@
   <string name="wird_ach_khatma_1_desc">Completa el mushaf entero</string>
   <string name="wird_ach_khatma_3_title">Tres jatmas</string>
   <string name="wird_ach_khatma_3_desc">Completa el mushaf tres veces</string>
+  <string name="wird_ach_memo_first_portion_title">Primer pasaje</string>
+  <string name="wird_ach_memo_first_portion_desc">Añade un pasaje para memorizar</string>
+  <string name="wird_ach_memo_portions_5_title">Cinco pasajes</string>
+  <string name="wird_ach_memo_portions_5_desc">Memoriza cinco pasajes</string>
+  <string name="wird_ach_memo_reviews_10_title">Diez repasos</string>
+  <string name="wird_ach_memo_reviews_10_desc">Repasa tus pasajes diez veces</string>
+  <string name="wird_ach_memo_reviews_50_title">Cincuenta repasos</string>
+  <string name="wird_ach_memo_reviews_50_desc">Repasa tus pasajes cincuenta veces</string>
+  <string name="wird_level_title">Nivel %1$d · %2$s</string>
+  <string name="wird_level_1">Principiante</string>
+  <string name="wird_level_2">Constante</string>
+  <string name="wird_level_3">Aplicado</string>
+  <string name="wird_level_4">Recitador</string>
+  <string name="wird_level_5">Reflexivo</string>
+  <string name="wird_level_6">Memorizador</string>
+  <string name="wird_level_7">Competente</string>
+  <string name="wird_level_8">Qari</string>
+  <string name="wird_level_9">Maestro</string>
+  <string name="wird_level_10">Compañero del Corán</string>
+  <string name="wird_level_max">Has alcanzado el nivel más alto.</string>
+  <string name="wird_points_how">Puntos: 10 por página, 50 por la meta diaria, 100 por logro, 500 por jatma, 20 por pasaje memorizado, 5–40 por repaso, 150 por el reto semanal.</string>
+  <string name="wird_challenge_title">Reto de la semana</string>
+  <string name="wird_challenge_pages">Lee %d páginas esta semana</string>
+  <string name="wird_challenge_goal_days">Alcanza tu meta diaria %d días esta semana</string>
+  <string name="wird_challenge_reviews">Repasa %d pasajes memorizados esta semana</string>
+  <string name="wird_challenge_progress">%1$d / %2$d</string>
+  <string name="wird_challenge_done">¡Completado! +%d puntos</string>
+  <string name="wird_level_up_title">¡Subiste de nivel!</string>
+  <string name="wird_level_up_text">Alcanzaste el nivel %1$d: %2$s</string>
+  <string name="wird_challenge_completed_title">Reto semanal completado</string>
+  <string name="wird_challenge_completed_text">¡Bien hecho! Ganaste %d puntos.</string>
   <plurals name="wird_remaining_pages">
     <item quantity="one">Queda %d página hoy</item>
     <item quantity="other">Quedan %d páginas hoy</item>
@@ -80,5 +111,17 @@
   <plurals name="wird_goal_pages">
     <item quantity="one">%d página al día</item>
     <item quantity="other">%d páginas al día</item>
+  </plurals>
+  <plurals name="wird_points_total">
+    <item quantity="one">%d punto</item>
+    <item quantity="other">%d puntos</item>
+  </plurals>
+  <plurals name="wird_points_to_next_level">
+    <item quantity="one">%d punto para el siguiente nivel</item>
+    <item quantity="other">%d puntos para el siguiente nivel</item>
+  </plurals>
+  <plurals name="wird_challenge_days_left">
+    <item quantity="one">queda %d día</item>
+    <item quantity="other">quedan %d días</item>
   </plurals>
 </resources>

@@ -17,7 +17,11 @@ enum class Achievement(val id: String) {
   JUZ_IN_A_DAY("juz_in_a_day"),
   FAJR_READER("fajr_reader"),
   KHATMA_1("khatma_1"),
-  KHATMA_3("khatma_3");
+  KHATMA_3("khatma_3"),
+  MEMO_FIRST_PORTION("memo_first_portion"),
+  MEMO_PORTIONS_5("memo_portions_5"),
+  MEMO_REVIEWS_10("memo_reviews_10"),
+  MEMO_REVIEWS_50("memo_reviews_50");
 
   companion object {
     fun fromId(id: String): Achievement? = entries.firstOrNull { it.id == id }

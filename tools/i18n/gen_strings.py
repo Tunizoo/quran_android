@@ -54,6 +54,14 @@ def main():
         import memo_strings
         if lang in memo_strings.MEMO:
             modules["memorization"] = (memo_strings.MEMO[lang], memo_strings.MEMO_PLURALS.get(lang, {}))
+        # gamification strings of feature/wird live in gamification_strings.py
+        import gamification_strings
+        if lang in gamification_strings.GAMIFICATION and "wird" in modules:
+            wird_strings, wird_plurals = modules["wird"]
+            modules["wird"] = (
+                {**wird_strings, **gamification_strings.GAMIFICATION[lang]},
+                {**wird_plurals, **gamification_strings.GAMIFICATION_PLURALS.get(lang, {})},
+            )
         for mod_name, (strings, plurals) in modules.items():
             expected = english_keys(mod_name)
             provided = set(strings) | set(plurals)

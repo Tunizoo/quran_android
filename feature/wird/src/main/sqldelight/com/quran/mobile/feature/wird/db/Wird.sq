@@ -29,6 +29,26 @@ CREATE TABLE IF NOT EXISTS wird_achievement(
   unlocked_at INTEGER NOT NULL
 );
 
+-- Points ledger of the gamification layer. `source` is a RewardEvent name; `ref` makes awards that
+-- must count once idempotent (e.g. the day of a daily goal, the id of an achievement).
+CREATE TABLE IF NOT EXISTS wird_points(
+  id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+  day INTEGER NOT NULL,
+  source TEXT NOT NULL,
+  amount INTEGER NOT NULL,
+  ref TEXT,
+  created_at INTEGER NOT NULL
+);
+
+CREATE INDEX IF NOT EXISTS wird_points_day ON wird_points(day);
+CREATE INDEX IF NOT EXISTS wird_points_source ON wird_points(source, ref);
+
+-- Weekly challenges that were completed (one row per week number).
+CREATE TABLE IF NOT EXISTS wird_challenge(
+  week INTEGER NOT NULL PRIMARY KEY,
+  completed_at INTEGER NOT NULL
+);
+
 CREATE TABLE IF NOT EXISTS wird_settings(
   id INTEGER NOT NULL PRIMARY KEY,
   pages_per_day INTEGER NOT NULL,
@@ -89,9 +109,41 @@ upsertSettings:
 INSERT OR REPLACE INTO wird_settings(id, pages_per_day, reminder_enabled, reminder_minute_of_day, reminder_mode)
 VALUES (1, ?, ?, ?, ?);
 
+insertPoints:
+INSERT INTO wird_points(day, source, amount, ref, created_at) VALUES (?, ?, ?, ?, ?);
+
+hasPoints:
+SELECT COUNT(*) FROM wird_points WHERE source = ? AND ref = ?;
+
+totalPoints:
+SELECT COALESCE(SUM(amount), 0) FROM wird_points;
+
+countSource:
+SELECT COUNT(*) FROM wird_points WHERE source = ?;
+
+countSourceLike:
+SELECT COUNT(*) FROM wird_points WHERE source LIKE ?;
+
+countSourceLikeSince:
+SELECT COUNT(*) FROM wird_points WHERE source LIKE ? AND day >= ?;
+
+recentPoints:
+SELECT * FROM wird_points ORDER BY id DESC LIMIT ?;
+
+challengeForWeek:
+SELECT * FROM wird_challenge WHERE week = ?;
+
+completeChallenge:
+INSERT OR IGNORE INTO wird_challenge(week, completed_at) VALUES (?, ?);
+
+completedChallenges:
+SELECT * FROM wird_challenge ORDER BY week DESC;
+
 clearProgress {
   DELETE FROM wird_page_view;
   DELETE FROM wird_khatma_page;
   DELETE FROM wird_khatma;
   DELETE FROM wird_achievement;
+  DELETE FROM wird_points;
+  DELETE FROM wird_challenge;
 }

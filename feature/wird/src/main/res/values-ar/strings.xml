@@ -105,4 +105,60 @@
   <string name="wird_ach_khatma_1_desc">أكملت المصحف كاملًا</string>
   <string name="wird_ach_khatma_3_title">ثلاث ختمات</string>
   <string name="wird_ach_khatma_3_desc">أكملت المصحف ثلاث مرات</string>
+  <string name="wird_ach_memo_first_portion_title">أول مقطع</string>
+  <string name="wird_ach_memo_first_portion_desc">أضف مقطعًا للحفظ</string>
+  <string name="wird_ach_memo_portions_5_title">خمسة مقاطع</string>
+  <string name="wird_ach_memo_portions_5_desc">احفظ خمسة مقاطع</string>
+  <string name="wird_ach_memo_reviews_10_title">عشر مراجعات</string>
+  <string name="wird_ach_memo_reviews_10_desc">راجع مقاطعك عشر مرات</string>
+  <string name="wird_ach_memo_reviews_50_title">خمسون مراجعة</string>
+  <string name="wird_ach_memo_reviews_50_desc">راجع مقاطعك خمسين مرة</string>
+
+  <string name="wird_level_title">المستوى %1$d · %2$s</string>
+  <string name="wird_level_1">المبتدئ</string>
+  <string name="wird_level_2">المواظب</string>
+  <string name="wird_level_3">المجتهد</string>
+  <string name="wird_level_4">التالي</string>
+  <string name="wird_level_5">المتدبّر</string>
+  <string name="wird_level_6">الحافظ</string>
+  <string name="wird_level_7">المتقن</string>
+  <string name="wird_level_8">القارئ</string>
+  <string name="wird_level_9">الماهر</string>
+  <string name="wird_level_10">صاحب القرآن</string>
+  <string name="wird_level_max">بلغت أعلى مستوى.</string>
+  <plurals name="wird_points_total">
+    <item quantity="zero">لا نقاط بعد</item>
+    <item quantity="one">نقطة واحدة</item>
+    <item quantity="two">نقطتان</item>
+    <item quantity="few">%d نقاط</item>
+    <item quantity="many">%d نقطة</item>
+    <item quantity="other">%d نقطة</item>
+  </plurals>
+  <plurals name="wird_points_to_next_level">
+    <item quantity="zero">المستوى التالي الآن</item>
+    <item quantity="one">نقطة واحدة إلى المستوى التالي</item>
+    <item quantity="two">نقطتان إلى المستوى التالي</item>
+    <item quantity="few">%d نقاط إلى المستوى التالي</item>
+    <item quantity="many">%d نقطة إلى المستوى التالي</item>
+    <item quantity="other">%d نقطة إلى المستوى التالي</item>
+  </plurals>
+  <string name="wird_points_how">النقاط: ١٠ لكل صفحة، ٥٠ لهدف اليوم، ١٠٠ لكل إنجاز، ٥٠٠ لكل ختمة، ٢٠ لكل مقطع تحفظه، ٥ إلى ٤٠ لكل مراجعة، ١٥٠ لتحدي الأسبوع.</string>
+  <string name="wird_challenge_title">تحدي الأسبوع</string>
+  <string name="wird_challenge_pages">اقرأ %d صفحة هذا الأسبوع</string>
+  <string name="wird_challenge_goal_days">حقّق هدفك اليومي في %d أيام هذا الأسبوع</string>
+  <string name="wird_challenge_reviews">راجع %d مقاطع من حفظك هذا الأسبوع</string>
+  <string name="wird_challenge_progress">%1$d / %2$d</string>
+  <plurals name="wird_challenge_days_left">
+    <item quantity="zero">ينتهي اليوم</item>
+    <item quantity="one">بقي يوم واحد</item>
+    <item quantity="two">بقي يومان</item>
+    <item quantity="few">بقيت %d أيام</item>
+    <item quantity="many">بقي %d يومًا</item>
+    <item quantity="other">بقي %d يوم</item>
+  </plurals>
+  <string name="wird_challenge_done">اكتمل! +%d نقطة</string>
+  <string name="wird_level_up_title">ارتقيت مستوى!</string>
+  <string name="wird_level_up_text">بلغت المستوى %1$d: %2$s</string>
+  <string name="wird_challenge_completed_title">اكتمل تحدي الأسبوع</string>
+  <string name="wird_challenge_completed_text">أحسنت! كسبت %d نقطة.</string>
 </resources>

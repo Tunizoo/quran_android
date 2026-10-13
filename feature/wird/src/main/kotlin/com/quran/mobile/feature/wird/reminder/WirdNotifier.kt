@@ -17,6 +17,7 @@ import com.quran.mobile.feature.wird.WirdActivity
 import com.quran.mobile.feature.wird.model.Achievement
 import com.quran.mobile.feature.wird.model.WirdSummary
 import com.quran.mobile.feature.wird.ui.AchievementStrings
+import com.quran.mobile.feature.wird.ui.LevelStrings
 import dev.zacsweers.metro.Inject
 import dev.zacsweers.metro.SingleIn
 
@@ -77,6 +78,30 @@ class WirdNotifier @Inject constructor(
     )
   }
 
+  fun showLevelUp(level: Int) {
+    notify(
+      channelId = ACHIEVEMENT_CHANNEL,
+      channelName = context.getString(R.string.wird_notification_channel_achievements),
+      notificationId = NOTIFICATION_ID_LEVEL,
+      title = context.getString(R.string.wird_level_up_title),
+      text = context.getString(
+        R.string.wird_level_up_text, level, LevelStrings.emoji(level) + " " + context.getString(LevelStrings.title(level))
+      ),
+      intent = Intent(context, WirdActivity::class.java)
+    )
+  }
+
+  fun showChallengeCompleted() {
+    notify(
+      channelId = ACHIEVEMENT_CHANNEL,
+      channelName = context.getString(R.string.wird_notification_channel_achievements),
+      notificationId = NOTIFICATION_ID_CHALLENGE,
+      title = context.getString(R.string.wird_challenge_completed_title),
+      text = context.getString(R.string.wird_challenge_completed_text, com.quran.mobile.di.RewardEvent.WEEKLY_CHALLENGE.points),
+      intent = Intent(context, WirdActivity::class.java)
+    )
+  }
+
   private fun readerIntent(): Intent {
     return context.packageManager.getLaunchIntentForPackage(context.packageName)
       ?: Intent(context, WirdActivity::class.java)
@@ -129,5 +154,7 @@ class WirdNotifier @Inject constructor(
     const val NOTIFICATION_ID_REMINDER = 7001
     const val NOTIFICATION_ID_ACHIEVEMENT = 7002
     const val NOTIFICATION_ID_KHATMA = 7003
+    const val NOTIFICATION_ID_LEVEL = 7004
+    const val NOTIFICATION_ID_CHALLENGE = 7005
   }
 }

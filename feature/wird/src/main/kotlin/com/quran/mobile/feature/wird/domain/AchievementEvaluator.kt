@@ -9,7 +9,9 @@ data class WirdStats(
   val bestStreak: Int,
   val bestDayPages: Int,
   val earlyMorningViews: Int,
-  val completedKhatmas: Int
+  val completedKhatmas: Int,
+  val memorizationPortions: Int = 0,
+  val memorizationReviews: Int = 0
 )
 
 /**
@@ -40,6 +42,10 @@ object AchievementEvaluator {
     if (stats.earlyMorningViews >= 1) earned += Achievement.FAJR_READER
     if (stats.completedKhatmas >= 1) earned += Achievement.KHATMA_1
     if (stats.completedKhatmas >= 3) earned += Achievement.KHATMA_3
+    if (stats.memorizationPortions >= 1) earned += Achievement.MEMO_FIRST_PORTION
+    if (stats.memorizationPortions >= 5) earned += Achievement.MEMO_PORTIONS_5
+    if (stats.memorizationReviews >= 10) earned += Achievement.MEMO_REVIEWS_10
+    if (stats.memorizationReviews >= 50) earned += Achievement.MEMO_REVIEWS_50
     return earned
   }
 }

@@ -4,6 +4,7 @@ import com.quran.data.di.AppCoroutineScope
 import com.quran.data.di.AppScope
 import com.quran.mobile.feature.wird.data.WirdRepository
 import com.quran.mobile.feature.wird.reminder.WirdNotifier
+import com.quran.mobile.feature.wird.reward.showRewards
 import dev.zacsweers.metro.Inject
 import dev.zacsweers.metro.SingleIn
 import kotlinx.coroutines.Job
@@ -50,11 +51,7 @@ class WirdPageRecorder @Inject constructor(
   }
 
   private suspend fun record(page: Int) {
-    val result = repository.recordPageView(page)
-    result.completedKhatmaNumber?.let { notifier.showKhatmaCompleted(it) }
-    if (result.newAchievements.isNotEmpty()) {
-      notifier.showAchievements(result.newAchievements)
-    }
+    notifier.showRewards(repository.recordPageView(page))
   }
 
   companion object {

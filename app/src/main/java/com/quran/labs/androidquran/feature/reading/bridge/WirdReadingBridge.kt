@@ -3,6 +3,7 @@ package com.quran.labs.androidquran.feature.reading.bridge
 import com.quran.data.di.AppCoroutineScope
 import com.quran.data.di.AppScope
 import com.quran.labs.androidquran.feature.reading.model.LatestPageTracker
+import com.quran.mobile.feature.wird.data.WirdRepository
 import com.quran.mobile.feature.wird.reminder.WirdReminderScheduler
 import com.quran.mobile.feature.wird.tracking.WirdPageRecorder
 import dev.zacsweers.metro.Inject
@@ -21,6 +22,7 @@ class WirdReadingBridge @Inject constructor(
   private val latestPageTracker: LatestPageTracker,
   private val wirdPageRecorder: WirdPageRecorder,
   private val wirdReminderScheduler: WirdReminderScheduler,
+  private val wirdRepository: WirdRepository,
   private val appCoroutineScope: AppCoroutineScope
 ) {
   private var isStarted = false
@@ -34,6 +36,9 @@ class WirdReadingBridge @Inject constructor(
       .onEach { wirdPageRecorder.onPageVisible(it.page) }
       .launchIn(appCoroutineScope)
 
-    appCoroutineScope.launch { wirdReminderScheduler.reschedule() }
+    appCoroutineScope.launch {
+      wirdRepository.backfillPoints()
+      wirdReminderScheduler.reschedule()
+    }
   }
 }

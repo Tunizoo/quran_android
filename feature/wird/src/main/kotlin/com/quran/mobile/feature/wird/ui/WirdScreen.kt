@@ -126,6 +126,7 @@ fun WirdScreen(
       verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
       if (summary != null) {
+        item { MotivationCard(summary) }
         item { TodayCard(summary) }
         items(state.dailyReviews, key = { it.titleResId }) { card -> DailyReviewCardView(card) }
         item { StreakCard(summary) }
@@ -234,6 +235,89 @@ private fun ProgressRing(
       }
     }
     content()
+  }
+}
+
+@Composable
+private fun MotivationCard(summary: WirdSummary) {
+  val level = summary.level
+  val challenge = summary.challenge
+  SectionCard {
+    Row(verticalAlignment = Alignment.CenterVertically) {
+      Text(text = LevelStrings.emoji(level.number), style = MaterialTheme.typography.headlineMedium)
+      Spacer(Modifier.width(12.dp))
+      Column(modifier = Modifier.weight(1f)) {
+        Text(
+          text = stringResource(R.string.wird_level_title, level.number, stringResource(LevelStrings.title(level.number))),
+          style = MaterialTheme.typography.titleMedium,
+          fontWeight = FontWeight.Bold
+        )
+        Text(
+          text = pluralStringResource(R.plurals.wird_points_total, level.totalPoints, level.totalPoints),
+          style = MaterialTheme.typography.bodyMedium
+        )
+      }
+    }
+    Spacer(Modifier.height(8.dp))
+    LinearProgressIndicator(
+      progress = { level.fraction },
+      modifier = Modifier
+        .fillMaxWidth()
+        .height(10.dp)
+        .clip(RoundedCornerShape(5.dp))
+    )
+    Spacer(Modifier.height(4.dp))
+    Text(
+      text = if (level.isMaxLevel) {
+        stringResource(R.string.wird_level_max)
+      } else {
+        pluralStringResource(R.plurals.wird_points_to_next_level, level.pointsToNextLevel, level.pointsToNextLevel)
+      },
+      style = MaterialTheme.typography.bodySmall,
+      color = MaterialTheme.colorScheme.onSurfaceVariant
+    )
+    Spacer(Modifier.height(12.dp))
+    Row(verticalAlignment = Alignment.CenterVertically) {
+      Text(text = if (challenge.completed) "✅" else "🎯", style = MaterialTheme.typography.titleLarge)
+      Spacer(Modifier.width(8.dp))
+      Column(modifier = Modifier.weight(1f)) {
+        Text(
+          text = stringResource(R.string.wird_challenge_title),
+          style = MaterialTheme.typography.titleSmall,
+          fontWeight = FontWeight.Bold
+        )
+        Text(
+          text = stringResource(LevelStrings.challenge(challenge.challenge.type), challenge.challenge.target),
+          style = MaterialTheme.typography.bodyMedium
+        )
+      }
+    }
+    Spacer(Modifier.height(6.dp))
+    LinearProgressIndicator(
+      progress = { challenge.fraction },
+      modifier = Modifier
+        .fillMaxWidth()
+        .height(8.dp)
+        .clip(RoundedCornerShape(4.dp)),
+      color = if (challenge.completed) MaterialTheme.colorScheme.tertiary else MaterialTheme.colorScheme.primary
+    )
+    Spacer(Modifier.height(4.dp))
+    Text(
+      text = if (challenge.completed) {
+        stringResource(R.string.wird_challenge_done, com.quran.mobile.di.RewardEvent.WEEKLY_CHALLENGE.points)
+      } else {
+        stringResource(R.string.wird_challenge_progress, challenge.progress, challenge.challenge.target) + " · " +
+          pluralStringResource(R.plurals.wird_challenge_days_left, challenge.daysLeft, challenge.daysLeft)
+      },
+      style = MaterialTheme.typography.bodySmall,
+      color = if (challenge.completed) MaterialTheme.colorScheme.tertiary else MaterialTheme.colorScheme.onSurfaceVariant
+    )
+    Spacer(Modifier.height(8.dp))
+    Text(
+      text = stringResource(R.string.wird_points_how),
+      style = MaterialTheme.typography.labelSmall,
+      color = MaterialTheme.colorScheme.outline
+    )
   }
 }
 

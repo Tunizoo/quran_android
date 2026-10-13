@@ -1,0 +1,16 @@
+CREATE TABLE IF NOT EXISTS wird_points(
+  id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+  day INTEGER NOT NULL,
+  source TEXT NOT NULL,
+  amount INTEGER NOT NULL,
+  ref TEXT,
+  created_at INTEGER NOT NULL
+);
+
+CREATE INDEX IF NOT EXISTS wird_points_day ON wird_points(day);
+CREATE INDEX IF NOT EXISTS wird_points_source ON wird_points(source, ref);
+
+CREATE TABLE IF NOT EXISTS wird_challenge(
+  week INTEGER NOT NULL PRIMARY KEY,
+  completed_at INTEGER NOT NULL
+);

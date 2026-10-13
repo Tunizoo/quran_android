@@ -65,6 +65,37 @@
   <string name="wird_ach_khatma_1_desc">Selesaikan seluruh mushaf</string>
   <string name="wird_ach_khatma_3_title">Tiga khatam</string>
   <string name="wird_ach_khatma_3_desc">Selesaikan mushaf tiga kali</string>
+  <string name="wird_ach_memo_first_portion_title">Bagian pertama</string>
+  <string name="wird_ach_memo_first_portion_desc">Tambahkan bagian untuk dihafal</string>
+  <string name="wird_ach_memo_portions_5_title">Lima bagian</string>
+  <string name="wird_ach_memo_portions_5_desc">Hafalkan lima bagian</string>
+  <string name="wird_ach_memo_reviews_10_title">Sepuluh ulangan</string>
+  <string name="wird_ach_memo_reviews_10_desc">Ulangi bagian Anda sepuluh kali</string>
+  <string name="wird_ach_memo_reviews_50_title">Lima puluh ulangan</string>
+  <string name="wird_ach_memo_reviews_50_desc">Ulangi bagian Anda lima puluh kali</string>
+  <string name="wird_level_title">Level %1$d · %2$s</string>
+  <string name="wird_level_1">Pemula</string>
+  <string name="wird_level_2">Istiqamah</string>
+  <string name="wird_level_3">Rajin</string>
+  <string name="wird_level_4">Pembaca</string>
+  <string name="wird_level_5">Perenung</string>
+  <string name="wird_level_6">Penghafal</string>
+  <string name="wird_level_7">Mahir</string>
+  <string name="wird_level_8">Qari</string>
+  <string name="wird_level_9">Ahli</string>
+  <string name="wird_level_10">Sahabat Al-Qur’an</string>
+  <string name="wird_level_max">Anda mencapai level tertinggi.</string>
+  <string name="wird_points_how">Poin: 10 per halaman, 50 untuk target harian, 100 per pencapaian, 500 per khatam, 20 per bagian yang dihafal, 5–40 per ulangan, 150 untuk tantangan mingguan.</string>
+  <string name="wird_challenge_title">Tantangan minggu ini</string>
+  <string name="wird_challenge_pages">Baca %d halaman minggu ini</string>
+  <string name="wird_challenge_goal_days">Capai target harian Anda selama %d hari minggu ini</string>
+  <string name="wird_challenge_reviews">Ulangi %d bagian hafalan minggu ini</string>
+  <string name="wird_challenge_progress">%1$d / %2$d</string>
+  <string name="wird_challenge_done">Selesai! +%d poin</string>
+  <string name="wird_level_up_title">Naik level!</string>
+  <string name="wird_level_up_text">Anda mencapai level %1$d: %2$s</string>
+  <string name="wird_challenge_completed_title">Tantangan mingguan selesai</string>
+  <string name="wird_challenge_completed_text">Bagus! Anda mendapat %d poin.</string>
   <plurals name="wird_remaining_pages">
     <item quantity="other">Tersisa %d halaman hari ini</item>
   </plurals>
@@ -76,5 +107,17 @@
   </plurals>
   <plurals name="wird_goal_pages">
     <item quantity="other">%d halaman per hari</item>
+  </plurals>
+  <plurals name="wird_points_total">
+    <item quantity="one">%d poin</item>
+    <item quantity="other">%d poin</item>
+  </plurals>
+  <plurals name="wird_points_to_next_level">
+    <item quantity="one">%d poin lagi ke level berikutnya</item>
+    <item quantity="other">%d poin lagi ke level berikutnya</item>
+  </plurals>
+  <plurals name="wird_challenge_days_left">
+    <item quantity="one">%d hari tersisa</item>
+    <item quantity="other">%d hari tersisa</item>
   </plurals>
 </resources>

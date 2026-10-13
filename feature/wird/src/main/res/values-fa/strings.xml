@@ -65,6 +65,37 @@
   <string name="wird_ach_khatma_1_desc">تمام مصحف را به پایان برسانید</string>
   <string name="wird_ach_khatma_3_title">سه ختم</string>
   <string name="wird_ach_khatma_3_desc">مصحف را سه بار به پایان برسانید</string>
+  <string name="wird_ach_memo_first_portion_title">نخستین بخش</string>
+  <string name="wird_ach_memo_first_portion_desc">بخشی برای حفظ بیفزایید</string>
+  <string name="wird_ach_memo_portions_5_title">پنج بخش</string>
+  <string name="wird_ach_memo_portions_5_desc">پنج بخش حفظ کنید</string>
+  <string name="wird_ach_memo_reviews_10_title">ده مرور</string>
+  <string name="wird_ach_memo_reviews_10_desc">بخش‌های خود را ده بار مرور کنید</string>
+  <string name="wird_ach_memo_reviews_50_title">پنجاه مرور</string>
+  <string name="wird_ach_memo_reviews_50_desc">بخش‌های خود را پنجاه بار مرور کنید</string>
+  <string name="wird_level_title">سطح %1$d · %2$s</string>
+  <string name="wird_level_1">نوآموز</string>
+  <string name="wird_level_2">پیوسته</string>
+  <string name="wird_level_3">کوشا</string>
+  <string name="wird_level_4">تلاوت‌گر</string>
+  <string name="wird_level_5">اهل تدبر</string>
+  <string name="wird_level_6">حافظ</string>
+  <string name="wird_level_7">چیره‌دست</string>
+  <string name="wird_level_8">قاری</string>
+  <string name="wird_level_9">استاد</string>
+  <string name="wird_level_10">همدم قرآن</string>
+  <string name="wird_level_max">به بالاترین سطح رسیدید.</string>
+  <string name="wird_points_how">امتیازها: ۱۰ برای هر صفحه، ۵۰ برای هدف روزانه، ۱۰۰ برای هر دستاورد، ۵۰۰ برای هر ختم، ۲۰ برای هر بخش حفظ‌شده، ۵ تا ۴۰ برای هر مرور، ۱۵۰ برای چالش هفته.</string>
+  <string name="wird_challenge_title">چالش هفته</string>
+  <string name="wird_challenge_pages">این هفته %d صفحه بخوانید</string>
+  <string name="wird_challenge_goal_days">این هفته %d روز به هدف روزانهٔ خود برسید</string>
+  <string name="wird_challenge_reviews">این هفته %d بخش حفظ‌شده را مرور کنید</string>
+  <string name="wird_challenge_progress">%1$d / %2$d</string>
+  <string name="wird_challenge_done">انجام شد! %d+ امتیاز</string>
+  <string name="wird_level_up_title">سطح بالاتر!</string>
+  <string name="wird_level_up_text">به سطح %1$d رسیدید: %2$s</string>
+  <string name="wird_challenge_completed_title">چالش هفته انجام شد</string>
+  <string name="wird_challenge_completed_text">آفرین! %d امتیاز گرفتید.</string>
   <plurals name="wird_remaining_pages">
     <item quantity="one">امروز %d صفحه مانده است</item>
     <item quantity="other">امروز %d صفحه مانده است</item>
@@ -80,5 +111,17 @@
   <plurals name="wird_goal_pages">
     <item quantity="one">%d صفحه در روز</item>
     <item quantity="other">%d صفحه در روز</item>
+  </plurals>
+  <plurals name="wird_points_total">
+    <item quantity="one">%d امتیاز</item>
+    <item quantity="other">%d امتیاز</item>
+  </plurals>
+  <plurals name="wird_points_to_next_level">
+    <item quantity="one">%d امتیاز تا سطح بعد</item>
+    <item quantity="other">%d امتیاز تا سطح بعد</item>
+  </plurals>
+  <plurals name="wird_challenge_days_left">
+    <item quantity="one">%d روز مانده</item>
+    <item quantity="other">%d روز مانده</item>
   </plurals>
 </resources>
