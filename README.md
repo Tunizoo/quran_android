@@ -10,6 +10,28 @@
 
 This is a simple (Madani based) Quran app for Android.
 
+> **This fork** (Tunizoo/quran_android) adds a daily wird tracker with achievements, points and levels,
+> optional tajweed colouring of the mushaf page, highlighting of the names and attributes of Allah with
+> explanations in ten languages, a memorization mode with spaced repetition, and an in-app language
+> picker. See the Arabic overview below and [docs/ROADMAP_AR.md](docs/ROADMAP_AR.md).
+
+<div dir="rtl" align="right">
+
+## ما يضيفه هذا الفرع
+
+نسخة مطوَّرة من تطبيق «القرآن» المفتوح المصدر، تضيف:
+
+- **الورد اليومي**: هدف يومي بالصفحات، مواظبة، متابعة الختمة، تذكير ذكي يتعلّم وقت قراءتك، وإنجازات.
+- **التحفيز**: نقاط على القراءة والحفظ والختم، عشرة مستويات من «المبتدئ» إلى «صاحب القرآن»، وتحدٍّ أسبوعي.
+- **تلوين أحكام التجويد** (اختياري) بألوان مصحف التجويد المعروف برواية حفص، مع مفتاح للألوان أسفل الصفحة.
+- **أسماء الله وصفاته**: تلوين مواضعها في المصحف (الأسماء بالذهبي والصفات بالأصفر)، ونقرة مزدوجة تفتح شرحًا على منهج السلف بعشر لغات، مع فهرس كامل.
+- **وضع الحفظ**: إخفاء كلمات المقطع وكشفها كلمة كلمة أو آية آية أو بالنقر، استماع بتكرار، اختبار ذاتي، وجدولة مراجعات بالتكرار المتباعد.
+- **لغة التطبيق** تُختار من الإعدادات (45 لغة) والميزات الجديدة مترجمة إلى عشر لغات.
+
+التفاصيل التقنية وخارطة الطريق في [docs/ROADMAP_AR.md](docs/ROADMAP_AR.md). التطبيق الأصلي من [quran.com](https://github.com/quran/quran_android) ويُنشر هذا الفرع تحت الرخصة نفسها (GPL‑3).
+
+</div>
+
 [<img src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png"
       alt='Get it on Google Play'
       height="80">](https://play.google.com/store/apps/details?id=com.quran.labs.androidquran)
