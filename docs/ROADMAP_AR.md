@@ -197,6 +197,12 @@
 8 التحديث التقني يسير بالتوازي، ويُنصح بإنجاز بنوده 1–3 قبل المرحلة 7
 ```
 
+## هوية النسخة والنشر
+
+- اسم الحزمة في هذا الفرع `com.tunizoo.quran` (والنسخة التجريبية `com.tunizoo.quran.debug`) والاسم الظاهر «Qur'an» في كل اللغات، حتى تُثبَّت بجانب التطبيق الرسمي `com.quran.labs.androidquran` ولا تتعارض معه (2026-10-15).
+- بناء الإصدار: `./gradlew :app:assembleMadaniRelease -PdisableFirebase -PSTORE_FILE=… -PSTORE_PASSWORD=… -PKEY_ALIAS=… -PKEY_PASSWORD=…` مع تجاوز مهام `lintVital*` التي تتعطل بخلل في أداة Lint. مفتاح التوقيع محلي خارج المستودع (`~/.android/quran-fork-release.jks`) ويجب الاحتفاظ به.
+- النشر على GitHub: ملف APK من `dist/` يُرفع في صفحة Releases يدويًا. النشر على Google Play يحتاج حساب مطوّر وملف AAB (`bundleMadaniRelease` بالخيارات نفسها).
+
 ## اعتبارات عامة
 
 - **الترخيص**: التطبيق GPL-3، والبيانات (تفاسير، ترجمات، بيانات التجويد) لها تراخيص خاصة؛ توثيق المصدر والترخيص لكل قاعدة بيانات جديدة إلزامي.

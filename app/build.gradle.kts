@@ -74,7 +74,7 @@ android {
   flavorDimensions += listOf("pageType")
   productFlavors {
     create("madani") {
-      applicationId = "com.quran.labs.androidquran"
+      applicationId = "com.tunizoo.quran"
     }
   }
 
