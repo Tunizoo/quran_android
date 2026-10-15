@@ -114,6 +114,8 @@ class Data:
             r[0]: dict(id=r[0], arabic=r[1], meaning=r[2], evidence=r[3], ref=r[4], note=r[5], kind=r[6], order=r[7], sources=r[8])
             for r in self.names.execute("select id, arabic, meaning, evidence, evidence_ref, note, kind, sort_order, sources from names")
         }
+        # page where each name was first explained in a footnote (filled while rendering in order)
+        self.explained_on = {}
         self.occurrences = {}
         for s, a, p, nid in self.names.execute("select sura, ayah, position, name_id from occurrences"):
             self.occurrences[(s, a, p)] = nid
@@ -165,16 +167,24 @@ def render_page(data, page, images_dir):
         f'<g>{"".join(covers)}</g><g>{"".join(names_rects)}</g><g class="words">{"".join(texts)}</g></svg>'
     )
 
-    # footnotes: the names and attributes of this page (the very frequent ones are in the intro)
+    # footnotes: the names and attributes of this page (the very frequent ones are in the intro).
+    # On a crowded page, names already explained earlier only get a reference to that page.
     notes = [data.name_info[n] for n in page_names if n not in FREQUENT]
-    total = sum(len(n["meaning"]) for n in notes)
+    dense = len(notes) > 6
+    seen_before = [n for n in notes if dense and n["id"] in data.explained_on]
+    to_explain = [n for n in notes if n not in seen_before]
+    total = sum(len(n["meaning"]) for n in to_explain)
     items = []
-    for n in notes:
-        meaning = n["meaning"] if (total <= 420 and len(notes) <= 6) else first_sentence(n["meaning"])
+    for n in to_explain:
+        meaning = n["meaning"] if (total <= 420 and len(to_explain) <= 6) else first_sentence(n["meaning"])
         kind = ' <span class="kind">(صفة)</span>' if n["kind"] == "attribute" else ""
         items.append(f'<li><b>{html.escape(n["arabic"])}</b>{kind}: {html.escape(meaning)}</li>')
-    dense = " dense" if len(notes) > 6 else ""
-    footnotes = f'<ol class="notes{dense}">{"".join(items)}</ol>' if items else '<div class="notes"></div>'
+        data.explained_on.setdefault(n["id"], page)
+    if seen_before:
+        refs = "، ".join(f'<b>{html.escape(n["arabic"])}</b> (ص {ar(data.explained_on[n["id"]])})' for n in seen_before)
+        items.append(f'<li class="ref">تقدّم شرح: {refs}.</li>')
+    dense_class = " dense" if len(items) > 6 else ""
+    footnotes = f'<ol class="notes{dense_class}">{"".join(items)}</ol>' if items else '<div class="notes"></div>'
 
     sura = data.sura_names[first_sura - 1]
     juz = juz_of(page, data.juz_pages)
@@ -201,6 +211,7 @@ ol.notes { list-style: none; border-top: 0.3mm solid #c9b989; padding-top: 1.2mm
 .notes li { margin: 0 0 0.6mm 0; text-align: justify; }
 .notes.dense { column-count: 2; column-gap: 5mm; font-size: 7.4pt; line-height: 1.28; }
 .notes.dense li { break-inside: avoid; margin-bottom: 0.4mm; }
+.notes li.ref { column-span: all; color: #555; margin-top: 0.8mm; }
 .notes b { color: #8a6500; }
 .kind { color: #7a6a00; font-size: 7.5pt; }
 .ftr { display: flex; justify-content: space-between; align-items: center; font-size: 7.5pt; color: #444; padding-top: 1mm; }
