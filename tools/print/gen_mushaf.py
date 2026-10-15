@@ -170,10 +170,11 @@ def render_page(data, page, images_dir):
     total = sum(len(n["meaning"]) for n in notes)
     items = []
     for n in notes:
-        meaning = n["meaning"] if total <= 420 else first_sentence(n["meaning"])
+        meaning = n["meaning"] if (total <= 420 and len(notes) <= 6) else first_sentence(n["meaning"])
         kind = ' <span class="kind">(صفة)</span>' if n["kind"] == "attribute" else ""
         items.append(f'<li><b>{html.escape(n["arabic"])}</b>{kind}: {html.escape(meaning)}</li>')
-    footnotes = f'<ol class="notes">{"".join(items)}</ol>' if items else '<div class="notes"></div>'
+    dense = " dense" if len(notes) > 6 else ""
+    footnotes = f'<ol class="notes{dense}">{"".join(items)}</ol>' if items else '<div class="notes"></div>'
 
     sura = data.sura_names[first_sura - 1]
     juz = juz_of(page, data.juz_pages)
@@ -198,6 +199,8 @@ body { font-family: "Amiri", "Traditional Arabic", serif; direction: rtl; color:
 .notes { flex: 1; overflow: hidden; margin: 1.5mm 1mm 0; padding: 0; font-size: 8.4pt; line-height: 1.4; }
 ol.notes { list-style: none; border-top: 0.3mm solid #c9b989; padding-top: 1.2mm; }
 .notes li { margin: 0 0 0.6mm 0; text-align: justify; }
+.notes.dense { column-count: 2; column-gap: 5mm; font-size: 7.4pt; line-height: 1.28; }
+.notes.dense li { break-inside: avoid; margin-bottom: 0.4mm; }
 .notes b { color: #8a6500; }
 .kind { color: #7a6a00; font-size: 7.5pt; }
 .ftr { display: flex; justify-content: space-between; align-items: center; font-size: 7.5pt; color: #444; padding-top: 1mm; }
