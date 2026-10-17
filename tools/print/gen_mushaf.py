@@ -104,7 +104,7 @@ def spans_of(word_text, spans):
 
 
 class Data:
-    def __init__(self):
+    def __init__(self, gharib_path=None):
         self.tajweed = sqlite3.connect(os.path.join(ROOT, "feature/tajweed/src/main/assets/tajweed.db"))
         self.names = sqlite3.connect(os.path.join(ROOT, "feature/divinenames/src/main/assets/divine_names.db"))
         self.glyphs = sqlite3.connect(os.path.join(ROOT, "feature/divinenames/tools/db/ayahinfo_1260.db"))
@@ -119,6 +119,14 @@ class Data:
         self.occurrences = {}
         for s, a, p, nid in self.names.execute("select sura, ayah, position, name_id from occurrences"):
             self.occurrences[(s, a, p)] = nid
+        # meanings of the difficult words per ayah (al-Siraj fi bayan gharib al-Quran, al-Khudayri)
+        self.gharib = {}
+        if gharib_path:
+            db = sqlite3.connect(gharib_path)
+            for s, a, t in db.execute("select sura, ayah, text from verses"):
+                t = (t or "").strip()
+                if t and t != "...":
+                    self.gharib[(s, a)] = t
 
     def page_glyphs(self, page):
         return self.glyphs.execute(
@@ -135,10 +143,13 @@ def render_page(data, page, images_dir):
         return "", []
     covers, names_rects, texts = [], [], []
     page_names = []  # distinct name ids in reading order
+    page_ayahs = []  # (sura, ayah) in reading order
     first_sura = None
     for s, a, p, line, x1, y1, x2, y2 in glyphs:
         if first_sura is None:
             first_sura = s
+        if (s, a) not in page_ayahs:
+            page_ayahs.append((s, a))
         w, h = x2 - x1, y2 - y1
         if w < 20 or h < 40:
             continue  # pause marks and the like stay as drawn on the page
@@ -184,7 +195,18 @@ def render_page(data, page, images_dir):
         refs = "، ".join(f'<b>{html.escape(n["arabic"])}</b> (ص {ar(data.explained_on[n["id"]])})' for n in seen_before)
         items.append(f'<li class="ref">تقدّم شرح: {refs}.</li>')
     dense_class = " dense" if len(items) > 6 else ""
-    footnotes = f'<ol class="notes{dense_class}">{"".join(items)}</ol>' if items else '<div class="notes"></div>'
+    names_html = f'<ol class="notes{dense_class}">{"".join(items)}</ol>' if items else ""
+
+    # meanings of the difficult words of the page, one run per ayah
+    gharib_items = []
+    for s, a in page_ayahs:
+        text = data.gharib.get((s, a))
+        if not text:
+            continue
+        body = html.escape(" ".join(line.strip() for line in text.splitlines() if line.strip()))
+        gharib_items.append(f'<span class="ay"><span class="an">{ar(a)}</span> {body}</span>')
+    gharib_html = f'<div class="gharib">{" ".join(gharib_items)}</div>' if gharib_items else ""
+    footnotes = f'<div class="foot">{gharib_html}{names_html}</div>'
 
     sura = data.sura_names[first_sura - 1]
     juz = juz_of(page, data.juz_pages)
@@ -204,10 +226,14 @@ html, body { margin: 0; padding: 0; }
 body { font-family: "Amiri", "Traditional Arabic", serif; direction: rtl; color: #222; }
 .page { height: 278mm; display: flex; flex-direction: column; page-break-after: always; break-after: page; }
 .hdr { display: flex; justify-content: space-between; font-size: 10.5pt; font-weight: bold; color: #5b4a1e; padding: 0 2mm 1mm; }
-.mushaf { width: 140mm; height: 226mm; align-self: center; direction: ltr; border: 0.3mm solid #c9b989; border-radius: 2mm; }
+.mushaf { width: 130mm; height: 210mm; align-self: center; direction: ltr; border: 0.3mm solid #c9b989; border-radius: 2mm; }
 .mushaf text { font-family: "Uthmanic"; font-size: 100px; dominant-baseline: central; fill: #111; stroke: #111; stroke-width: 1.3px; stroke-linejoin: round; paint-order: stroke fill; }
-.notes { flex: 1; overflow: hidden; margin: 1.5mm 1mm 0; padding: 0; font-size: 8.4pt; line-height: 1.4; }
-ol.notes { list-style: none; border-top: 0.3mm solid #c9b989; padding-top: 1.2mm; }
+.foot { flex: 1; overflow: hidden; margin: 1.2mm 1mm 0; border-top: 0.3mm solid #c9b989; padding-top: 1mm; }
+.gharib { column-count: 2; column-gap: 5mm; font-size: 7.3pt; line-height: 1.38; text-align: justify; }
+.gharib .ay { display: inline; }
+.gharib .an { font-weight: bold; color: #8a6500; }
+.notes { margin: 1mm 0 0; padding: 0; font-size: 8pt; line-height: 1.38; }
+ol.notes { list-style: none; border-top: 0.2mm dotted #c9b989; padding-top: 0.8mm; }
 .notes li { margin: 0 0 0.6mm 0; text-align: justify; }
 .notes.dense { column-count: 2; column-gap: 5mm; font-size: 7.4pt; line-height: 1.28; }
 .notes.dense li { break-inside: avoid; margin-bottom: 0.4mm; }
@@ -268,6 +294,8 @@ def intro_html(data):
   <p><b>{allah["arabic"]}</b>: {html.escape(allah["meaning"])}</p>
   <p><b>{rabb["arabic"]}</b>: {html.escape(rabb["meaning"])}</p>
   <p>وفي آخر المصحف فهرس كامل بالأسماء والصفات وشرحها ودليلها.</p>
+  <h2>معاني الكلمات</h2>
+  <p>في حاشية كل صفحة بيان لمعاني الكلمات الغريبة في آياتها، مرقّمة برقم الآية، من كتاب «السراج في بيان غريب القرآن» للدكتور محمد بن عبد العزيز الخضيري.</p>
   <h2>المراجع</h2>
   <p style="font-size:10pt">{html.escape(allah.get("sources", "") or "القواعد المثلى (ابن عثيمين)، فقه الأسماء الحسنى (عبد الرزاق البدر)، شرح أسماء الله الحسنى (سعيد القحطاني)، العقيدة الواسطية وشرحها، تفسير السعدي.")}</p>
 </section>"""
@@ -313,6 +341,7 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--pages", required=True, help="directory with page001.png … page604.png (1260 px wide)")
     ap.add_argument("--fonts", required=True, help="directory with Amiri-Regular.ttf and Amiri-Bold.ttf")
+    ap.add_argument("--gharib", help="quran.ar.wordsmeaningssiraj.db (meanings of the difficult words)")
     ap.add_argument("--from", dest="start", type=int, default=1)
     ap.add_argument("--to", dest="end", type=int, default=604)
     ap.add_argument("--out", default=os.path.join(ROOT, "dist", "mushaf.pdf"))
@@ -324,7 +353,7 @@ def main():
 
     os.makedirs(args.work, exist_ok=True)
     os.makedirs(os.path.dirname(os.path.abspath(args.out)), exist_ok=True)
-    data = Data()
+    data = Data(args.gharib)
     pages = list(range(args.start, args.end + 1))
     parts = [pages[i:i + args.part] for i in range(0, len(pages), args.part)]
     pdfs = []
