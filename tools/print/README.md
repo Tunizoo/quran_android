@@ -27,7 +27,7 @@ fonts), in parts of N pages, merged with `pypdf`.
 
 ```
 python tools/print/gen_mushaf.py --pages <dir with page001.png> --fonts <dir with Amiri ttf> \
-    [--from 1 --to 604] [--part 40] [--out dist/mushaf-tajweed-asma.pdf]
+    --gharib <quran.ar.wordsmeaningssiraj.db> [--from 1 --to 604] [--part 40] [--out dist/mushaf-tajweed-asma.pdf]
 ```
 
 ## How the page is laid out
