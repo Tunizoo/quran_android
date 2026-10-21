@@ -71,7 +71,7 @@ class TajweedSettings @Inject constructor(
 
   companion object {
     const val KEY_ENABLED = "tajweedColors"
-    const val DEFAULT_ENABLED = false
+    const val DEFAULT_ENABLED = true
 
     // keys owned by the app's QuranSettings
     private const val KEY_NIGHT_MODE = "nightMode"
