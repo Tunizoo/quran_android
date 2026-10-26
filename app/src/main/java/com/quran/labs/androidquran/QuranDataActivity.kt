@@ -431,6 +431,15 @@ class QuranDataActivity : AppCompatActivity(), SimpleDownloadListener, OnRequest
   }
 
   private fun promptForDownload() {
+    // This fork downloads the pages without asking: a reader opened without them shows blank
+    // pages until each one is fetched, which confused users of the GitHub release.
+    quranDataStatus ?: return
+    quranSettings.setShouldFetchPages(true)
+    downloadQuranImages(true)
+  }
+
+  @Suppress("unused")
+  private fun promptForDownloadWithDialog() {
     val dataStatus = quranDataStatus ?: return
     val message = if (dataStatus.needPortrait()) {
       R.string.downloadPrompt

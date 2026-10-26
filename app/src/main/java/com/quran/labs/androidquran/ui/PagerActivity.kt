@@ -189,6 +189,7 @@ class PagerActivity : AppCompatActivity(), AudioBarListener, OnBookmarkTagsUpdat
   private var showingTranslation = false
   private var needsPermissionToDownloadOver3g = true
   private var promptDialog: AlertDialog? = null
+  private var requiredFilesRequested = false
   private var isDualPages = false
   private var promptedForExtraDownload = false
   private var progressDialog: ProgressDialog? = null
@@ -953,6 +954,20 @@ class PagerActivity : AppCompatActivity(), AudioBarListener, OnBookmarkTagsUpdat
   }
 
   fun showGetRequiredFilesDialog() {
+    if (promptDialog != null) {
+      return
+    }
+    // This fork fetches the required files (ayah positions, Arabic search database) without
+    // asking: the tajweed colours, the names highlighting and the memorization mode all need the
+    // ayah positions, and the question was easy to decline by mistake.
+    if (!requiredFilesRequested) {
+      requiredFilesRequested = true
+      downloadRequiredFiles()
+    }
+  }
+
+  @Suppress("unused")
+  private fun showGetRequiredFilesDialogWithPrompt() {
     if (promptDialog != null) {
       return
     }

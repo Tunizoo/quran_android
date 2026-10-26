@@ -203,6 +203,8 @@
 
 ## هوية النسخة والنشر
 
+- منذ 2026-10-26 ينزّل التطبيق صور الصفحات والملفات المطلوبة (مواضع الآيات وقاعدة البحث العربي) تلقائيًا دون سؤال (`QuranDataActivity.promptForDownload` و`PagerActivity.showGetRequiredFilesDialog`)، لأن رفض السؤال كان يترك الصفحات فارغة ويعطّل تلوين التجويد والأسماء ووضع الحفظ التي تعتمد على مواضع الكلمات.
+
 - اسم الحزمة في هذا الفرع `com.tunizoo.quran` (والنسخة التجريبية `com.tunizoo.quran.debug`) والاسم الظاهر «قرآن Qur'an» في كل اللغات، حتى تُثبَّت بجانب التطبيق الرسمي `com.quran.labs.androidquran` ولا تتعارض معه (2026-10-15).
 - بناء الإصدار: `./gradlew :app:assembleMadaniRelease -PdisableFirebase -PSTORE_FILE=… -PSTORE_PASSWORD=… -PKEY_ALIAS=… -PKEY_PASSWORD=…` مع تجاوز مهام `lintVital*` التي تتعطل بخلل في أداة Lint. مفتاح التوقيع محلي خارج المستودع (`~/.android/quran-fork-release.jks`) ويجب الاحتفاظ به.
 - النشر على GitHub: ملف APK من `dist/` يُرفع في صفحة Releases يدويًا. النشر على Google Play يحتاج حساب مطوّر وملف AAB (`bundleMadaniRelease` بالخيارات نفسها).
