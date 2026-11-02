@@ -73,6 +73,7 @@ import com.quran.labs.androidquran.common.audio.model.playback.AudioRequest
 import com.quran.labs.androidquran.common.audio.repository.AudioStatusRepository
 import com.quran.labs.androidquran.common.audio.repository.CurrentQariManager
 import com.quran.labs.androidquran.data.Constants
+import com.quran.labs.androidquran.util.ThemeUtil
 import com.quran.labs.androidquran.data.QuranDataProvider
 import com.quran.labs.androidquran.data.QuranDisplayData
 import com.quran.labs.androidquran.di.component.activity.PagerActivityComponent
@@ -1299,6 +1300,8 @@ class PagerActivity : AppCompatActivity(), AudioBarListener, OnBookmarkTagsUpdat
       item.setIcon(if (isNightMode) R.drawable.ic_night_mode else R.drawable.ic_day_mode)
       item.isChecked = isNightMode
       refreshQuranPages()
+      // darken (or lighten) the rest of the app too; this recreates the activity
+      ThemeUtil.applyFromPreferences(prefs)
       return true
     } else if (itemId == R.id.settings) {
       val i = Intent(this, QuranPreferenceActivity::class.java)

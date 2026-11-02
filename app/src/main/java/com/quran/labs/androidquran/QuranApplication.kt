@@ -39,9 +39,8 @@ open class QuranApplication : Application(), QuranApplicationComponentProvider {
     bookmarksWidgetSubscriber.subscribeBookmarksWidgetIfNecessary()
     wirdReadingBridge.start()
 
-    // theme setup
-    val theme = quranSettings.currentTheme()
-    ThemeUtil.setTheme(theme)
+    // theme setup (the reader's night mode darkens the whole app)
+    ThemeUtil.applyFromPreferences(androidx.preference.PreferenceManager.getDefaultSharedPreferences(this))
   }
 
   open fun setupTimber() {

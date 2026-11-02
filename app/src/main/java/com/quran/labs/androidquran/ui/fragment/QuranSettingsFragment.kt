@@ -23,6 +23,7 @@ import com.quran.labs.androidquran.pageselect.PageSelectActivity
 import com.quran.labs.androidquran.ui.TranslationManagerActivity
 import com.quran.labs.androidquran.util.OrientationLockUtils
 import com.quran.labs.androidquran.util.QuranUtils
+import androidx.preference.PreferenceManager
 import com.quran.labs.androidquran.util.ThemeUtil
 import com.quran.mobile.di.ExtraPreferencesProvider
 import com.quran.mobile.feature.downloadmanager.AudioManagerActivity
@@ -69,9 +70,26 @@ class QuranSettingsFragment : PreferenceFragmentCompat() {
     // handle theme preference
     val themePref: Preference? = findPreference(Constants.PREF_APP_THEME)
     themePref?.onPreferenceChangeListener = Preference.OnPreferenceChangeListener { _, newValue ->
-      ThemeUtil.setTheme(newValue as String)
+      val prefs = PreferenceManager.getDefaultSharedPreferences(requireContext())
+      if (prefs.getBoolean(Constants.PREF_NIGHT_MODE, false)) {
+        ThemeUtil.setTheme(Constants.THEME_DARK)
+      } else {
+        ThemeUtil.setTheme(newValue as String)
+      }
       true
     }
+
+    // the reader's night mode darkens the whole app
+    findPreference<Preference>(Constants.PREF_NIGHT_MODE)?.onPreferenceChangeListener =
+      Preference.OnPreferenceChangeListener { _, newValue ->
+        val prefs = PreferenceManager.getDefaultSharedPreferences(requireContext())
+        if (newValue as Boolean) {
+          ThemeUtil.setTheme(Constants.THEME_DARK)
+        } else {
+          ThemeUtil.setTheme(prefs.getString(Constants.PREF_APP_THEME, Constants.THEME_DEFAULT) ?: Constants.THEME_DEFAULT)
+        }
+        true
+      }
 
     // handle translation manager click
     val translationPref: Preference? = findPreference(Constants.PREF_TRANSLATION_MANAGER)
