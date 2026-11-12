@@ -16,11 +16,10 @@
   <string name="memo_hidden">مخفي</string>
   <string name="memo_show">ظاهر</string>
   <string name="memo_hint">أول كلمة</string>
-  <string name="memo_next_word">كلمة</string>
   <string name="memo_next_ayah">آية</string>
   <string name="memo_reveal_all">الكل</string>
   <string name="memo_hide_again">إخفاء</string>
-  <string name="memo_tap_hint">انقر على كلمة مخفية لإظهارها.</string>
+  <string name="memo_tap_hint">انقر على آية مخفية لإظهارها.</string>
   <string name="memo_completed">أظهرت المقطع كاملًا. كيف كان حفظك؟</string>
   <string name="memo_rate_prompt">قيّم حفظك عند الانتهاء:</string>
   <string name="memo_grade_again">أعد</string>

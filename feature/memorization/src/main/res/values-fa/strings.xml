@@ -15,11 +15,10 @@
   <string name="memo_hidden">پنهان</string>
   <string name="memo_show">نمایان</string>
   <string name="memo_hint">واژهٔ نخست</string>
-  <string name="memo_next_word">واژه</string>
   <string name="memo_next_ayah">آیه</string>
   <string name="memo_reveal_all">همه</string>
   <string name="memo_hide_again">پنهان کردن</string>
-  <string name="memo_tap_hint">برای دیدن یک واژهٔ پنهان روی آن بزنید.</string>
+  <string name="memo_tap_hint">برای آشکار شدن یک آیهٔ پنهان روی آن بزنید.</string>
   <string name="memo_completed">همهٔ بخش را آشکار کردید. چطور بود؟</string>
   <string name="memo_rate_prompt">پس از پایان، حفظ خود را ارزیابی کنید:</string>
   <string name="memo_grade_again">دوباره</string>

@@ -38,8 +38,8 @@ data class MemorizationSessionState(
   /** Keep the first word of every ayah visible as a hint. */
   val hint: Boolean = true,
   val cursor: RevealCursor = RevealCursor(0, 0),
-  /** Single words revealed by tapping them. */
-  val peeked: Set<GlyphPosition> = emptySet(),
+  /** Ayahs (global ayah ids) revealed by tapping one of their words. */
+  val peekedAyahs: Set<Int> = emptySet(),
   /** Set once the cursor has passed the last word of the portion. */
   val completed: Boolean = false
 ) {
@@ -49,7 +49,7 @@ data class MemorizationSessionState(
 /**
  * The running memorization session: which portion is hidden on the page and how much of it has
  * been revealed. Shared by the reader overlay (controls), the draw helper (painting) and the tap
- * handler (peeking a word).
+ * handler (revealing a tapped ayah).
  */
 @SingleIn(AppScope::class)
 class MemorizationSession @Inject constructor(
@@ -114,7 +114,7 @@ class MemorizationSession @Inject constructor(
   /** Hides the whole portion again. */
   fun hideAll() {
     _state.update {
-      it.copy(hidden = true, cursor = RevealCursor(it.startAyahId, 0), peeked = emptySet(), completed = false)
+      it.copy(hidden = true, cursor = RevealCursor(it.startAyahId, 0), peekedAyahs = emptySet(), completed = false)
     }
     notifyChanged()
   }
@@ -124,44 +124,23 @@ class MemorizationSession @Inject constructor(
     notifyChanged()
   }
 
-  /** Reveals the next hidden word after the cursor (moving on to the next ayah when needed). */
-  fun revealNextWord() {
-    val state = _state.value
-    if (!state.isActive || state.completed) return
-    var cursor = state.cursor
-    while (true) {
-      val words = wordsOfAyah(cursor.ayahId)
-      val next = words.firstOrNull { it.position.position > cursor.position }
-      if (next != null) {
-        cursor = RevealCursor(cursor.ayahId, next.position.position)
-        break
-      }
-      if (cursor.ayahId >= state.endAyahId) {
-        _state.update { it.copy(cursor = RevealCursor(it.endAyahId, Int.MAX_VALUE), completed = true) }
-        notifyChanged()
-        return
-      }
-      cursor = RevealCursor(cursor.ayahId + 1, 0)
-    }
-    _state.update { it.copy(cursor = cursor) }
-    notifyChanged()
-  }
-
-  /** Reveals the rest of the current ayah (or the whole next ayah when the current one is done). */
+  /** Reveals the next hidden ayah of the portion. */
   fun revealNextAyah() {
     val state = _state.value
     if (!state.isActive || state.completed) return
     val cursor = state.cursor
-    val remaining = wordsOfAyah(cursor.ayahId).any { it.position.position > cursor.position }
-    val targetAyah = if (remaining || cursor.ayahId >= state.endAyahId) cursor.ayahId else cursor.ayahId + 1
-    val completed = targetAyah >= state.endAyahId
-    _state.update { it.copy(cursor = RevealCursor(targetAyah, Int.MAX_VALUE), completed = completed) }
+    var target = if (cursor.position == Int.MAX_VALUE) cursor.ayahId + 1 else cursor.ayahId
+    // ayahs already revealed by a tap do not need another press
+    while (target < state.endAyahId && target in state.peekedAyahs) target++
+    target = minOf(target, state.endAyahId)
+    _state.update { it.copy(cursor = RevealCursor(target, Int.MAX_VALUE), completed = target >= it.endAyahId) }
     notifyChanged()
   }
 
-  /** Reveals one word without moving the cursor. */
-  fun peek(position: GlyphPosition) {
-    _state.update { it.copy(peeked = it.peeked + position) }
+  /** Reveals the whole ayah of the tapped word without moving the cursor. */
+  fun peekAyah(position: GlyphPosition) {
+    val ayahId = quranInfoProvider().getAyahId(position.sura, position.ayah)
+    _state.update { it.copy(peekedAyahs = it.peekedAyahs + ayahId) }
     notifyChanged()
   }
 
@@ -171,7 +150,7 @@ class MemorizationSession @Inject constructor(
     val ayahId = quranInfoProvider().getAyahId(position.sura, position.ayah)
     if (ayahId < state.startAyahId || ayahId > state.endAyahId) return false
     if (state.hint && isFirstWord) return false
-    if (position in state.peeked) return false
+    if (ayahId in state.peekedAyahs) return false
     return RevealCursor(ayahId, position.position) > state.cursor
   }
 

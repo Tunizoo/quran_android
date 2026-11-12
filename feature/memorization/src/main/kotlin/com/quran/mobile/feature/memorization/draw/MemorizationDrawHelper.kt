@@ -29,7 +29,7 @@ import java.util.Collections
 
 /**
  * Covers the words of the portion being memorised with the page background, leaving a faint box
- * where each hidden word is so the reader can tap it to peek. Draws over the ayah highlights
+ * where each hidden word is so the reader can tap it to reveal its ayah. Draws over the ayah highlights
  * (positive order) so covered words stay covered while audio plays.
  */
 @SingleIn(AppScope::class)

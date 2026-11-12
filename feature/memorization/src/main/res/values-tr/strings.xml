@@ -15,11 +15,10 @@
   <string name="memo_hidden">Gizli</string>
   <string name="memo_show">Görünür</string>
   <string name="memo_hint">İlk kelime</string>
-  <string name="memo_next_word">Kelime</string>
   <string name="memo_next_ayah">Ayet</string>
   <string name="memo_reveal_all">Tümü</string>
   <string name="memo_hide_again">Gizle</string>
-  <string name="memo_tap_hint">Gizli bir kelimeye dokunarak ona göz atın.</string>
+  <string name="memo_tap_hint">Gizli bir ayete dokunarak onu açın.</string>
   <string name="memo_completed">Bölümün tamamını açtınız. Nasıl gitti?</string>
   <string name="memo_rate_prompt">Bitirince ezberinizi değerlendirin:</string>
   <string name="memo_grade_again">Tekrar</string>

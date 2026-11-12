@@ -15,11 +15,10 @@
   <string name="memo_hidden">Oculto</string>
   <string name="memo_show">Visible</string>
   <string name="memo_hint">Primera palabra</string>
-  <string name="memo_next_word">Palabra</string>
   <string name="memo_next_ayah">Aleya</string>
   <string name="memo_reveal_all">Todo</string>
   <string name="memo_hide_again">Ocultar</string>
-  <string name="memo_tap_hint">Toca una palabra oculta para verla.</string>
+  <string name="memo_tap_hint">Toca una aleya oculta para mostrarla.</string>
   <string name="memo_completed">Has descubierto todo el pasaje. ¿Cómo te ha ido?</string>
   <string name="memo_rate_prompt">Valora tu memoria cuando termines:</string>
   <string name="memo_grade_again">Otra vez</string>

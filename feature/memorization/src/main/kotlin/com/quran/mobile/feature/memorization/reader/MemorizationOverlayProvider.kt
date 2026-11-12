@@ -79,7 +79,6 @@ class MemorizationOverlayProvider @Inject constructor(
       }
       override fun setHidden(hidden: Boolean) = session.setHidden(hidden)
       override fun setHint(hint: Boolean) = session.setHint(hint)
-      override fun revealWord() = session.revealNextWord()
       override fun revealAyah() = session.revealNextAyah()
       override fun revealAll() = session.revealAll()
       override fun hideAll() = session.hideAll()
@@ -127,7 +126,7 @@ class MemorizationOverlayProvider @Inject constructor(
 
     override fun onPageChanged(page: Int) {
       // a review opened through the deep link arrives with the first ayah selected; the selection
-      // would otherwise swallow the taps meant to peek at words
+      // would otherwise swallow the taps meant to reveal ayahs
       if (session.state.value.isActive) host.clearSelection()
     }
 

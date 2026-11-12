@@ -43,7 +43,6 @@ interface MemorizationBarActions {
   fun listen(times: Int)
   fun setHidden(hidden: Boolean)
   fun setHint(hint: Boolean)
-  fun revealWord()
   fun revealAyah()
   fun revealAll()
   fun hideAll()
@@ -55,7 +54,8 @@ private val REPEAT_CHOICES = listOf(1, 3, 5, 10)
 
 /**
  * The control bar shown over the reader while a memorization session is running. Collapsed by
- * default to a single row so the bottom lines of the page stay visible and tappable; the chevron
+ * default to a single row (reveal the next ayah) so the bottom lines of the page stay visible and
+ * tappable; the chevron
  * expands it to the listening, hiding and grading controls.
  */
 @Composable
@@ -88,12 +88,6 @@ fun MemorizationBar(
           modifier = Modifier.weight(1f)
         )
         if (state.hidden) {
-          Button(
-            onClick = { actions.revealWord() },
-            enabled = !state.completed,
-            contentPadding = ButtonDefaults.ButtonWithIconContentPadding
-          ) { Text(stringResource(R.string.memo_next_word)) }
-          Spacer(Modifier.width(6.dp))
           Button(
             onClick = { actions.revealAyah() },
             enabled = !state.completed,

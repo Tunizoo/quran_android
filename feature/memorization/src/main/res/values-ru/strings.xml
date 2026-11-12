@@ -15,11 +15,10 @@
   <string name="memo_hidden">Скрыто</string>
   <string name="memo_show">Показано</string>
   <string name="memo_hint">Первое слово</string>
-  <string name="memo_next_word">Слово</string>
   <string name="memo_next_ayah">Аят</string>
   <string name="memo_reveal_all">Всё</string>
   <string name="memo_hide_again">Скрыть</string>
-  <string name="memo_tap_hint">Нажмите на скрытое слово, чтобы подсмотреть его.</string>
+  <string name="memo_tap_hint">Нажмите на скрытый аят, чтобы открыть его.</string>
   <string name="memo_completed">Вы открыли весь отрывок. Как прошло?</string>
   <string name="memo_rate_prompt">Оцените, как вы помните отрывок, когда закончите:</string>
   <string name="memo_grade_again">Снова</string>

@@ -15,11 +15,10 @@
   <string name="memo_hidden">Tersembunyi</string>
   <string name="memo_show">Tampak</string>
   <string name="memo_hint">Kata pertama</string>
-  <string name="memo_next_word">Kata</string>
   <string name="memo_next_ayah">Ayat</string>
   <string name="memo_reveal_all">Semua</string>
   <string name="memo_hide_again">Sembunyikan</string>
-  <string name="memo_tap_hint">Ketuk kata yang tertutup untuk mengintipnya.</string>
+  <string name="memo_tap_hint">Ketuk ayat yang tertutup untuk menampilkannya.</string>
   <string name="memo_completed">Anda telah membuka seluruh bagian. Bagaimana hasilnya?</string>
   <string name="memo_rate_prompt">Nilai hafalan Anda setelah selesai:</string>
   <string name="memo_grade_again">Ulangi</string>

@@ -16,11 +16,10 @@
   <string name="memo_hidden">Hidden</string>
   <string name="memo_show">Shown</string>
   <string name="memo_hint">First word</string>
-  <string name="memo_next_word">Word</string>
   <string name="memo_next_ayah">Ayah</string>
   <string name="memo_reveal_all">All</string>
   <string name="memo_hide_again">Hide</string>
-  <string name="memo_tap_hint">Tap a covered word to peek at it.</string>
+  <string name="memo_tap_hint">Tap a covered ayah to reveal it.</string>
   <string name="memo_completed">You revealed the whole portion. How did it go?</string>
   <string name="memo_rate_prompt">Rate your recall when you are done:</string>
   <string name="memo_grade_again">Again</string>

@@ -15,11 +15,10 @@
   <string name="memo_hidden">Verborgen</string>
   <string name="memo_show">Sichtbar</string>
   <string name="memo_hint">Erstes Wort</string>
-  <string name="memo_next_word">Wort</string>
   <string name="memo_next_ayah">Vers</string>
   <string name="memo_reveal_all">Alles</string>
   <string name="memo_hide_again">Verbergen</string>
-  <string name="memo_tap_hint">Tippe auf ein verdecktes Wort, um es kurz zu sehen.</string>
+  <string name="memo_tap_hint">Tippe auf einen verdeckten Vers, um ihn aufzudecken.</string>
   <string name="memo_completed">Du hast den ganzen Abschnitt aufgedeckt. Wie lief es?</string>
   <string name="memo_rate_prompt">Bewerte dein Erinnern, wenn du fertig bist:</string>
   <string name="memo_grade_again">Nochmal</string>

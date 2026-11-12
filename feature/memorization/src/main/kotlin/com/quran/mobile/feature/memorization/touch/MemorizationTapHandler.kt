@@ -9,7 +9,7 @@ import com.quran.page.common.touch.PageTapHandler
 import dev.zacsweers.metro.ContributesIntoSet
 import dev.zacsweers.metro.Inject
 
-/** A single tap on a covered word reveals that word (a "peek") while a session is running. */
+/** A single tap on a covered word reveals its whole ayah while a session is running. */
 @ContributesIntoSet(AppScope::class)
 class MemorizationTapHandler @Inject constructor(
   private val drawHelper: MemorizationDrawHelper,
@@ -18,7 +18,7 @@ class MemorizationTapHandler @Inject constructor(
 
   override fun onSingleTap(activity: Activity, page: Int, image: ImageView, pageX: Float, pageY: Float): Boolean {
     val word = drawHelper.hiddenWordAt(page, image, pageX, pageY) ?: return false
-    session.peek(word)
+    session.peekAyah(word)
     return true
   }
 }

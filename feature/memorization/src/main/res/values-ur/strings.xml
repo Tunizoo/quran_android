@@ -15,11 +15,10 @@
   <string name="memo_hidden">چھپا ہوا</string>
   <string name="memo_show">ظاہر</string>
   <string name="memo_hint">پہلا لفظ</string>
-  <string name="memo_next_word">لفظ</string>
   <string name="memo_next_ayah">آیت</string>
   <string name="memo_reveal_all">سب</string>
   <string name="memo_hide_again">چھپائیں</string>
-  <string name="memo_tap_hint">کسی چھپے ہوئے لفظ کو دیکھنے کے لیے اس پر ٹیپ کریں۔</string>
+  <string name="memo_tap_hint">کسی چھپی ہوئی آیت کو ظاہر کرنے کے لیے اس پر ٹیپ کریں۔</string>
   <string name="memo_completed">آپ نے پورا حصہ ظاہر کر دیا۔ کیسا رہا؟</string>
   <string name="memo_rate_prompt">مکمل ہونے پر اپنے حفظ کی درجہ بندی کریں:</string>
   <string name="memo_grade_again">دوبارہ</string>

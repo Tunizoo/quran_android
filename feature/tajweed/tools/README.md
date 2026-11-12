@@ -9,3 +9,12 @@ Regenerates src/main/assets/tajweed.db from the quran.com API word markup.
 
 Each word row stores the bare word text and its tajweed spans (char offsets + rule class) keyed by
 the glyph position in the madani page database, so the app can repaint exactly that word box.
+
+## Ligature breaks
+
+The Uthmanic font draws many letter pairs as one ligature glyph, and a glyph has a single colour,
+so two letters of different tajweed colours came out in the same colour (e.g. the grey lam and the
+green noon of «ٱلنَّاسِ»). After `gen_tajweed.py`, run `python ligature_breaks.py`: it inserts a
+ZERO WIDTH JOINER between such letters (only where the font really ligates them, checked by
+shaping the candidate words with headless Chrome and the bundled font) and shifts the span offsets.
+The letters stay joined but are separate glyphs. Bump `TajweedDatabase.BUNDLED_VERSION` afterwards.

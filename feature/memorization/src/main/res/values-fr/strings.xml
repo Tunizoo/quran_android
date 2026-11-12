@@ -16,11 +16,10 @@
   <string name="memo_hidden">Masqué</string>
   <string name="memo_show">Visible</string>
   <string name="memo_hint">Premier mot</string>
-  <string name="memo_next_word">Mot</string>
   <string name="memo_next_ayah">Verset</string>
   <string name="memo_reveal_all">Tout</string>
   <string name="memo_hide_again">Masquer</string>
-  <string name="memo_tap_hint">Touchez un mot masqué pour le dévoiler.</string>
+  <string name="memo_tap_hint">Touchez un verset masqué pour le dévoiler.</string>
   <string name="memo_completed">Vous avez dévoilé tout le passage. Comment cela s’est-il passé ?</string>
   <string name="memo_rate_prompt">Évaluez votre mémorisation quand vous avez fini :</string>
   <string name="memo_grade_again">À revoir</string>
