@@ -224,7 +224,7 @@ CSS = """
 @font-face { font-family: "Amiri"; font-weight: bold; src: url("%(amirib)s"); }
 html, body { margin: 0; padding: 0; }
 body { font-family: "Amiri", "Traditional Arabic", serif; direction: rtl; color: #222; }
-.page { height: 278mm; display: flex; flex-direction: column; page-break-after: always; break-after: page; }
+.page { height: 278mm; box-sizing: border-box; overflow: hidden; display: flex; flex-direction: column; page-break-after: always; break-after: page; }
 .hdr { display: flex; justify-content: space-between; font-size: 10.5pt; font-weight: bold; color: #5b4a1e; padding: 0 2mm 1mm; }
 .mushaf { width: 130mm; height: 210mm; align-self: center; direction: ltr; border: 0.3mm solid #c9b989; border-radius: 2mm; }
 .mushaf text { font-family: "Uthmanic"; font-size: 100px; dominant-baseline: central; fill: #111; stroke: #111; stroke-width: 1.3px; stroke-linejoin: round; paint-order: stroke fill; }
@@ -244,10 +244,11 @@ ol.notes { list-style: none; border-top: 0.2mm dotted #c9b989; padding-top: 0.8m
 .legend .sw { display: inline-block; width: 3.2mm; height: 3.2mm; border-radius: 0.6mm; vertical-align: middle; margin: 0 0.8mm 0 1.8mm; }
 .legend .lb { vertical-align: middle; }
 .num { font-size: 10pt; font-weight: bold; }
-.intro { font-size: 11.5pt; line-height: 1.8; padding: 4mm 6mm; }
-.intro h1 { text-align: center; font-size: 26pt; margin: 30mm 0 4mm; color: #5b4a1e; }
-.intro h2 { font-size: 15pt; color: #5b4a1e; margin: 6mm 0 2mm; }
-.intro .sub { text-align: center; font-size: 14pt; color: #8a6500; margin-bottom: 20mm; }
+.intro { font-size: 10.8pt; line-height: 1.65; padding: 2mm 6mm; }
+.intro h1 { text-align: center; font-size: 26pt; margin: 12mm 0 3mm; color: #5b4a1e; }
+.intro h2 { font-size: 14pt; color: #5b4a1e; margin: 4mm 0 1mm; }
+.intro p { margin: 1.5mm 0; }
+.intro .sub { text-align: center; font-size: 14pt; color: #8a6500; margin-bottom: 8mm; }
 .index { font-size: 9.5pt; line-height: 1.55; column-count: 2; column-gap: 7mm; padding: 2mm 3mm; }
 .index .e { break-inside: avoid; margin-bottom: 2.4mm; }
 .index .e b { color: #8a6500; font-size: 11pt; }
