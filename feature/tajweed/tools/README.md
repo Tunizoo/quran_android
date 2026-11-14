@@ -10,6 +10,16 @@ Regenerates src/main/assets/tajweed.db from the quran.com API word markup.
 Each word row stores the bare word text and its tajweed spans (char offsets + rule class) keyed by
 the glyph position in the madani page database, so the app can repaint exactly that word box.
 
+## Tanween marks
+
+The letter carrying a tanween is pronounced normally; the rule (idgham in grey, ikhfa and iqlab in
+green) applies to the noon sound of the tanween. After `gen_tajweed.py`, run
+`python tanween_marks.py`: it moves the start of those spans onto the tanween sign (or the small
+meem of an iqlab). A base letter and its marks are one glyph cluster with a single colour, so the
+renderers draw such words in two passes: the mark's cluster in the mark colour underneath, then the
+word without the mark in its normal colours on top (`TajweedDrawHelper.measure`,
+`tools/print/gen_mushaf.py: word_layers`). Run it before `ligature_breaks.py`.
+
 ## Ligature breaks
 
 The Uthmanic font draws many letter pairs as one ligature glyph, and a glyph has a single colour,

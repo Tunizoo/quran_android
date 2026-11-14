@@ -4,6 +4,7 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapShader
 import android.graphics.Canvas
+import android.graphics.Color
 import android.graphics.ColorFilter
 import android.graphics.Matrix
 import android.graphics.Paint
@@ -319,38 +320,112 @@ class TajweedDrawHelper @Inject constructor(
   }
 
   private class MeasuredWord(
+    /** The word with its colours (without the separately coloured marks when [under] is set). */
     val layout: StaticLayout,
+    /**
+     * Drawn first, under [layout], when a rule colours a mark alone (e.g. the tanween of an idgham,
+     * whose carrier letter is pronounced normally): the whole word, transparent except the cluster
+     * of that mark in the mark's colour. [layout] then repaints the word without the mark, so only
+     * the mark keeps the colour. A glyph cluster cannot be given two colours in one pass.
+     */
+    val under: StaticLayout?,
     val inkBounds: Rect,
     val target: RectF,
     val line: Int,
     val rawScale: Float
   )
 
+  private fun isMark(ch: Char): Boolean {
+    val type = Character.getType(ch)
+    return type == Character.NON_SPACING_MARK.toInt() ||
+      type == Character.COMBINING_SPACING_MARK.toInt() ||
+      type == Character.ENCLOSING_MARK.toInt()
+  }
+
+  private class ColorRange(val start: Int, val end: Int, val color: Int)
+
   private fun measure(word: TajweedWord, target: RectF, line: Int, textPaint: TextPaint, night: Boolean): MeasuredWord? {
     val text = word.text
     if (text.isEmpty()) return null
-    val spannable = SpannableString(text)
+
+    // a span that starts on a combining mark colours that mark (and the marks after it) alone
+    val markRanges = ArrayList<ColorRange>()
+    val normalRanges = ArrayList<ColorRange>()
     for (span in word.spans) {
-      spannable.setSpan(ForegroundColorSpan(span.group.color(night)), span.start, span.end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+      val color = span.group.color(night)
+      if (span.start in 1 until text.length && isMark(text[span.start])) {
+        var m = span.start
+        while (m < span.end && isMark(text[m])) m++
+        markRanges.add(ColorRange(span.start, m, color))
+        if (m < span.end) normalRanges.add(ColorRange(m, span.end, color))
+      } else {
+        normalRanges.add(ColorRange(span.start, span.end, color))
+      }
     }
+
     val inkBounds = Rect()
     textPaint.getTextBounds(text, 0, text.length, inkBounds)
     if (inkBounds.width() <= 0 || inkBounds.height() <= 0) return null
     val advance = ceil(textPaint.measureText(text)).toInt() + 2
-    val layout = StaticLayout.Builder.obtain(spannable, 0, spannable.length, textPaint, max(advance, inkBounds.right + 2))
+    val width = max(advance, inkBounds.right + 2)
+
+    val under: StaticLayout?
+    val top: CharSequence
+    if (markRanges.isEmpty()) {
+      under = null
+      top = SpannableString(text).also { spannable ->
+        for (range in normalRanges) {
+          spannable.setSpan(ForegroundColorSpan(range.color), range.start, range.end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+        }
+      }
+    } else {
+      val underText = SpannableString(text)
+      underText.setSpan(ForegroundColorSpan(Color.TRANSPARENT), 0, text.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+      val removed = BooleanArray(text.length)
+      for (range in markRanges) {
+        var clusterStart = range.start
+        while (clusterStart > 0 && isMark(text[clusterStart])) clusterStart--
+        var clusterEnd = range.end
+        while (clusterEnd < text.length && isMark(text[clusterEnd])) clusterEnd++
+        underText.setSpan(ForegroundColorSpan(range.color), clusterStart, clusterEnd, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+        for (i in range.start until range.end) removed[i] = true
+      }
+      under = layoutOf(underText, textPaint, width)
+
+      // the same word without those marks; offsets shift left by the marks removed before them
+      val shift = IntArray(text.length + 1)
+      val builder = StringBuilder(text.length)
+      for (i in text.indices) {
+        shift[i] = builder.length
+        if (!removed[i]) builder.append(text[i])
+      }
+      shift[text.length] = builder.length
+      top = SpannableString(builder.toString()).also { spannable ->
+        for (range in normalRanges) {
+          val start = shift[range.start]
+          val end = shift[range.end]
+          if (end > start) spannable.setSpan(ForegroundColorSpan(range.color), start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+        }
+      }
+    }
+    return MeasuredWord(layoutOf(top, textPaint, width), under, inkBounds, target, line, target.width() / inkBounds.width())
+  }
+
+  private fun layoutOf(text: CharSequence, textPaint: TextPaint, width: Int): StaticLayout =
+    StaticLayout.Builder.obtain(text, 0, text.length, textPaint, width)
       .setAlignment(Layout.Alignment.ALIGN_NORMAL)
       .setTextDirection(TextDirectionHeuristics.RTL)
       .setIncludePad(false)
       .build()
-    return MeasuredWord(layout, inkBounds, target, line, target.width() / inkBounds.width())
-  }
 
   private fun drawMeasured(canvas: Canvas, item: MeasuredWord, scaleX: Float, scaleY: Float) {
-    val layout = item.layout
+    // positions come from the full word (the under layout when there is one); both layouts are
+    // right aligned in the same width, so their glyphs coincide under the same transform
+    val reference = item.under ?: item.layout
     val inkBounds = item.inkBounds
     val target = item.target
-    val lineLeft = layout.getLineLeft(0)
-    val baseline = layout.getLineBaseline(0).toFloat()
+    val lineLeft = reference.getLineLeft(0)
+    val baseline = reference.getLineBaseline(0).toFloat()
     val inkWidth = inkBounds.width() * scaleX
     val left = target.left + (target.width() - inkWidth) / 2f
     val translateX = left - scaleX * (lineLeft + inkBounds.left)
@@ -358,7 +433,8 @@ class TajweedDrawHelper @Inject constructor(
     canvas.save()
     canvas.translate(translateX, translateY)
     canvas.scale(scaleX, scaleY)
-    layout.draw(canvas)
+    item.under?.draw(canvas)
+    item.layout.draw(canvas)
     canvas.restore()
   }
 

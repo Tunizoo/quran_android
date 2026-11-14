@@ -17,7 +17,7 @@ Inputs (relative to the repository unless given):
   pages/data/madani/.../MadaniDataSource.kt (juz table)
   --fonts DIR containing Amiri-Regular.ttf and Amiri-Bold.ttf (footnotes)
 """
-import argparse, html, os, re, sqlite3, subprocess, sys, json
+import argparse, html, os, re, sqlite3, subprocess, sys, json, unicodedata
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.normpath(os.path.join(HERE, "..", ".."))
@@ -79,10 +79,12 @@ def first_sentence(text):
     return text
 
 
-def spans_of(word_text, spans):
-    """Splits a word into (text, colour) runs from the 'start-end:rule;...' span string."""
-    runs = []
-    cursor = 0
+def is_mark(ch):
+    return unicodedata.category(ch).startswith("M")
+
+
+def parse_spans(spans):
+    """'start-end:rule;...' -> [(start, end, colour)] for the coloured rules, sorted."""
     parts = []
     for item in spans.split(";") if spans else []:
         rng, rule = item.split(":")
@@ -91,6 +93,13 @@ def spans_of(word_text, spans):
         if colour:
             parts.append((a, b, colour))
     parts.sort()
+    return parts
+
+
+def runs_of(word_text, parts):
+    """Splits a word into (text, colour) runs."""
+    runs = []
+    cursor = 0
     for a, b, colour in parts:
         if a < cursor:
             continue
@@ -101,6 +110,65 @@ def spans_of(word_text, spans):
     if cursor < len(word_text):
         runs.append((word_text[cursor:], None))
     return runs
+
+
+def tspans_of(runs, hidden=False):
+    out = []
+    for t, c in runs:
+        if c:
+            out.append(f'<tspan fill="{c}" stroke="{c}">{html.escape(t)}</tspan>')
+        elif hidden:
+            out.append(f'<tspan fill="none" stroke="none">{html.escape(t)}</tspan>')
+        else:
+            out.append(html.escape(t))
+    return "".join(out)
+
+
+def word_layers(word_text, spans):
+    """
+    Returns (under, top) tspans markup. A rule that colours a mark alone (a span starting on a
+    combining mark, e.g. the tanween of an idgham whose carrier letter is pronounced normally) needs
+    two passes, because a glyph cluster takes a single colour: `under` is the whole word, invisible
+    except the cluster of that mark in the mark's colour, and `top` is the word without the mark in
+    its normal colours, drawn over it. `under` is None for ordinary words.
+    """
+    parts = parse_spans(spans)
+    mark_ranges, normal = [], []
+    for a, b, colour in parts:
+        if 0 < a < len(word_text) and is_mark(word_text[a]):
+            m = a
+            while m < b and is_mark(word_text[m]):
+                m += 1
+            mark_ranges.append((a, m, colour))
+            if m < b:
+                normal.append((m, b, colour))
+        else:
+            normal.append((a, b, colour))
+    if not mark_ranges:
+        return None, tspans_of(runs_of(word_text, normal))
+
+    clusters = []
+    removed = set()
+    for a, m, colour in mark_ranges:
+        start = a
+        while start > 0 and is_mark(word_text[start]):
+            start -= 1
+        end = m
+        while end < len(word_text) and is_mark(word_text[end]):
+            end += 1
+        clusters.append((start, end, colour))
+        removed.update(range(a, m))
+    clusters.sort()
+    under = tspans_of(runs_of(word_text, clusters), hidden=True)
+
+    shift, kept = [], []
+    for i, ch in enumerate(word_text):
+        shift.append(len(kept))
+        if i not in removed:
+            kept.append(ch)
+    shift.append(len(kept))
+    top_parts = sorted((shift[a], shift[b], c) for a, b, c in normal if shift[b] > shift[a])
+    return under, tspans_of(runs_of("".join(kept), top_parts))
 
 
 class Data:
@@ -164,11 +232,14 @@ def render_page(data, page, images_dir):
             if nid not in page_names:
                 page_names.append(nid)
         covers.append(f'<rect x="{x1-1}" y="{y1-1}" width="{w+2}" height="{h+2}" fill="{PAPER}"/>')
-        tspans = "".join(
-            f'<tspan fill="{c}" stroke="{c}">{html.escape(t)}</tspan>' if c else html.escape(t) for t, c in spans_of(text, spans)
-        )
+        under, top = word_layers(text, spans)
         cx, cy = x1 + w / 2, y1 + h / 2
-        texts.append(f'<text data-w="{w}" data-cx="{cx:.1f}" y="{cy:.1f}">{tspans}</text>')
+        if under is None:
+            texts.append(f'<text data-w="{w}" data-cx="{cx:.1f}" y="{cy:.1f}">{top}</text>')
+        else:
+            # measured on the full word; the top layer copies its geometry (see layoutPage)
+            texts.append(f'<text data-w="{w}" data-cx="{cx:.1f}" y="{cy:.1f}">{under}</text>'
+                         f'<text class="top" y="{cy:.1f}">{top}</text>')
 
     img = f"file:///{os.path.join(images_dir, f'page{page:03d}.png').replace(os.sep, '/')}"
     svg = (
@@ -259,7 +330,7 @@ ol.notes { list-style: none; border-top: 0.2mm dotted #c9b989; padding-top: 0.8m
 
 JS = """
 function layoutPage(svg) {
-  const texts = Array.from(svg.querySelectorAll('text'));
+  const texts = Array.from(svg.querySelectorAll('text:not(.top)'));
   if (!texts.length) return;
   const data = texts.map(t => { t.setAttribute('font-size', '100'); const b = t.getBBox(); return { t, w: Math.max(b.width, 1), box: +t.dataset.w }; });
   const ratios = data.map(d => d.box / d.w).sort((a, b) => a - b);
@@ -271,6 +342,10 @@ function layoutPage(svg) {
     d.t.setAttribute('textLength', L.toFixed(1));
     d.t.setAttribute('lengthAdjust', 'spacingAndGlyphs');
     d.t.setAttribute('x', (+d.t.dataset.cx - L / 2).toFixed(1));
+    const top = d.t.nextElementSibling;
+    if (top && top.classList.contains('top')) {
+      for (const name of ['font-size', 'textLength', 'lengthAdjust', 'x']) top.setAttribute(name, d.t.getAttribute(name));
+    }
   }
 }
 document.fonts.ready.then(() => { document.querySelectorAll('svg.mushaf').forEach(layoutPage); document.body.dataset.ready = '1'; });
