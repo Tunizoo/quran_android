@@ -10,7 +10,7 @@
   <string name="divine_names_sheet_location">%1$s · %2$d:%3$d</string>
   <string name="divine_names_sheet_open_index">Abrir el índice</string>
   <string name="divine_names_pref_highlight">Resaltar los nombres y atributos de Allah</string>
-  <string name="divine_names_pref_highlight_summary">Nombres en dorado y atributos en amarillo en la página del mushaf. Toca dos veces una palabra resaltada para leer su explicación según el método de los Salaf.</string>
+  <string name="divine_names_pref_highlight_summary">Nombres en dorado y atributos en amarillo en la página del mushaf. Mantén pulsada una palabra resaltada para leer su explicación según el camino de los Salaf.</string>
   <string name="divine_names_pref_index">Índice de los nombres</string>
   <string name="divine_names_pref_index_summary">Explora todos los nombres con su significado y sus pruebas</string>
   <string name="divine_names_panel_no_selection">Selecciona una aleya para ver los nombres y atributos de Allah que contiene.</string>

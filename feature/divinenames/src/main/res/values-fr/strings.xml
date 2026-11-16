@@ -11,7 +11,7 @@
   <string name="divine_names_sheet_open_index">Ouvrir l’index</string>
 
   <string name="divine_names_pref_highlight">Colorer les noms et attributs d’Allah</string>
-  <string name="divine_names_pref_highlight_summary">Les noms en doré et les attributs en jaune sur la page du mushaf. Touchez deux fois un mot coloré pour lire son explication selon la méthode des Salaf.</string>
+  <string name="divine_names_pref_highlight_summary">Les noms en doré et les attributs en jaune sur la page du mushaf. Appuyez longuement sur un mot coloré pour lire son explication selon la voie des Salaf.</string>
   <string name="divine_names_pref_index">Index des noms</string>
   <string name="divine_names_pref_index_summary">Parcourir tous les noms avec leur sens et leurs preuves</string>
 

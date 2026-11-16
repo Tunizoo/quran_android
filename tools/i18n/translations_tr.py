@@ -86,7 +86,7 @@ DIVINE = {
     "divine_names_sheet_location": "%1$s · %2$d:%3$d",
     "divine_names_sheet_open_index": "Dizini aç",
     "divine_names_pref_highlight": "Allah’ın isim ve sıfatlarını renklendir",
-    "divine_names_pref_highlight_summary": "Mushaf sayfasında isimler altın, sıfatlar sarı renkte. Renkli bir kelimeye iki kez dokunarak Selef yöntemine göre açıklamasını okuyun.",
+    "divine_names_pref_highlight_summary": "Mushaf sayfasında isimler altın, sıfatlar sarı renkte. Renkli bir kelimeye uzun basarak Selef yöntemine göre açıklamasını okuyun.",
     "divine_names_pref_index": "İsimler dizini",
     "divine_names_pref_index_summary": "Tüm isimleri anlamları ve delilleriyle inceleyin",
     "divine_names_panel_no_selection": "İçindeki Allah’ın isim ve sıfatlarını görmek için bir ayet seçin.",

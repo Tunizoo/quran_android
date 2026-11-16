@@ -38,6 +38,7 @@ import com.quran.mobile.translation.model.LocalTranslation
 import com.quran.page.common.data.AyahCoordinates
 import com.quran.page.common.data.PageCoordinates
 import com.quran.page.common.touch.PageDoubleTapHandler
+import com.quran.page.common.touch.PageLongPressHandler
 import com.quran.page.common.touch.PageTapHandler
 import com.quran.reading.common.ReadingEventPresenter
 import com.quran.recitation.events.RecitationEventPresenter
@@ -69,6 +70,7 @@ class AyahTrackerPresenter @Inject constructor(
   private val recitationHighlightsPresenter: RecitationHighlightsPresenter,
   private val pageDoubleTapHandlers: Set<@JvmSuppressWildcards PageDoubleTapHandler>,
   private val pageTapHandlers: Set<@JvmSuppressWildcards PageTapHandler>,
+  private val pageLongPressHandlers: Set<@JvmSuppressWildcards PageLongPressHandler>,
 ) : AyahTracker, Presenter<AyahInteractionHandler>, PopupContainer, RecitationPage {
   // we may bind and unbind several times, and each time we unbind, we cancel
   // the scope, which means we can't launch new coroutines in that same scope.
@@ -275,6 +277,8 @@ class AyahTrackerPresenter @Inject constructor(
       readingEventPresenter.onAyahSelection(AyahSelection.None)
     } else if (eventType == SINGLE_TAP && handleSingleTap(activity, event, page)) {
       // consumed by a feature (e.g. revealing a hidden word in memorization mode)
+    } else if (eventType == LONG_PRESS && handlePageLongPress(activity, event, page)) {
+      // consumed by a feature (e.g. the explanation of a highlighted name of Allah)
     } else if (eventType == LONG_PRESS ||
       readingEventPresenter.currentAyahSelection() != AyahSelection.None
     ) {
@@ -304,6 +308,12 @@ class AyahTrackerPresenter @Inject constructor(
     if (pageTapHandlers.isEmpty()) return false
     val (imageView, point) = pagePoint(event, page) ?: return false
     return pageTapHandlers.any { it.onSingleTap(activity, page, imageView, point[0], point[1]) }
+  }
+
+  private fun handlePageLongPress(activity: Activity, event: MotionEvent, page: Int): Boolean {
+    if (pageLongPressHandlers.isEmpty()) return false
+    val (imageView, point) = pagePoint(event, page) ?: return false
+    return pageLongPressHandlers.any { it.onLongPress(activity, page, imageView, point[0], point[1]) }
   }
 
   /** The page image view and the event position mapped into page image pixels. */

@@ -11,7 +11,7 @@
   <string name="divine_names_sheet_open_index">فتح الفهرس</string>
 
   <string name="divine_names_pref_highlight">تلوين أسماء الله وصفاته</string>
-  <string name="divine_names_pref_highlight_summary">الأسماء بالذهبي والصفات بالأصفر في صفحة المصحف. انقر مرتين على الكلمة الملونة لقراءة شرحها على منهج السلف.</string>
+  <string name="divine_names_pref_highlight_summary">الأسماء بالذهبي والصفات بالأصفر في صفحة المصحف. اضغط مطوّلًا على الكلمة الملوّنة لقراءة شرحها على منهج السلف.</string>
   <string name="divine_names_pref_index">فهرس الأسماء</string>
   <string name="divine_names_pref_index_summary">تصفح الأسماء الحسنى مع معانيها وأدلتها</string>
 

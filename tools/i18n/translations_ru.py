@@ -86,7 +86,7 @@ DIVINE = {
     "divine_names_sheet_location": "%1$s · %2$d:%3$d",
     "divine_names_sheet_open_index": "Открыть указатель",
     "divine_names_pref_highlight": "Выделять имена и атрибуты Аллаха",
-    "divine_names_pref_highlight_summary": "Имена золотым, атрибуты жёлтым на странице мусхафа. Дважды коснитесь выделенного слова, чтобы прочитать пояснение по методу саляфов.",
+    "divine_names_pref_highlight_summary": "Имена золотым, атрибуты жёлтым на странице мусхафа. Нажмите и удерживайте выделенное слово, чтобы прочитать пояснение по методу саляфов.",
     "divine_names_pref_index": "Указатель имён",
     "divine_names_pref_index_summary": "Просмотреть все имена с их значением и доказательствами",
     "divine_names_panel_no_selection": "Выберите аят, чтобы увидеть имена и атрибуты Аллаха в нём.",

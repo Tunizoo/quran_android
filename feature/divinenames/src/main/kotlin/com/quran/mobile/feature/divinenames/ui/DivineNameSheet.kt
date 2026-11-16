@@ -29,7 +29,7 @@ import com.quran.mobile.feature.divinenames.R
 import com.quran.mobile.feature.divinenames.model.DivineName
 import com.quran.mobile.feature.divinenames.model.NameOccurrence
 
-/** Bottom sheet with the explanation of one name or attribute, opened by a double tap on the page. */
+/** Bottom sheet with the explanation of one name or attribute, opened by a long press on the page. */
 object DivineNameSheet {
 
   fun show(activity: Activity, name: DivineName, occurrence: NameOccurrence) {

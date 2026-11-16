@@ -10,7 +10,7 @@
   <string name="divine_names_sheet_location">%1$s · %2$d:%3$d</string>
   <string name="divine_names_sheet_open_index">فہرست کھولیں</string>
   <string name="divine_names_pref_highlight">اللہ کے اسماء و صفات کو رنگین کریں</string>
-  <string name="divine_names_pref_highlight_summary">مصحف کے صفحے پر اسماء سنہری اور صفات پیلے رنگ میں۔ کسی رنگین لفظ پر دو بار ٹیپ کر کے سلف کے منہج پر اس کی تشریح پڑھیں۔</string>
+  <string name="divine_names_pref_highlight_summary">مصحف کے صفحے پر اسماء سنہری اور صفات پیلے رنگ میں۔ کسی رنگین لفظ کو دیر تک دبا کر سلف کے منہج پر اس کی تشریح پڑھیں۔</string>
   <string name="divine_names_pref_index">اسماء کی فہرست</string>
   <string name="divine_names_pref_index_summary">تمام اسماء ان کے معانی اور دلائل کے ساتھ دیکھیں</string>
   <string name="divine_names_panel_no_selection">اللہ کے اسماء و صفات دیکھنے کے لیے کوئی آیت منتخب کریں۔</string>

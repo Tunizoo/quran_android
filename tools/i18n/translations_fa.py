@@ -86,7 +86,7 @@ DIVINE = {
     "divine_names_sheet_location": "%1$s · %2$d:%3$d",
     "divine_names_sheet_open_index": "باز کردن فهرست",
     "divine_names_pref_highlight": "رنگ‌آمیزی نام‌ها و صفات خداوند",
-    "divine_names_pref_highlight_summary": "نام‌ها طلایی و صفات زرد در صفحهٔ مصحف. برای خواندن شرح بر روش سلف، دو بار روی واژهٔ رنگی بزنید.",
+    "divine_names_pref_highlight_summary": "نام‌ها طلایی و صفات زرد در صفحهٔ مصحف. برای خواندن شرح بر روش سلف، واژهٔ رنگی را لمس کرده و نگه دارید.",
     "divine_names_pref_index": "فهرست نام‌ها",
     "divine_names_pref_index_summary": "همهٔ نام‌ها را با معنا و دلیلشان مرور کنید",
     "divine_names_panel_no_selection": "برای دیدن نام‌ها و صفات خداوند در آیه، آیه‌ای را انتخاب کنید.",

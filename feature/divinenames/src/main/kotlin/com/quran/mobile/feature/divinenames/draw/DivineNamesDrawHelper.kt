@@ -31,7 +31,7 @@ import java.util.Collections
  *
  * The rectangles for a page are loaded once in the background (from the bundled occurrence table
  * and the page glyph database) and cached, so drawing is a plain loop over cached rectangles. The
- * same cache answers hit tests for the double tap that opens the explanation sheet. Occurrence
+ * same cache answers hit tests for the long press that opens the explanation sheet. Occurrence
  * positions were generated for the madani mushaf layout, so the helper is inactive for other page
  * types.
  */

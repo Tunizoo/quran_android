@@ -86,7 +86,7 @@ DIVINE = {
     "divine_names_sheet_location": "%1$s · %2$d:%3$d",
     "divine_names_sheet_open_index": "Abrir el índice",
     "divine_names_pref_highlight": "Resaltar los nombres y atributos de Allah",
-    "divine_names_pref_highlight_summary": "Nombres en dorado y atributos en amarillo en la página del mushaf. Toca dos veces una palabra resaltada para leer su explicación según el método de los Salaf.",
+    "divine_names_pref_highlight_summary": "Nombres en dorado y atributos en amarillo en la página del mushaf. Mantén pulsada una palabra resaltada para leer su explicación según el camino de los Salaf.",
     "divine_names_pref_index": "Índice de los nombres",
     "divine_names_pref_index_summary": "Explora todos los nombres con su significado y sus pruebas",
     "divine_names_panel_no_selection": "Selecciona una aleya para ver los nombres y atributos de Allah que contiene.",

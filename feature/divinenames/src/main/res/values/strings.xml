@@ -11,7 +11,7 @@
   <string name="divine_names_sheet_open_index">Open the index</string>
 
   <string name="divine_names_pref_highlight">Highlight the names and attributes of Allah</string>
-  <string name="divine_names_pref_highlight_summary">Names in gold and attributes in yellow on the mushaf page. Double tap a highlighted word to read its explanation.</string>
+  <string name="divine_names_pref_highlight_summary">Names in gold and attributes in yellow on the mushaf page. Long-press a highlighted word to read its explanation.</string>
   <string name="divine_names_pref_index">Index of the names</string>
   <string name="divine_names_pref_index_summary">Browse all the names with their meanings and evidence</string>
 

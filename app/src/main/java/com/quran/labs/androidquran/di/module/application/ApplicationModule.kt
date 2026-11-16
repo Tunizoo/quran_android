@@ -31,6 +31,7 @@ import com.quran.mobile.di.qualifier.ApplicationContext
 import dev.zacsweers.metro.BindingContainer
 import com.quran.page.common.extension.ReaderOverlayProvider
 import com.quran.page.common.touch.PageDoubleTapHandler
+import com.quran.page.common.touch.PageLongPressHandler
 import com.quran.page.common.touch.PageTapHandler
 import dev.zacsweers.metro.ElementsIntoSet
 import dev.zacsweers.metro.Named
@@ -138,6 +139,12 @@ object ApplicationModule {
   @Provides
   @ElementsIntoSet
   fun provideDailyReviewProviders(): Set<DailyReviewProvider> {
+    return emptySet()
+  }
+
+  @Provides
+  @ElementsIntoSet
+  fun providePageLongPressHandlers(): Set<PageLongPressHandler> {
     return emptySet()
   }
 

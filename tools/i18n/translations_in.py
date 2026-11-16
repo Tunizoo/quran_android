@@ -86,7 +86,7 @@ DIVINE = {
     "divine_names_sheet_location": "%1$s · %2$d:%3$d",
     "divine_names_sheet_open_index": "Buka indeks",
     "divine_names_pref_highlight": "Warnai nama dan sifat Allah",
-    "divine_names_pref_highlight_summary": "Nama berwarna emas dan sifat berwarna kuning pada halaman mushaf. Ketuk dua kali kata yang berwarna untuk membaca penjelasannya menurut manhaj Salaf.",
+    "divine_names_pref_highlight_summary": "Nama berwarna emas dan sifat berwarna kuning pada halaman mushaf. Tekan lama kata yang berwarna untuk membaca penjelasannya menurut manhaj Salaf.",
     "divine_names_pref_index": "Indeks nama",
     "divine_names_pref_index_summary": "Telusuri semua nama beserta makna dan dalilnya",
     "divine_names_panel_no_selection": "Pilih sebuah ayat untuk melihat nama dan sifat Allah di dalamnya.",
