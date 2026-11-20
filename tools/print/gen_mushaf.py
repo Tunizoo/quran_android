@@ -126,11 +126,16 @@ def tspans_of(runs, hidden=False):
 
 def word_layers(word_text, spans):
     """
-    Returns (under, top) tspans markup. A rule that colours a mark alone (a span starting on a
-    combining mark, e.g. the tanween of an idgham whose carrier letter is pronounced normally) needs
-    two passes, because a glyph cluster takes a single colour: `under` is the whole word, invisible
-    except the cluster of that mark in the mark's colour, and `top` is the word without the mark in
-    its normal colours, drawn over it. `under` is None for ordinary words.
+    Returns (under, top, fallback) tspans markup. A rule that colours a mark alone (a span starting
+    on a combining mark, e.g. the tanween of an idgham whose carrier letter is pronounced normally)
+    needs two passes, because a glyph cluster takes a single colour: `under` is the whole word,
+    invisible except the cluster of that mark in the mark's colour, and `top` is the word without
+    the mark in its normal colours, drawn over it.
+
+    This font picks letter forms by the marks around them, so the word without the mark is not
+    always the same drawing. The page script compares the two renderings and, when anything but the
+    mark differs, shows `fallback` instead: the complete word with the whole cluster coloured.
+    `under` and `fallback` are None for ordinary words.
     """
     parts = parse_spans(spans)
     mark_ranges, normal = [], []
@@ -145,7 +150,7 @@ def word_layers(word_text, spans):
         else:
             normal.append((a, b, colour))
     if not mark_ranges:
-        return None, tspans_of(runs_of(word_text, normal))
+        return None, tspans_of(runs_of(word_text, normal)), None
 
     clusters = []
     removed = set()
@@ -160,6 +165,7 @@ def word_layers(word_text, spans):
         removed.update(range(a, m))
     clusters.sort()
     under = tspans_of(runs_of(word_text, clusters), hidden=True)
+    fallback = tspans_of(runs_of(word_text, sorted(clusters + normal)))
 
     shift, kept = [], []
     for i, ch in enumerate(word_text):
@@ -168,7 +174,30 @@ def word_layers(word_text, spans):
             kept.append(ch)
     shift.append(len(kept))
     top_parts = sorted((shift[a], shift[b], c) for a, b, c in normal if shift[b] > shift[a])
-    return under, tspans_of(runs_of("".join(kept), top_parts))
+    return under, tspans_of(runs_of("".join(kept), top_parts)), fallback
+
+
+def split_overlaps(entries):
+    """
+    The calligrapher sometimes lets a word reach over its neighbour (the kaf of «قَبۡلِكَ» above
+    «فَأَمۡلَيۡتُ» in 13:32), so their boxes overlap; set side by side in the text font the two words
+    would cover each other. The overlap of neighbours on a line is split in the middle. Sets the
+    `dx1`/`dx2` drawing edges of each entry.
+    """
+    lines = {}
+    for e in entries:
+        e["dx1"], e["dx2"] = float(e["x1"]), float(e["x2"])
+        lines.setdefault(e["line"], []).append(e)
+    for words in lines.values():
+        words.sort(key=lambda e: -e["x2"])  # right to left
+        for prev, cur in zip(words, words[1:]):
+            if cur["dx2"] - prev["dx1"] <= 4:
+                continue
+            middle = (cur["dx2"] + prev["dx1"]) / 2
+            if middle - cur["dx1"] < 12 or prev["dx2"] - middle < 12:
+                continue
+            prev["dx1"] = middle
+            cur["dx2"] = middle
 
 
 class Data:
@@ -210,6 +239,7 @@ def render_page(data, page, images_dir):
     if not glyphs:
         return "", []
     covers, names_rects, texts = [], [], []
+    entries = []
     page_names = []  # distinct name ids in reading order
     page_ayahs = []  # (sura, ayah) in reading order
     first_sura = None
@@ -224,22 +254,30 @@ def render_page(data, page, images_dir):
         word = data.word(s, a, p)
         if word is None:
             continue  # ayah marker or ornament
-        text, spans = word
         nid = data.occurrences.get((s, a, p))
-        if nid:
-            fill = ATTR_FILL if data.name_info[nid]["kind"] == "attribute" else NAME_FILL
-            names_rects.append(f'<rect x="{x1-3}" y="{y1-2}" width="{w+6}" height="{h+4}" rx="6" fill="{fill}"/>')
-            if nid not in page_names:
-                page_names.append(nid)
+        if nid and nid not in page_names:
+            page_names.append(nid)
+        entries.append(dict(line=line, x1=x1, y1=y1, x2=x2, y2=y2, text=word[0], spans=word[1], nid=nid))
+
+    split_overlaps(entries)
+    for e in entries:
+        x1, y1, x2, y2 = e["x1"], e["y1"], e["x2"], e["y2"]
+        w, h = x2 - x1, y2 - y1
+        dw = e["dx2"] - e["dx1"]
+        if e["nid"]:
+            fill = ATTR_FILL if data.name_info[e["nid"]]["kind"] == "attribute" else NAME_FILL
+            names_rects.append(f'<rect x="{e["dx1"]-3:.1f}" y="{y1-2}" width="{dw+6:.1f}" height="{h+4}" rx="6" fill="{fill}"/>')
         covers.append(f'<rect x="{x1-1}" y="{y1-1}" width="{w+2}" height="{h+2}" fill="{PAPER}"/>')
-        under, top = word_layers(text, spans)
-        cx, cy = x1 + w / 2, y1 + h / 2
+        under, top, fallback = word_layers(e["text"], e["spans"])
+        cx, cy = (e["dx1"] + e["dx2"]) / 2, y1 + h / 2
+        sq = ' data-sq="1"' if dw < w else ""
+        geo = f'data-w="{dw:.1f}" data-cx="{cx:.1f}"{sq} y="{cy:.1f}"'
         if under is None:
-            texts.append(f'<text data-w="{w}" data-cx="{cx:.1f}" y="{cy:.1f}">{top}</text>')
+            texts.append(f'<text {geo}>{top}</text>')
         else:
             # measured on the full word; the top layer copies its geometry (see layoutPage)
-            texts.append(f'<text data-w="{w}" data-cx="{cx:.1f}" y="{cy:.1f}">{under}</text>'
-                         f'<text class="top" y="{cy:.1f}">{top}</text>')
+            texts.append(f'<text {geo}>{under}</text><text class="top" y="{cy:.1f}">{top}</text>'
+                         f'<text class="fb" y="{cy:.1f}">{fallback}</text>')
 
     img = f"file:///{os.path.join(images_dir, f'page{page:03d}.png').replace(os.sep, '/')}"
     svg = (
@@ -299,6 +337,7 @@ body { font-family: "Amiri", "Traditional Arabic", serif; direction: rtl; color:
 .hdr { display: flex; justify-content: space-between; font-size: 10.5pt; font-weight: bold; color: #5b4a1e; padding: 0 2mm 1mm; }
 .mushaf { width: 130mm; height: 210mm; align-self: center; direction: ltr; border: 0.3mm solid #c9b989; border-radius: 2mm; }
 .mushaf text { font-family: "Uthmanic"; font-size: 100px; dominant-baseline: central; fill: #111; stroke: #111; stroke-width: 1.3px; stroke-linejoin: round; paint-order: stroke fill; }
+.mushaf text.fb { display: none; }
 .foot { flex: 1; overflow: hidden; margin: 1.2mm 1mm 0; border-top: 0.3mm solid #c9b989; padding-top: 1mm; }
 .gharib { column-count: 2; column-gap: 5mm; font-size: 7.3pt; line-height: 1.38; text-align: justify; }
 .gharib .ay { display: inline; }
@@ -329,14 +368,55 @@ ol.notes { list-style: none; border-top: 0.2mm dotted #c9b989; padding-top: 0.8m
 """
 
 JS = """
+// Is the word without its mark the same drawing as the complete word, minus the mark? Both are
+// painted on a canvas; every pixel inked by the shortened word must be inked by the complete one.
+const probe = document.createElement('canvas');
+probe.width = 1000; probe.height = 360;
+const pctx = probe.getContext('2d', { willReadFrequently: true });
+const probeCache = new Map();
+function inkOf(text) {
+  pctx.clearRect(0, 0, probe.width, probe.height);
+  pctx.font = '100px Uthmanic';
+  pctx.direction = 'rtl';
+  pctx.textAlign = 'right';
+  pctx.fillStyle = '#000';
+  pctx.fillText(text, probe.width - 40, 220);
+  return pctx.getImageData(0, 0, probe.width, probe.height).data;
+}
+function sameDrawing(full, reduced) {
+  const key = full + '|' + reduced;
+  if (probeCache.has(key)) return probeCache.get(key);
+  let ok = Math.abs(pctx.measureText(full).width - pctx.measureText(reduced).width) < 0.5;
+  if (ok) {
+    const a = inkOf(reduced), b = inkOf(full);
+    let stray = 0, extra = 0;
+    for (let i = 3; i < a.length; i += 4) {
+      if (a[i] > 160 && b[i] < 48) stray++;
+      if (b[i] > 160 && a[i] < 48) extra++;
+    }
+    ok = stray <= 2 && extra > 0;
+  }
+  probeCache.set(key, ok);
+  return ok;
+}
 function layoutPage(svg) {
+  // words whose mark cannot be coloured on its own are shown complete, with the cluster coloured
+  for (const top of Array.from(svg.querySelectorAll('text.top'))) {
+    const under = top.previousElementSibling, fb = top.nextElementSibling;
+    if (sameDrawing(under.textContent, top.textContent)) { fb.remove(); continue; }
+    for (const name of ['data-w', 'data-cx', 'data-sq']) if (under.hasAttribute(name)) fb.setAttribute(name, under.getAttribute(name));
+    fb.classList.remove('fb');
+    under.remove(); top.remove();
+    document.body.dataset.fallbacks = (+(document.body.dataset.fallbacks || 0) + 1);
+  }
   const texts = Array.from(svg.querySelectorAll('text:not(.top)'));
   if (!texts.length) return;
-  const data = texts.map(t => { t.setAttribute('font-size', '100'); const b = t.getBBox(); return { t, w: Math.max(b.width, 1), box: +t.dataset.w }; });
-  const ratios = data.map(d => d.box / d.w).sort((a, b) => a - b);
+  const data = texts.map(t => { t.setAttribute('font-size', '100'); const b = t.getBBox(); return { t, w: Math.max(b.width, 1), box: +t.dataset.w, sq: !!t.dataset.sq }; });
+  let ratios = data.filter(d => !d.sq).map(d => d.box / d.w).sort((a, b) => a - b);
+  if (!ratios.length) ratios = data.map(d => d.box / d.w).sort((a, b) => a - b);
   const ps = ratios[ratios.length >> 1];
   for (const d of data) {
-    const s = Math.min(Math.max(d.box / d.w, ps * 0.85), ps * 1.45);
+    const s = Math.min(Math.max(d.box / d.w, ps * (d.sq ? 0.6 : 0.85)), ps * 1.45);
     const L = d.w * s;
     d.t.setAttribute('font-size', (100 * ps).toFixed(2));
     d.t.setAttribute('textLength', L.toFixed(1));

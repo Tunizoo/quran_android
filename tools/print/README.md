@@ -37,7 +37,13 @@ python tools/print/gen_mushaf.py --pages <dir with page001.png> --fonts <dir wit
   covered with the paper colour and the word is drawn as SVG text with `<tspan>` colours.
 - A script in the page measures each word, takes the median box/width ratio of the page as the font
   size (one letter height per page, like the app) and stretches each word horizontally into its box
-  (0.85–1.45× of the page scale, `textLength`), the way the calligrapher stretches with kashida.
+  (0.85–1.45× of the page scale, `textLength`), the way the calligrapher stretches with kashida. Where
+  the boxes of two neighbouring words overlap (the calligrapher lets a letter reach over the next
+  word), the overlap is split in the middle and those words may be squeezed down to 0.6×.
+- A tanween coloured on its own is drawn in two layers; the page script checks on a canvas that
+  the word without the mark is the same drawing, and otherwise colours the whole cluster.
+- The inputs (page images, Amiri, the gharib database) can be kept in `tools/print/inputs/`,
+  which is git-ignored.
 - Footnotes start with the meanings of the difficult words of the page's ayahs (two columns, each
   run prefixed with the ayah number), then list the distinct names/attributes of the page in reading order; when the full
   explanations exceed ~420 characters only the first sentence of each is printed (the index at the

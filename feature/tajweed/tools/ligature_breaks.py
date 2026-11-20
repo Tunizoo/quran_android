@@ -152,9 +152,26 @@ document.fonts.ready.then(() => {
 def main():
     db = sqlite3.connect(DB)
     rows = db.execute("select sura, ayah, position, text, spans from words").fetchall()
-    if any(ZWJ in r[3] for r in rows):
-        print("the database already contains joiners; regenerate it with gen_tajweed.py first")
-        sys.exit(1)
+    # joiners of an earlier run are removed first (the colours may have changed since), so the script
+    # can be run again after tanween_marks.py
+    stripped = 0
+    for s, a, p, text, spans in rows:
+        if ZWJ not in text:
+            continue
+        parsed = parse_spans(spans)
+        for pos in sorted((i for i, ch in enumerate(text) if ch == ZWJ), reverse=True):
+            text = text[:pos] + text[pos + 1:]
+            for span in parsed:
+                if span[0] > pos:
+                    span[0] -= 1
+                if span[1] > pos:
+                    span[1] -= 1
+        db.execute("update words set text = ?, spans = ? where sura = ? and ayah = ? and position = ?",
+                   (text, ";".join(f"{x}-{y}:{rule}" for x, y, rule in parsed), s, a, p))
+        stripped += 1
+    if stripped:
+        print("joiners of a previous run removed from", stripped, "words")
+        rows = db.execute("select sura, ayah, position, text, spans from words").fetchall()
     pairs = font_ligature_pairs()
     print("ligature letter pairs in the font:", len(pairs))
 

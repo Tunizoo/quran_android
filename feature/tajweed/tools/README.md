@@ -15,10 +15,32 @@ the glyph position in the madani page database, so the app can repaint exactly t
 The letter carrying a tanween is pronounced normally; the rule (idgham in grey, ikhfa and iqlab in
 green) applies to the noon sound of the tanween. After `gen_tajweed.py`, run
 `python tanween_marks.py`: it moves the start of those spans onto the tanween sign (or the small
-meem of an iqlab). A base letter and its marks are one glyph cluster with a single colour, so the
-renderers draw such words in two passes: the mark's cluster in the mark colour underneath, then the
-word without the mark in its normal colours on top (`TajweedDrawHelper.measure`,
-`tools/print/gen_mushaf.py: word_layers`). Run it before `ligature_breaks.py`.
+meem of an iqlab). It also moves spans that start on a short vowel (the source includes the vowel
+before a madd letter or a merged meem: «لَهُم» 3-5 = damma + meem) onto the letter after it. Run it
+before `ligature_breaks.py`; it can be run again on a database that already has the ZWJ breaks
+(`ligature_breaks.py` removes the joiners of its previous run first, so run it again afterwards).
+Two more corrections of the source spans happen here: the small meem over a noon («مِنۢ بَعۡدِ») keeps
+the noon coloured with it (the noon is the letter that turns into a meem), and the hidden meem
+(ikhfa shafawi, «هُم بِهِ») is coloured without the letter before it.
+
+A base letter and its marks are one glyph cluster, painted in a single colour, and this font picks
+letter forms by the marks around them, so **a word must never be drawn from a text with a mark
+removed** (doing so displaced letters, e.g. the meem of «لَهُم», in database version 8).
+
+- App (`TajweedDrawHelper.measure`, `MarkGlyphs`): the complete word is drawn once; on Android 12+
+  the text is shaped with and without the mark (`TextRunShaper`), the glyphs only present in the
+  complete run are the mark, and they are repainted in the mark colour with `Canvas.drawGlyphs`.
+  If any other glyph differs (or on older Android) the whole cluster takes the colour.
+- Print (`tools/print/gen_mushaf.py: word_layers`): two layers (the mark's cluster underneath,
+  the word without the mark on top), but the page script first paints both variants on a canvas
+  and shows the complete word with the cluster coloured when anything but the mark differs.
+
+## Overlapping word boxes
+
+The calligrapher sometimes lets a word reach over its neighbour (the kaf of «قَبۡلِكَ» above
+«فَأَمۡلَيۡتُ», 13:32), so 370 pairs of neighbouring word boxes overlap. Both renderers split the
+overlap in the middle for drawing (`drawTargets`, `split_overlaps`), keep the full box for
+erasing the original ink, and let those words be squeezed down to 0.6× of the page scale.
 
 ## Ligature breaks
 

@@ -4,7 +4,6 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapShader
 import android.graphics.Canvas
-import android.graphics.Color
 import android.graphics.ColorFilter
 import android.graphics.Matrix
 import android.graphics.Paint
@@ -12,9 +11,11 @@ import android.graphics.Rect
 import android.graphics.RectF
 import android.graphics.Shader
 import android.graphics.Typeface
+import android.graphics.fonts.Font
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
+import android.os.Build
 import android.text.Layout
 import android.text.SpannableString
 import android.text.Spanned
@@ -299,40 +300,62 @@ class TajweedDrawHelper @Inject constructor(
       strokeJoin = Paint.Join.ROUND
     }
     val measured = ArrayList<MeasuredWord>(pageData.words.size)
-    for ((glyph, word) in pageData.words) {
+    val targets = drawTargets(pageData.words)
+    pageData.words.forEachIndexed { index, (glyph, word) ->
       val target = RectF()
-      matrix.mapRect(target, glyph.bounds)
+      matrix.mapRect(target, targets[index])
       target.offset(padX, padY)
-      measure(word, target, glyph.line, textPaint, night)?.let { measured.add(it) }
+      val squeezed = targets[index].width() < glyph.bounds.width()
+      measure(word, target, glyph.line, squeezed, textPaint, night)?.let { measured.add(it) }
     }
     // one font size for the whole page (median width ratio), so letters have the same height
     // everywhere; each word is then only stretched or squeezed horizontally into its box, the way
     // the calligrapher stretches words with kashida to justify the lines
     if (measured.isNotEmpty()) {
-      val scales = measured.map { it.rawScale }.sorted()
+      val scales = measured.filter { !it.squeezed }.ifEmpty { measured }.map { it.rawScale }.sorted()
       val pageScale = scales[scales.size / 2]
       for (item in measured) {
-        val scaleX = item.rawScale.coerceIn(pageScale * MIN_STRETCH, pageScale * MAX_STRETCH)
-        drawMeasured(canvas, item, scaleX, pageScale)
+        val minStretch = if (item.squeezed) MIN_STRETCH_SQUEEZED else MIN_STRETCH
+        val scaleX = item.rawScale.coerceIn(pageScale * minStretch, pageScale * MAX_STRETCH)
+        drawMeasured(canvas, item, scaleX, pageScale, textPaint)
       }
     }
     return overlay
   }
 
+  /**
+   * Boxes the words are drawn into. In the mushaf the calligrapher sometimes lets a word reach over
+   * its neighbour (the kaf of «قَبۡلِكَ» above «فَأَمۡلَيۡتُ» in 13:32), so their glyph boxes overlap;
+   * drawn side by side with the text font the two words would cover each other. The overlap is split
+   * in the middle. Words are in reading order: on one line the next word lies to the left.
+   */
+  private fun drawTargets(words: List<Pair<GlyphRect, TajweedWord>>): List<RectF> {
+    val targets = words.map { RectF(it.first.bounds) }
+    for (i in 1 until words.size) {
+      if (words[i - 1].first.line != words[i].first.line) continue
+      val previous = targets[i - 1]
+      val current = targets[i]
+      if (current.right - previous.left <= MIN_OVERLAP_PX) continue
+      val middle = (current.right + previous.left) / 2f
+      if (middle - current.left < MIN_TARGET_WIDTH_PX || previous.right - middle < MIN_TARGET_WIDTH_PX) continue
+      previous.left = middle
+      current.right = middle
+    }
+    return targets
+  }
+
+  /** Glyphs repainted over the word in another colour (a mark coloured on its own). */
+  private class GlyphOverlay(val glyphIds: IntArray, val positions: FloatArray, val font: Font, val color: Int)
+
   private class MeasuredWord(
-    /** The word with its colours (without the separately coloured marks when [under] is set). */
     val layout: StaticLayout,
-    /**
-     * Drawn first, under [layout], when a rule colours a mark alone (e.g. the tanween of an idgham,
-     * whose carrier letter is pronounced normally): the whole word, transparent except the cluster
-     * of that mark in the mark's colour. [layout] then repaints the word without the mark, so only
-     * the mark keeps the colour. A glyph cluster cannot be given two colours in one pass.
-     */
-    val under: StaticLayout?,
+    val overlays: List<GlyphOverlay>,
     val inkBounds: Rect,
     val target: RectF,
     val line: Int,
-    val rawScale: Float
+    val rawScale: Float,
+    /** The box was cut to resolve an overlap with a neighbour. */
+    val squeezed: Boolean
   )
 
   private fun isMark(ch: Char): Boolean {
@@ -342,24 +365,46 @@ class TajweedDrawHelper @Inject constructor(
       type == Character.ENCLOSING_MARK.toInt()
   }
 
-  private class ColorRange(val start: Int, val end: Int, val color: Int)
-
-  private fun measure(word: TajweedWord, target: RectF, line: Int, textPaint: TextPaint, night: Boolean): MeasuredWord? {
+  private fun measure(
+    word: TajweedWord,
+    target: RectF,
+    line: Int,
+    squeezed: Boolean,
+    textPaint: TextPaint,
+    night: Boolean
+  ): MeasuredWord? {
     val text = word.text
     if (text.isEmpty()) return null
 
-    // a span that starts on a combining mark colours that mark (and the marks after it) alone
-    val markRanges = ArrayList<ColorRange>()
-    val normalRanges = ArrayList<ColorRange>()
+    // The word is always laid out from its complete text: this font picks letter forms by the marks
+    // around them, so a word drawn without one of its marks is not the same word.
+    //
+    // A span that starts on a combining mark colours that mark alone (the tanween of an idgham: its
+    // carrier letter is pronounced normally). A letter and its marks are one glyph cluster and a
+    // cluster is painted in one colour, so the mark is repainted on top as a glyph of its own
+    // (Android 12+). Where that is not possible the whole cluster takes the colour.
+    val spannable = SpannableString(text)
+    val overlays = ArrayList<GlyphOverlay>()
     for (span in word.spans) {
       val color = span.group.color(night)
-      if (span.start in 1 until text.length && isMark(text[span.start])) {
-        var m = span.start
-        while (m < span.end && isMark(text[m])) m++
-        markRanges.add(ColorRange(span.start, m, color))
-        if (m < span.end) normalRanges.add(ColorRange(m, span.end, color))
-      } else {
-        normalRanges.add(ColorRange(span.start, span.end, color))
+      var start = span.start
+      if (start in 1 until text.length && isMark(text[start])) {
+        var markEnd = start
+        while (markEnd < span.end && isMark(text[markEnd])) markEnd++
+        val glyphs = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+          MarkGlyphs.find(text, start, markEnd, textPaint)
+        } else {
+          null
+        }
+        if (glyphs != null) {
+          overlays.add(GlyphOverlay(glyphs.glyphIds, glyphs.positions, glyphs.font, color))
+          start = markEnd
+        } else {
+          while (start > 0 && isMark(text[start])) start--
+        }
+      }
+      if (start < span.end) {
+        spannable.setSpan(ForegroundColorSpan(color), start, span.end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
       }
     }
 
@@ -367,65 +412,20 @@ class TajweedDrawHelper @Inject constructor(
     textPaint.getTextBounds(text, 0, text.length, inkBounds)
     if (inkBounds.width() <= 0 || inkBounds.height() <= 0) return null
     val advance = ceil(textPaint.measureText(text)).toInt() + 2
-    val width = max(advance, inkBounds.right + 2)
-
-    val under: StaticLayout?
-    val top: CharSequence
-    if (markRanges.isEmpty()) {
-      under = null
-      top = SpannableString(text).also { spannable ->
-        for (range in normalRanges) {
-          spannable.setSpan(ForegroundColorSpan(range.color), range.start, range.end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
-        }
-      }
-    } else {
-      val underText = SpannableString(text)
-      underText.setSpan(ForegroundColorSpan(Color.TRANSPARENT), 0, text.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
-      val removed = BooleanArray(text.length)
-      for (range in markRanges) {
-        var clusterStart = range.start
-        while (clusterStart > 0 && isMark(text[clusterStart])) clusterStart--
-        var clusterEnd = range.end
-        while (clusterEnd < text.length && isMark(text[clusterEnd])) clusterEnd++
-        underText.setSpan(ForegroundColorSpan(range.color), clusterStart, clusterEnd, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
-        for (i in range.start until range.end) removed[i] = true
-      }
-      under = layoutOf(underText, textPaint, width)
-
-      // the same word without those marks; offsets shift left by the marks removed before them
-      val shift = IntArray(text.length + 1)
-      val builder = StringBuilder(text.length)
-      for (i in text.indices) {
-        shift[i] = builder.length
-        if (!removed[i]) builder.append(text[i])
-      }
-      shift[text.length] = builder.length
-      top = SpannableString(builder.toString()).also { spannable ->
-        for (range in normalRanges) {
-          val start = shift[range.start]
-          val end = shift[range.end]
-          if (end > start) spannable.setSpan(ForegroundColorSpan(range.color), start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
-        }
-      }
-    }
-    return MeasuredWord(layoutOf(top, textPaint, width), under, inkBounds, target, line, target.width() / inkBounds.width())
-  }
-
-  private fun layoutOf(text: CharSequence, textPaint: TextPaint, width: Int): StaticLayout =
-    StaticLayout.Builder.obtain(text, 0, text.length, textPaint, width)
+    val layout = StaticLayout.Builder.obtain(spannable, 0, spannable.length, textPaint, max(advance, inkBounds.right + 2))
       .setAlignment(Layout.Alignment.ALIGN_NORMAL)
       .setTextDirection(TextDirectionHeuristics.RTL)
       .setIncludePad(false)
       .build()
+    return MeasuredWord(layout, overlays, inkBounds, target, line, target.width() / inkBounds.width(), squeezed)
+  }
 
-  private fun drawMeasured(canvas: Canvas, item: MeasuredWord, scaleX: Float, scaleY: Float) {
-    // positions come from the full word (the under layout when there is one); both layouts are
-    // right aligned in the same width, so their glyphs coincide under the same transform
-    val reference = item.under ?: item.layout
+  private fun drawMeasured(canvas: Canvas, item: MeasuredWord, scaleX: Float, scaleY: Float, textPaint: TextPaint) {
+    val layout = item.layout
     val inkBounds = item.inkBounds
     val target = item.target
-    val lineLeft = reference.getLineLeft(0)
-    val baseline = reference.getLineBaseline(0).toFloat()
+    val lineLeft = layout.getLineLeft(0)
+    val baseline = layout.getLineBaseline(0).toFloat()
     val inkWidth = inkBounds.width() * scaleX
     val left = target.left + (target.width() - inkWidth) / 2f
     val translateX = left - scaleX * (lineLeft + inkBounds.left)
@@ -433,8 +433,14 @@ class TajweedDrawHelper @Inject constructor(
     canvas.save()
     canvas.translate(translateX, translateY)
     canvas.scale(scaleX, scaleY)
-    item.under?.draw(canvas)
-    item.layout.draw(canvas)
+    layout.draw(canvas)
+    if (item.overlays.isNotEmpty() && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+      // glyph positions are relative to the left end of the line, on its baseline
+      canvas.translate(lineLeft, baseline)
+      for (overlay in item.overlays) {
+        MarkGlyphs.draw(canvas, overlay.glyphIds, overlay.positions, overlay.font, overlay.color, textPaint)
+      }
+    }
     canvas.restore()
   }
 
@@ -451,6 +457,11 @@ class TajweedDrawHelper @Inject constructor(
     private const val STROKE_WIDTH = 2.8f
     /** Horizontal stretch of a word relative to the page font size (kashida-like justification). */
     private const val MIN_STRETCH = 0.85f
+    /** Words whose box was cut to resolve an overlap may be squeezed further. */
+    private const val MIN_STRETCH_SQUEEZED = 0.6f
+    /** Overlap of two neighbouring word boxes (page image pixels) that gets split. */
+    private const val MIN_OVERLAP_PX = 4f
+    private const val MIN_TARGET_WIDTH_PX = 12f
     private const val MAX_STRETCH = 1.45f
     private const val MAX_OVERLAYS = 3
   }
