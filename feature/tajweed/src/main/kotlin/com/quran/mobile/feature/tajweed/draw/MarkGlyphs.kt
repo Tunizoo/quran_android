@@ -26,19 +26,28 @@ internal object MarkGlyphs {
 
   class Result(val glyphIds: IntArray, val positions: FloatArray, val font: Font)
 
-  /**
-   * Glyphs of the marks at [markStart, markEnd) of [text], positioned relative to the start of the
-   * run on its baseline, or null when they cannot be isolated.
-   */
-  fun find(text: String, markStart: Int, markEnd: Int, paint: TextPaint): Result? {
-    return try {
-      val full = TextRunShaper.shapeTextRun(text, 0, text.length, 0, text.length, 0f, 0f, true, paint)
-      val reducedText = text.removeRange(markStart, markEnd)
-      val reduced = TextRunShaper.shapeTextRun(reducedText, 0, reducedText.length, 0, reducedText.length, 0f, 0f, true, paint)
-      diff(full, reduced, markEnd - markStart)
-    } catch (e: RuntimeException) {
-      null
+  /** Shapes one word once and isolates the glyphs of its marks on demand. */
+  class Shaper(private val text: String, private val paint: TextPaint) {
+    private var full: PositionedGlyphs? = null
+    private var failed = false
+
+    /**
+     * Glyphs of the marks at [markStart, markEnd) of the text, positioned relative to the start of
+     * the run on its baseline, or null when they cannot be isolated.
+     */
+    fun find(markStart: Int, markEnd: Int): Result? {
+      if (failed) return null
+      return try {
+        val complete = full ?: shape(text).also { full = it }
+        diff(complete, shape(text.removeRange(markStart, markEnd)), markEnd - markStart)
+      } catch (e: RuntimeException) {
+        failed = true
+        null
+      }
     }
+
+    private fun shape(value: String): PositionedGlyphs =
+      TextRunShaper.shapeTextRun(value, 0, value.length, 0, value.length, 0f, 0f, true, paint)
   }
 
   private fun diff(full: PositionedGlyphs, reduced: PositionedGlyphs, removedChars: Int): Result? {

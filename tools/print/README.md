@@ -40,7 +40,8 @@ python tools/print/gen_mushaf.py --pages <dir with page001.png> --fonts <dir wit
   (0.85–1.45× of the page scale, `textLength`), the way the calligrapher stretches with kashida. Where
   the boxes of two neighbouring words overlap (the calligrapher lets a letter reach over the next
   word), the overlap is split in the middle and those words may be squeezed down to 0.6×.
-- A tanween coloured on its own is drawn in two layers; the page script checks on a canvas that
+- Colours only change between glyph clusters (a letter with its marks), otherwise the browser
+  misplaces the marks. A mark whose colour differs from its letter's is drawn in two layers; the page script checks on a canvas that
   the word without the mark is the same drawing, and otherwise colours the whole cluster.
 - The inputs (page images, Amiri, the gharib database) can be kept in `tools/print/inputs/`,
   which is git-ignored.

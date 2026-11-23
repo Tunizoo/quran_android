@@ -96,85 +96,76 @@ def parse_spans(spans):
     return parts
 
 
-def runs_of(word_text, parts):
-    """Splits a word into (text, colour) runs."""
-    runs = []
-    cursor = 0
-    for a, b, colour in parts:
-        if a < cursor:
-            continue
-        if a > cursor:
-            runs.append((word_text[cursor:a], None))
-        runs.append((word_text[a:b], colour))
-        cursor = b
-    if cursor < len(word_text):
-        runs.append((word_text[cursor:], None))
-    return runs
+HIDDEN = "none"
 
 
-def tspans_of(runs, hidden=False):
+def markup_of(text, cols):
+    """Markup of `text` with one colour per character: None = the text colour, HIDDEN = not drawn."""
     out = []
-    for t, c in runs:
-        if c:
-            out.append(f'<tspan fill="{c}" stroke="{c}">{html.escape(t)}</tspan>')
-        elif hidden:
-            out.append(f'<tspan fill="none" stroke="none">{html.escape(t)}</tspan>')
-        else:
-            out.append(html.escape(t))
+    i = 0
+    while i < len(text):
+        j = i + 1
+        while j < len(text) and cols[j] == cols[i]:
+            j += 1
+        chunk = html.escape(text[i:j])
+        out.append(chunk if cols[i] is None else f'<tspan fill="{cols[i]}" stroke="{cols[i]}">{chunk}</tspan>')
+        i = j
     return "".join(out)
 
 
 def word_layers(word_text, spans):
     """
-    Returns (under, top, fallback) tspans markup. A rule that colours a mark alone (a span starting
-    on a combining mark, e.g. the tanween of an idgham whose carrier letter is pronounced normally)
-    needs two passes, because a glyph cluster takes a single colour: `under` is the whole word,
-    invisible except the cluster of that mark in the mark's colour, and `top` is the word without
-    the mark in its normal colours, drawn over it.
+    Returns (under, top, fallback) tspans markup.
+
+    A letter and its marks are one glyph cluster. A <tspan> that starts or ends inside a cluster
+    makes the browser shape the marks apart from their letter and misplaces them (the tanween
+    landing on the dal of «لَشَدِيدٞ»), so every layer only changes colour between clusters.
+
+    A mark whose colour differs from its letter's (the tanween of an idgham on a letter pronounced
+    normally; the plain tanween of a qalqalah letter) needs two passes: `under` is the whole word,
+    invisible except that cluster, drawn in the mark's colour, and `top` is the word without the
+    mark in the letters' colours, drawn over it.
 
     This font picks letter forms by the marks around them, so the word without the mark is not
     always the same drawing. The page script compares the two renderings and, when anything but the
-    mark differs, shows `fallback` instead: the complete word with the whole cluster coloured.
-    `under` and `fallback` are None for ordinary words.
+    mark differs, shows `fallback` instead: the complete word with one colour per cluster (the
+    letter's, or the rule's when the letter has none). `under` and `fallback` are None when no
+    cluster has two colours.
     """
-    parts = parse_spans(spans)
-    mark_ranges, normal = [], []
-    for a, b, colour in parts:
-        if 0 < a < len(word_text) and is_mark(word_text[a]):
-            m = a
-            while m < b and is_mark(word_text[m]):
-                m += 1
-            mark_ranges.append((a, m, colour))
-            if m < b:
-                normal.append((m, b, colour))
-        else:
-            normal.append((a, b, colour))
-    if not mark_ranges:
-        return None, tspans_of(runs_of(word_text, normal)), None
-
-    clusters = []
+    n = len(word_text)
+    cols = [None] * n
+    for a, b, colour in parse_spans(spans):
+        for i in range(max(a, 0), min(b, n)):
+            cols[i] = colour
+    under = [HIDDEN] * n
+    top = [None] * n
+    fallback = [None] * n
     removed = set()
-    for a, m, colour in mark_ranges:
-        start = a
-        while start > 0 and is_mark(word_text[start]):
-            start -= 1
-        end = m
-        while end < len(word_text) and is_mark(word_text[end]):
-            end += 1
-        clusters.append((start, end, colour))
-        removed.update(range(a, m))
-    clusters.sort()
-    under = tspans_of(runs_of(word_text, clusters), hidden=True)
-    fallback = tspans_of(runs_of(word_text, sorted(clusters + normal)))
-
-    shift, kept = [], []
-    for i, ch in enumerate(word_text):
-        shift.append(len(kept))
-        if i not in removed:
-            kept.append(ch)
-    shift.append(len(kept))
-    top_parts = sorted((shift[a], shift[b], c) for a, b, c in normal if shift[b] > shift[a])
-    return under, tspans_of(runs_of("".join(kept), top_parts)), fallback
+    i = 0
+    while i < n:
+        j = i + 1
+        while j < n and is_mark(word_text[j]):
+            j += 1
+        base = cols[i]
+        differing = [k for k in range(i + 1, j) if cols[k] != base]
+        cluster = base
+        if differing:
+            mark_colour = cols[differing[0]]
+            removed.update(k for k in differing if cols[k] == mark_colour)
+            for k in range(i, j):
+                under[k] = mark_colour
+            if base is None:
+                cluster = mark_colour
+        for k in range(i, j):
+            top[k] = base
+            fallback[k] = cluster
+        i = j
+    if not removed:
+        return None, markup_of(word_text, top), None
+    kept = [k for k in range(n) if k not in removed]
+    return (markup_of(word_text, under),
+            markup_of("".join(word_text[k] for k in kept), [top[k] for k in kept]),
+            markup_of(word_text, fallback))
 
 
 def split_overlaps(entries):

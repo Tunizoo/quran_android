@@ -379,33 +379,55 @@ class TajweedDrawHelper @Inject constructor(
     // The word is always laid out from its complete text: this font picks letter forms by the marks
     // around them, so a word drawn without one of its marks is not the same word.
     //
-    // A span that starts on a combining mark colours that mark alone (the tanween of an idgham: its
-    // carrier letter is pronounced normally). A letter and its marks are one glyph cluster and a
-    // cluster is painted in one colour, so the mark is repainted on top as a glyph of its own
-    // (Android 12+). Where that is not possible the whole cluster takes the colour.
-    val spannable = SpannableString(text)
-    val overlays = ArrayList<GlyphOverlay>()
+    // A letter and its marks are one glyph cluster. A colour span that starts or ends inside a
+    // cluster makes the text renderer shape the marks apart from their letter, which misplaces them
+    // (the tanween landing on the dal of «لَشَدِيدٞ»). So the layout only gets one colour per
+    // cluster, the colour of its letter, and a mark whose colour differs (the tanween of an idgham
+    // on a letter pronounced normally; the plain tanween of a qalqalah letter) is repainted on top
+    // as a glyph of its own (Android 12+). Where that is not possible the whole cluster takes one
+    // colour: the rule's.
+    val length = text.length
+    val colors = IntArray(length) { NO_COLOR }
     for (span in word.spans) {
       val color = span.group.color(night)
-      var start = span.start
-      if (start in 1 until text.length && isMark(text[start])) {
-        var markEnd = start
-        while (markEnd < span.end && isMark(text[markEnd])) markEnd++
-        val glyphs = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-          MarkGlyphs.find(text, start, markEnd, textPaint)
-        } else {
-          null
+      for (i in max(0, span.start) until min(length, span.end)) colors[i] = color
+    }
+    val shaper = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) MarkGlyphs.Shaper(text, textPaint) else null
+    val overlays = ArrayList<GlyphOverlay>()
+    var clusterStart = 0
+    while (clusterStart < length) {
+      var clusterEnd = clusterStart + 1
+      while (clusterEnd < length && isMark(text[clusterEnd])) clusterEnd++
+      var clusterColor = colors[clusterStart]
+      var markStart = clusterStart + 1
+      while (markStart < clusterEnd) {
+        val markColor = colors[markStart]
+        var markEnd = markStart + 1
+        while (markEnd < clusterEnd && colors[markEnd] == markColor) markEnd++
+        if (markColor != colors[clusterStart]) {
+          val glyphs = shaper?.find(markStart, markEnd)
+          if (glyphs != null) {
+            val paintColor = if (markColor == NO_COLOR) textPaint.color else markColor
+            overlays.add(GlyphOverlay(glyphs.glyphIds, glyphs.positions, glyphs.font, paintColor))
+          } else if (clusterColor == NO_COLOR) {
+            clusterColor = markColor
+          }
         }
-        if (glyphs != null) {
-          overlays.add(GlyphOverlay(glyphs.glyphIds, glyphs.positions, glyphs.font, color))
-          start = markEnd
-        } else {
-          while (start > 0 && isMark(text[start])) start--
-        }
+        markStart = markEnd
       }
-      if (start < span.end) {
-        spannable.setSpan(ForegroundColorSpan(color), start, span.end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+      for (i in clusterStart until clusterEnd) colors[i] = clusterColor
+      clusterStart = clusterEnd
+    }
+
+    val spannable = SpannableString(text)
+    var runStart = 0
+    while (runStart < length) {
+      var runEnd = runStart + 1
+      while (runEnd < length && colors[runEnd] == colors[runStart]) runEnd++
+      if (colors[runStart] != NO_COLOR) {
+        spannable.setSpan(ForegroundColorSpan(colors[runStart]), runStart, runEnd, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
       }
+      runStart = runEnd
     }
 
     val inkBounds = Rect()
@@ -456,6 +478,8 @@ class TajweedDrawHelper @Inject constructor(
     /** Slight emboldening (at [BASE_TEXT_SIZE]) so the text font matches the weight of the page glyphs. */
     private const val STROKE_WIDTH = 2.8f
     /** Horizontal stretch of a word relative to the page font size (kashida-like justification). */
+    /** Marks a character without a tajweed colour (fully transparent is never a rule colour). */
+    private const val NO_COLOR = 0
     private const val MIN_STRETCH = 0.85f
     /** Words whose box was cut to resolve an overlap may be squeezed further. */
     private const val MIN_STRETCH_SQUEEZED = 0.6f

@@ -35,6 +35,13 @@ removed** (doing so displaced letters, e.g. the meem of «لَهُم», in datab
   the word without the mark on top), but the page script first paints both variants on a canvas
   and shows the complete word with the cluster coloured when anything but the mark differs.
 
+The same holds for every span that starts or ends between a letter and its marks (the qalqalah
+of «لَشَدِيدٞ» covers the dal but not its tanween; about 10,000 spans): a colour change inside a
+cluster makes Android and Chrome shape the mark apart from its letter and misplace it. Both
+renderers therefore change colour only between clusters and repaint a differing mark on top as
+described above (14,821 words; in 1,026 of them the mark cannot be isolated and the cluster takes
+one colour).
+
 ## Overlapping word boxes
 
 The calligrapher sometimes lets a word reach over its neighbour (the kaf of «قَبۡلِكَ» above
