@@ -11,6 +11,8 @@ import com.quran.data.constant.DependencyInjectionConstants
 import com.quran.data.core.QuranInfo
 import com.quran.data.di.AppCoroutineScope
 import com.quran.data.di.AppScope
+import com.quran.mobile.common.glyphbounds.GlyphPlacements
+import com.quran.mobile.common.glyphbounds.GlyphPosition
 import com.quran.mobile.feature.divinenames.data.DivineNamesDatabase
 import com.quran.mobile.feature.divinenames.data.DivineNamesSettings
 import com.quran.mobile.feature.divinenames.data.GlyphBoundsSource
@@ -41,6 +43,7 @@ class DivineNamesDrawHelper @Inject constructor(
   private val settings: DivineNamesSettings,
   private val database: DivineNamesDatabase,
   private val glyphBoundsSource: GlyphBoundsSource,
+  private val placements: GlyphPlacements,
   private val quranInfoProvider: () -> QuranInfo,
   private val appCoroutineScope: AppCoroutineScope,
   @Named(DependencyInjectionConstants.CURRENT_PAGE_TYPE) private val pageType: String
@@ -75,8 +78,9 @@ class DivineNamesDrawHelper @Inject constructor(
     }
 
     val radius = image.imageMatrix.mapRadius(CORNER_RADIUS_PX)
+    val placed = placements.forPage(pageCoordinates.page, width)
     for (item in rects) {
-      image.imageMatrix.mapRect(scaledRect, item.bounds)
+      image.imageMatrix.mapRect(scaledRect, boundsOf(item, placed))
       scaledRect.offset(image.paddingLeft.toFloat(), image.paddingTop.toFloat())
       val paint = if (item.occurrence.isAttribute) attributePaint else namePaint
       canvas.drawRoundRect(scaledRect, radius, radius, paint)
@@ -91,7 +95,15 @@ class DivineNamesDrawHelper @Inject constructor(
     if (!isActive) return null
     val width = imageWidth(image.drawable) ?: return null
     val rects = cache[Key(page, width)] ?: return null
-    return rects.firstOrNull { it.bounds.contains(pageX, pageY) }?.occurrence
+    val placed = placements.forPage(page, width)
+    return rects.firstOrNull { boundsOf(it, placed).contains(pageX, pageY) }?.occurrence
+  }
+
+  /** Where the word is drawn: the tajweed colouring does not put every word exactly on its glyph. */
+  private fun boundsOf(item: OccurrenceRect, placed: Map<GlyphPosition, RectF>?): RectF {
+    if (placed == null) return item.bounds
+    val occurrence = item.occurrence
+    return placed[GlyphPosition(occurrence.sura, occurrence.ayah, occurrence.position)] ?: item.bounds
   }
 
   private fun imageWidth(drawable: Drawable?): Int? {

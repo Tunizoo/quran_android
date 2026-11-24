@@ -8,6 +8,7 @@ android.namespace = "com.quran.mobile.feature.divinenames"
 dependencies {
   implementation(project(":common:data"))
   implementation(project(":common:di"))
+  implementation(project(":common:glyphbounds"))
   implementation(project(":common:pages"))
   implementation(project(":common:ui:core"))
 

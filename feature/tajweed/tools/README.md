@@ -46,8 +46,24 @@ one colour).
 
 The calligrapher sometimes lets a word reach over its neighbour (the kaf of «قَبۡلِكَ» above
 «فَأَمۡلَيۡتُ», 13:32), so 370 pairs of neighbouring word boxes overlap. Both renderers split the
-overlap in the middle for drawing (`drawTargets`, `split_overlaps`), keep the full box for
-erasing the original ink, and let those words be squeezed down to 0.6× of the page scale.
+overlap in the middle for drawing (`drawTargets`, `split_overlaps`) and keep the full box for
+erasing the original ink.
+
+## One letter size per page
+
+The calligrapher justifies the lines by lengthening words (kashida), so the boxes of the words are
+not in proportion to their width in the text font: a word stretched into its own box had visibly
+larger letters than its neighbours wherever the line had room. Both renderers now set the words of
+a *run* together (`layoutRuns`, `layoutPage`): the words that follow each other on a line with
+nothing left from the page image between them (ayah markers and pause marks end a run, so every
+word stays on its side of them). A run gets one horizontal stretch, at most 1.06× of the page font
+size, and the room that is left goes between its words; only when that would add more than 0.3 em
+per gap is the run stretched further. The page font size is the box/text ratio below which lies a
+quarter of the text of the page, so only the densest runs are squeezed.
+
+A word is therefore not always exactly on its glyph rectangle. The app records where each word is
+drawn in `GlyphPlacements` (`common/glyphbounds`); the highlights of the divine names and the
+covers of the memorization mode read it, for drawing and for hit tests.
 
 ## Ligature breaks
 

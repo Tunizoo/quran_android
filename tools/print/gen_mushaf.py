@@ -191,6 +191,33 @@ def split_overlaps(entries):
             cur["dx2"] = middle
 
 
+def assign_runs(entries, anchors):
+    """
+    Words that follow each other on a line, with nothing left from the page image between them, are
+    set together as one run (see layoutPage): sets the `run` number of each entry. `anchors` are the
+    (line, centre x) of the glyphs that stay as drawn on the page: ayah markers, pause marks.
+    `edges` tells whether such a glyph (rather than the end of the line) is on the right and on the
+    left of the run: room may be left next to it, while the ends of the lines stay aligned.
+    """
+    lines = {}
+    for e in entries:
+        lines.setdefault(e["line"], []).append(((e["x1"] + e["x2"]) / 2, e))
+    for line, x in anchors:
+        lines.setdefault(line, []).append((x, None))
+    run = 0
+    for items in lines.values():
+        items.sort(key=lambda item: -item[0])  # right to left
+        words, anchor_right = [], False
+        for _, e in items + [(0, "end of line")]:
+            if isinstance(e, dict):
+                words.append(e)
+                continue
+            for word in words:
+                word["run"], word["edges"] = run, (anchor_right, e is None)
+            run += 1
+            words, anchor_right = [], True
+
+
 class Data:
     def __init__(self, gharib_path=None):
         self.tajweed = sqlite3.connect(os.path.join(ROOT, "feature/tajweed/src/main/assets/tajweed.db"))
@@ -230,7 +257,7 @@ def render_page(data, page, images_dir):
     if not glyphs:
         return "", []
     covers, names_rects, texts = [], [], []
-    entries = []
+    entries, anchors = [], []
     page_names = []  # distinct name ids in reading order
     page_ayahs = []  # (sura, ayah) in reading order
     first_sura = None
@@ -241,9 +268,11 @@ def render_page(data, page, images_dir):
             page_ayahs.append((s, a))
         w, h = x2 - x1, y2 - y1
         if w < 20 or h < 40:
+            anchors.append((line, (x1 + x2) / 2))
             continue  # pause marks and the like stay as drawn on the page
         word = data.word(s, a, p)
         if word is None:
+            anchors.append((line, (x1 + x2) / 2))
             continue  # ayah marker or ornament
         nid = data.occurrences.get((s, a, p))
         if nid and nid not in page_names:
@@ -251,18 +280,22 @@ def render_page(data, page, images_dir):
         entries.append(dict(line=line, x1=x1, y1=y1, x2=x2, y2=y2, text=word[0], spans=word[1], nid=nid))
 
     split_overlaps(entries)
+    assign_runs(entries, anchors)
     for e in entries:
         x1, y1, x2, y2 = e["x1"], e["y1"], e["x2"], e["y2"]
         w, h = x2 - x1, y2 - y1
-        dw = e["dx2"] - e["dx1"]
+        cy = y1 + h / 2
+        # the page script sets the words of a run side by side and moves the highlight with its word
+        geo = f'data-x1="{e["dx1"]:.1f}" data-x2="{e["dx2"]:.1f}" data-run="{e["run"]}" y="{cy:.1f}"'
+        geo += (' data-er="1"' if e["edges"][0] else "") + (' data-el="1"' if e["edges"][1] else "")
         if e["nid"]:
             fill = ATTR_FILL if data.name_info[e["nid"]]["kind"] == "attribute" else NAME_FILL
-            names_rects.append(f'<rect x="{e["dx1"]-3:.1f}" y="{y1-2}" width="{dw+6:.1f}" height="{h+4}" rx="6" fill="{fill}"/>')
+            key = f"n{page}-{len(names_rects)}"
+            geo += f' data-nm="{key}"'
+            names_rects.append(f'<rect id="{key}" x="{e["dx1"]-3:.1f}" y="{y1-2}" width="{e["dx2"]-e["dx1"]+6:.1f}" '
+                               f'height="{h+4}" rx="6" fill="{fill}"/>')
         covers.append(f'<rect x="{x1-1}" y="{y1-1}" width="{w+2}" height="{h+2}" fill="{PAPER}"/>')
         under, top, fallback = word_layers(e["text"], e["spans"])
-        cx, cy = (e["dx1"] + e["dx2"]) / 2, y1 + h / 2
-        sq = ' data-sq="1"' if dw < w else ""
-        geo = f'data-w="{dw:.1f}" data-cx="{cx:.1f}"{sq} y="{cy:.1f}"'
         if under is None:
             texts.append(f'<text {geo}>{top}</text>')
         else:
@@ -327,7 +360,7 @@ body { font-family: "Amiri", "Traditional Arabic", serif; direction: rtl; color:
 .page { height: 278mm; box-sizing: border-box; overflow: hidden; display: flex; flex-direction: column; page-break-after: always; break-after: page; }
 .hdr { display: flex; justify-content: space-between; font-size: 10.5pt; font-weight: bold; color: #5b4a1e; padding: 0 2mm 1mm; }
 .mushaf { width: 130mm; height: 210mm; align-self: center; direction: ltr; border: 0.3mm solid #c9b989; border-radius: 2mm; }
-.mushaf text { font-family: "Uthmanic"; font-size: 100px; dominant-baseline: central; fill: #111; stroke: #111; stroke-width: 1.3px; stroke-linejoin: round; paint-order: stroke fill; }
+.mushaf text { font-family: "Uthmanic"; font-size: 100px; dominant-baseline: alphabetic; fill: #111; stroke: #111; stroke-width: 1.3px; stroke-linejoin: round; paint-order: stroke fill; }
 .mushaf text.fb { display: none; }
 .foot { flex: 1; overflow: hidden; margin: 1.2mm 1mm 0; border-top: 0.3mm solid #c9b989; padding-top: 1mm; }
 .gharib { column-count: 2; column-gap: 5mm; font-size: 7.3pt; line-height: 1.38; text-align: justify; }
@@ -390,32 +423,82 @@ function sameDrawing(full, reduced) {
   probeCache.set(key, ok);
   return ok;
 }
+// Setting the words of a run (the same values as TajweedDrawHelper): the share of the text of a
+// page that is denser than the page font size and gets squeezed; the stretch of a run relative to
+// the page font size; the room (em) added between two words before a run is stretched further.
+const FONT_QUANTILE = 0.25, MIN_STRETCH = 0.6, MAX_STRETCH = 1.06;
+const MAX_EXTRA_GAP = 0.3, LAST_RESORT_STRETCH = 1.45;
 function layoutPage(svg) {
   // words whose mark cannot be coloured on its own are shown complete, with the cluster coloured
   for (const top of Array.from(svg.querySelectorAll('text.top'))) {
     const under = top.previousElementSibling, fb = top.nextElementSibling;
     if (sameDrawing(under.textContent, top.textContent)) { fb.remove(); continue; }
-    for (const name of ['data-w', 'data-cx', 'data-sq']) if (under.hasAttribute(name)) fb.setAttribute(name, under.getAttribute(name));
+    for (const name of ['data-x1', 'data-x2', 'data-run', 'data-er', 'data-el', 'data-nm']) if (under.hasAttribute(name)) fb.setAttribute(name, under.getAttribute(name));
     fb.classList.remove('fb');
     under.remove(); top.remove();
     document.body.dataset.fallbacks = (+(document.body.dataset.fallbacks || 0) + 1);
   }
   const texts = Array.from(svg.querySelectorAll('text:not(.top)'));
   if (!texts.length) return;
-  const data = texts.map(t => { t.setAttribute('font-size', '100'); const b = t.getBBox(); return { t, w: Math.max(b.width, 1), box: +t.dataset.w, sq: !!t.dataset.sq }; });
-  let ratios = data.filter(d => !d.sq).map(d => d.box / d.w).sort((a, b) => a - b);
-  if (!ratios.length) ratios = data.map(d => d.box / d.w).sort((a, b) => a - b);
-  const ps = ratios[ratios.length >> 1];
-  for (const d of data) {
-    const s = Math.min(Math.max(d.box / d.w, ps * (d.sq ? 0.6 : 0.85)), ps * 1.45);
-    const L = d.w * s;
-    d.t.setAttribute('font-size', (100 * ps).toFixed(2));
-    d.t.setAttribute('textLength', L.toFixed(1));
-    d.t.setAttribute('lengthAdjust', 'spacingAndGlyphs');
-    d.t.setAttribute('x', (+d.t.dataset.cx - L / 2).toFixed(1));
-    const top = d.t.nextElementSibling;
-    if (top && top.classList.contains('top')) {
-      for (const name of ['font-size', 'textLength', 'lengthAdjust', 'x']) top.setAttribute(name, d.t.getAttribute(name));
+  // The calligrapher justifies the lines by lengthening words (kashida), so the boxes of the words
+  // are not in proportion to their width in the text font. Stretching every word into its own box
+  // gives letters of a different size from one word to the next; instead the words of a run (words
+  // side by side with nothing from the page image between them) are set together: one stretch for
+  // the whole run, kept within narrow limits, and the room that is left goes between the words and
+  // next to the ayah marker or pause mark at an end of the run (never at the end of the line).
+  const runs = new Map();
+  pctx.font = '100px Uthmanic';
+  for (const t of texts) {
+    t.setAttribute('font-size', '100');
+    // the box of a word on the page is the box of its ink: centre the ink of the text in it
+    const ink = pctx.measureText(t.textContent);
+    const d = { t, w: Math.max(t.getBBox().width, 1), x1: +t.dataset.x1, x2: +t.dataset.x2,
+                cy: +t.getAttribute('y'), rise: (ink.actualBoundingBoxAscent - ink.actualBoundingBoxDescent) / 2 };
+    if (!runs.has(t.dataset.run)) runs.set(t.dataset.run, []);
+    runs.get(t.dataset.run).push(d);
+  }
+  const list = [];
+  for (const words of runs.values()) {
+    words.sort((a, b) => b.x2 - a.x2);  // right to left
+    let box = 0, nat = 0;
+    for (const d of words) { box += d.x2 - d.x1; nat += d.w; }
+    list.push({ words, box, nat, ratio: box / nat });
+  }
+  // one font size for the page: the box/text ratio below which lies FONT_QUANTILE of the text
+  const sorted = list.slice().sort((a, b) => a.ratio - b.ratio);
+  let total = 0, seen = 0, ps = sorted[0].ratio;
+  for (const r of sorted) total += r.nat;
+  for (const r of sorted) { seen += r.nat; ps = r.ratio; if (seen >= total * FONT_QUANTILE) break; }
+  for (const r of list) {
+    const n = r.words.length;
+    let s = Math.min(Math.max(r.ratio / ps, MIN_STRETCH), MAX_STRETCH) * ps;
+    // a run of few words in a wide space: beyond some room between the words, stretch them after all
+    const markRight = !!r.words[0].t.dataset.er, markLeft = !!r.words[0].t.dataset.el;
+    const slots = n - 1 + (markRight ? 1 : 0) + (markLeft ? 1 : 0);
+    const room = MAX_EXTRA_GAP * 100 * ps * Math.max(slots, 1);
+    if (r.box - s * r.nat > room) s = Math.min((r.box - room) / r.nat, LAST_RESORT_STRETCH * ps);
+    const slack = r.box - s * r.nat;
+    let extra = 0, right = r.words[0].x2;
+    if (slack >= 0 && slots > 0) { extra = slack / slots; if (markRight) right -= extra; }
+    else if (slack < 0 && n > 1) extra = slack / (n - 1);  // too dense even squeezed: the words close up
+    else right -= slack / 2;
+    for (let i = 0; i < n; i++) {
+      const d = r.words[i], L = d.w * s, left = right - L;
+      d.t.setAttribute('font-size', (100 * ps).toFixed(2));
+      d.t.setAttribute('textLength', L.toFixed(1));
+      d.t.setAttribute('lengthAdjust', 'spacingAndGlyphs');
+      d.t.setAttribute('x', left.toFixed(1));
+      d.t.setAttribute('y', (d.cy + d.rise * ps).toFixed(1));
+      const top = d.t.nextElementSibling;
+      if (top && top.classList.contains('top')) {
+        for (const name of ['font-size', 'textLength', 'lengthAdjust', 'x', 'y']) top.setAttribute(name, d.t.getAttribute(name));
+      }
+      if (d.t.dataset.nm) {
+        const mark = document.getElementById(d.t.dataset.nm);
+        mark.setAttribute('x', (left - 3).toFixed(1));
+        mark.setAttribute('width', (L + 6).toFixed(1));
+      }
+      if (i + 1 < n) right = left - (d.x1 - r.words[i + 1].x2) - extra;
     }
   }
 }

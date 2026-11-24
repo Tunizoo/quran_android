@@ -35,11 +35,17 @@ python tools/print/gen_mushaf.py --pages <dir with page001.png> --fonts <dir wit
 - The word boxes come from `ayahinfo_1260.db`; small glyphs (pause marks) and glyphs without a word
   in `tajweed.db` (ayah markers, ornaments) are left as drawn on the image. Every word box is
   covered with the paper colour and the word is drawn as SVG text with `<tspan>` colours.
-- A script in the page measures each word, takes the median box/width ratio of the page as the font
-  size (one letter height per page, like the app) and stretches each word horizontally into its box
-  (0.85–1.45× of the page scale, `textLength`), the way the calligrapher stretches with kashida. Where
-  the boxes of two neighbouring words overlap (the calligrapher lets a letter reach over the next
-  word), the overlap is split in the middle and those words may be squeezed down to 0.6×.
+- A script in the page (`layoutPage`) sets the words. The calligrapher justifies the lines by
+  lengthening words (kashida), so stretching every word into its own box gives letters of a
+  different size from one word to the next. Instead the words that follow each other on a line with
+  nothing from the image between them (a *run*; ayah markers and pause marks end a run) are set
+  together in the room of their boxes: one horizontal stretch for the run, at most 1.06× of the
+  page font size, and the room that is left goes between the words (up to 0.3 em per gap before the
+  run is stretched further). The page font size is the box/text ratio below which lies a quarter of
+  the text, so only the densest runs are squeezed. Vertically the ink of each word is centred in
+  its box. The highlight of a divine name moves with its word.
+- Where the boxes of two neighbouring words overlap (the calligrapher lets a letter reach over the
+  next word), the overlap is split in the middle before the run is measured.
 - Colours only change between glyph clusters (a letter with its marks), otherwise the browser
   misplaces the marks. A mark whose colour differs from its letter's is drawn in two layers; the page script checks on a canvas that
   the word without the mark is the same drawing, and otherwise colours the whole cluster.

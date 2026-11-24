@@ -14,6 +14,7 @@ import com.quran.data.core.QuranInfo
 import com.quran.data.di.AppCoroutineScope
 import com.quran.data.di.AppScope
 import com.quran.mobile.common.glyphbounds.GlyphBoundsSource
+import com.quran.mobile.common.glyphbounds.GlyphPlacements
 import com.quran.mobile.common.glyphbounds.GlyphPosition
 import com.quran.mobile.common.glyphbounds.GlyphRect
 import com.quran.mobile.feature.memorization.session.MemorizationSession
@@ -38,6 +39,7 @@ class MemorizationDrawHelper @Inject constructor(
   private val session: MemorizationSession,
   private val colors: MemorizationPageColors,
   private val glyphBoundsSource: GlyphBoundsSource,
+  private val placements: GlyphPlacements,
   private val quranInfoProvider: () -> QuranInfo,
   private val appCoroutineScope: AppCoroutineScope
 ) : OrderedImageDrawHelper {
@@ -79,17 +81,19 @@ class MemorizationDrawHelper @Inject constructor(
     val radius = image.imageMatrix.mapRadius(CORNER_RADIUS_PX)
     val insetX = image.imageMatrix.mapRadius(COVER_PADDING_X_PX)
     val insetY = image.imageMatrix.mapRadius(COVER_PADDING_Y_PX)
+    // the tajweed colouring does not put every word exactly on its glyph rectangle
+    val placed = placements.forPage(pageCoordinates.page, width)
     // cover first (diacritics of one word may reach into the box of its neighbour), then outline
     for (word in words) {
       if (!session.isHidden(state, word.glyph.position, word.isFirstWord)) continue
-      image.imageMatrix.mapRect(scaledRect, word.glyph.bounds)
+      image.imageMatrix.mapRect(scaledRect, placed?.get(word.glyph.position) ?: word.glyph.bounds)
       scaledRect.offset(image.paddingLeft.toFloat(), image.paddingTop.toFloat())
       scaledRect.inset(-insetX, -insetY)
       canvas.drawRoundRect(scaledRect, radius, radius, fillPaint)
     }
     for (word in words) {
       if (word.glyph.isSmallMark || !session.isHidden(state, word.glyph.position, word.isFirstWord)) continue
-      image.imageMatrix.mapRect(scaledRect, word.glyph.bounds)
+      image.imageMatrix.mapRect(scaledRect, placed?.get(word.glyph.position) ?: word.glyph.bounds)
       scaledRect.offset(image.paddingLeft.toFloat(), image.paddingTop.toFloat())
       scaledRect.inset(-insetX / 2, -insetY / 2)
       canvas.drawRoundRect(scaledRect, radius, radius, boxPaint)
@@ -102,9 +106,10 @@ class MemorizationDrawHelper @Inject constructor(
     if (!state.isActive || !state.hidden) return null
     val width = imageWidth(image.drawable) ?: return null
     val words = cache[Key(page, width)] ?: return null
+    val placed = placements.forPage(page, width)
     val hit = RectF()
     return words.firstOrNull {
-      hit.set(it.glyph.bounds)
+      hit.set(placed?.get(it.glyph.position) ?: it.glyph.bounds)
       hit.inset(-COVER_PADDING_X_PX, -COVER_PADDING_Y_PX)
       !it.glyph.isSmallMark && hit.contains(pageX, pageY) &&
         session.isHidden(state, it.glyph.position, it.isFirstWord)

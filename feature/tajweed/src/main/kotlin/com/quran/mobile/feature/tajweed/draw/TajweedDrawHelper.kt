@@ -31,6 +31,8 @@ import com.quran.data.core.QuranInfo
 import com.quran.data.di.AppCoroutineScope
 import com.quran.data.di.AppScope
 import com.quran.mobile.common.glyphbounds.GlyphBoundsSource
+import com.quran.mobile.common.glyphbounds.GlyphPlacements
+import com.quran.mobile.common.glyphbounds.GlyphPosition
 import com.quran.mobile.common.glyphbounds.GlyphRect
 import com.quran.mobile.di.qualifier.ApplicationContext
 import com.quran.mobile.feature.tajweed.TajweedSettings
@@ -47,6 +49,7 @@ import dev.zacsweers.metro.binding
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.util.Collections
+import java.util.TreeMap
 import kotlin.math.ceil
 import kotlin.math.max
 import kotlin.math.min
@@ -57,9 +60,11 @@ import kotlin.math.min
  * The mushaf pages are bitmaps, so letters cannot be recoloured in place. Instead, for every word
  * whose rectangle is known from the page glyph database, the original glyph is covered with the
  * page background (only where its ink is, so ayah highlights drawn under it keep their shape) and
- * the word is drawn again with the KFGQPC Uthmanic font, scaled into the same rectangle, with a
- * colour span per tajweed rule. Ayah markers, pause marks and other ornaments are copied from the
- * page bitmap unchanged. The result for a page is rendered once into an overlay bitmap and cached.
+ * the word is drawn again with the KFGQPC Uthmanic font, with a colour span per tajweed rule. The
+ * words that follow each other on a line are set together in the room of their rectangles, with
+ * one letter size, so a word is not always exactly on its rectangle: where it is drawn is recorded
+ * in [GlyphPlacements]. Ayah markers, pause marks and other ornaments are copied from the page
+ * bitmap unchanged. The result for a page is rendered once into an overlay bitmap and cached.
  *
  * Only the madani page type has word positions, so the helper is inactive for other page types.
  */
@@ -70,6 +75,7 @@ class TajweedDrawHelper @Inject constructor(
   private val settings: TajweedSettings,
   private val database: TajweedDatabase,
   private val glyphBoundsSource: GlyphBoundsSource,
+  private val placements: GlyphPlacements,
   private val quranInfoProvider: () -> QuranInfo,
   private val appCoroutineScope: AppCoroutineScope,
   @Named(DependencyInjectionConstants.CURRENT_PAGE_TYPE) private val pageType: String
@@ -80,7 +86,14 @@ class TajweedDrawHelper @Inject constructor(
 
   private data class PageKey(val page: Int, val width: Int)
 
-  private class PageData(val words: List<Pair<GlyphRect, TajweedWord>>, val markers: List<GlyphRect>)
+  /**
+   * A run of words set together. [markRight] and [markLeft] tell whether a glyph left as drawn on
+   * the page (rather than the end of the line) is on that side of the run.
+   */
+  private class Run(val markRight: Boolean, val markLeft: Boolean)
+
+  /** [runs] is the run of each word: see [runsOf]. */
+  private class PageData(val words: List<Pair<GlyphRect, TajweedWord>>, val runs: List<Run>)
 
   private data class OverlayKey(
     val page: Int,
@@ -120,7 +133,10 @@ class TajweedDrawHelper @Inject constructor(
   val isActive: Boolean get() = settings.isEnabled && pageType == SUPPORTED_PAGE_TYPE
 
   override fun draw(pageCoordinates: PageCoordinates, canvas: Canvas, image: ImageView) {
-    if (!isActive) return
+    if (!isActive) {
+      placements.clear()
+      return
+    }
     val drawable = image.drawable ?: return
     val bitmap = (drawable as? BitmapDrawable)?.bitmap ?: return
     val width = bitmap.width
@@ -186,7 +202,7 @@ class TajweedDrawHelper @Inject constructor(
           if (word != null && !glyph.isSmallMark) wordGlyphs.add(glyph to word) else markers.add(glyph)
         }
         Log.i(TAG, "page ${key.page} width ${key.width}: ${wordGlyphs.size} words, ${markers.size} other glyphs")
-        PageData(wordGlyphs, markers)
+        PageData(wordGlyphs, runsOf(wordGlyphs, markers))
       } catch (e: Exception) {
         Log.w(TAG, "failed to load tajweed data for page ${key.page}", e)
         PageData(emptyList(), emptyList())
@@ -195,6 +211,42 @@ class TajweedDrawHelper @Inject constructor(
       loadingPages.remove(key)
       if (data.words.isNotEmpty()) image.postInvalidate()
     }
+  }
+
+  /**
+   * Words that follow each other on a line, with nothing left from the page image between them, are
+   * set together as one run (see [layoutRuns]). The glyphs that stay as drawn on the page (ayah
+   * markers, pause marks) end a run, so every word stays on its side of them. Returns the run of
+   * each word.
+   */
+  private fun runsOf(words: List<Pair<GlyphRect, TajweedWord>>, markers: List<GlyphRect>): List<Run> {
+    class Item(val centerX: Float, val word: Int)
+    val lines = TreeMap<Int, MutableList<Item>>()
+    words.forEachIndexed { index, (glyph, _) ->
+      lines.getOrPut(glyph.line) { ArrayList() }.add(Item(glyph.bounds.centerX(), index))
+    }
+    for (marker in markers) {
+      lines.getOrPut(marker.line) { ArrayList() }.add(Item(marker.bounds.centerX(), -1))
+    }
+    val runs = arrayOfNulls<Run>(words.size)
+    for (items in lines.values) {
+      items.sortByDescending { it.centerX } // right to left
+      val pending = ArrayList<Int>()
+      var markRight = false
+      for (item in items) {
+        if (item.word >= 0) {
+          pending.add(item.word)
+        } else {
+          val run = Run(markRight, markLeft = true)
+          for (word in pending) runs[word] = run
+          pending.clear()
+          markRight = true
+        }
+      }
+      val run = Run(markRight, markLeft = false)
+      for (word in pending) runs[word] = run
+    }
+    return runs.map { it ?: Run(markRight = false, markLeft = false) }
   }
 
   // ------------------------------------------------------------------------------------- overlay
@@ -288,9 +340,7 @@ class TajweedDrawHelper @Inject constructor(
     }
     inkMask.recycle()
 
-    // 2. words, drawn with the Uthmanic font and tajweed colours. Each word is scaled by the width
-    //    of its glyph box, but the mushaf stretches words (kashida) to justify its lines, so the
-    //    font size is the page median and the word is only stretched horizontally into its box.
+    // 2. words, drawn with the Uthmanic font and tajweed colours
     val textPaint = TextPaint(Paint.ANTI_ALIAS_FLAG or Paint.SUBPIXEL_TEXT_FLAG).apply {
       typeface = this@TajweedDrawHelper.typeface
       textSize = BASE_TEXT_SIZE
@@ -305,22 +355,85 @@ class TajweedDrawHelper @Inject constructor(
       val target = RectF()
       matrix.mapRect(target, targets[index])
       target.offset(padX, padY)
-      val squeezed = targets[index].width() < glyph.bounds.width()
-      measure(word, target, glyph.line, squeezed, textPaint, night)?.let { measured.add(it) }
+      measure(word, glyph.position, target, pageData.runs[index], textPaint, night)?.let { measured.add(it) }
     }
-    // one font size for the whole page (median width ratio), so letters have the same height
-    // everywhere; each word is then only stretched or squeezed horizontally into its box, the way
-    // the calligrapher stretches words with kashida to justify the lines
     if (measured.isNotEmpty()) {
-      val scales = measured.filter { !it.squeezed }.ifEmpty { measured }.map { it.rawScale }.sorted()
-      val pageScale = scales[scales.size / 2]
-      for (item in measured) {
-        val minStretch = if (item.squeezed) MIN_STRETCH_SQUEEZED else MIN_STRETCH
-        val scaleX = item.rawScale.coerceIn(pageScale * minStretch, pageScale * MAX_STRETCH)
-        drawMeasured(canvas, item, scaleX, pageScale, textPaint)
+      val pageScale = layoutRuns(measured)
+      for (item in measured) drawMeasured(canvas, item, pageScale, textPaint)
+
+      // where the words are now, in page image pixels, for the helpers that draw on words
+      val toPage = Matrix()
+      if (matrix.invert(toPage)) {
+        val placed = HashMap<GlyphPosition, RectF>(measured.size * 2)
+        for (item in measured) {
+          val rect = RectF(item.left, item.target.top, item.left + item.inkBounds.width() * item.scaleX, item.target.bottom)
+          rect.offset(-padX, -padY)
+          toPage.mapRect(rect)
+          placed[item.position] = rect
+        }
+        placements.set(key.page, key.width, placed)
       }
     }
     return overlay
+  }
+
+  /**
+   * The calligrapher justifies the lines by lengthening words (kashida), so the boxes of the words
+   * are not in proportion to their width in the text font. Stretching every word into its own box
+   * gives letters of a different size from one word to the next. Instead the words of a run are set
+   * together: one stretch for the whole run, kept within narrow limits, and the room that is left
+   * goes between the words and next to the ayah marker or pause mark at an end of the run (never at
+   * the end of the line). Sets where each word is drawn and returns the scale of the page font.
+   */
+  private fun layoutRuns(measured: List<MeasuredWord>): Float {
+    class Group(val run: Run, val words: List<MeasuredWord>) {
+      val box = words.sumOf { it.target.width().toDouble() }.toFloat()
+      val ink = words.sumOf { it.inkBounds.width().toDouble() }.toFloat()
+      val ratio = box / ink
+    }
+    val runs = measured.groupBy { it.run }.map { (run, words) -> Group(run, words.sortedByDescending { it.target.right }) }
+
+    // one font size for the page: the box/text ratio below which lies FONT_QUANTILE of the text.
+    // The denser runs are squeezed, the others keep the page size and get more room between words.
+    val sorted = runs.sortedBy { it.ratio }
+    val total = sorted.sumOf { it.ink.toDouble() }
+    var seen = 0.0
+    var pageScale = sorted.first().ratio
+    for (run in sorted) {
+      seen += run.ink
+      pageScale = run.ratio
+      if (seen >= total * FONT_QUANTILE) break
+    }
+
+    for (run in runs) {
+      val count = run.words.size
+      var scale = (run.ratio / pageScale).coerceIn(MIN_STRETCH, MAX_STRETCH) * pageScale
+      // a run of few words in a wide space: beyond some room between the words, stretch them after all
+      val slots = count - 1 + (if (run.run.markRight) 1 else 0) + (if (run.run.markLeft) 1 else 0)
+      val room = MAX_EXTRA_GAP * BASE_TEXT_SIZE * pageScale * max(slots, 1)
+      if (run.box - scale * run.ink > room) {
+        scale = min((run.box - room) / run.ink, LAST_RESORT_STRETCH * pageScale)
+      }
+      val slack = run.box - scale * run.ink
+      var extra = 0f
+      var right = run.words[0].target.right
+      if (slack >= 0f && slots > 0) {
+        extra = slack / slots
+        if (run.run.markRight) right -= extra
+      } else if (slack < 0f && count > 1) {
+        extra = slack / (count - 1) // too dense even squeezed: the words close up
+      } else {
+        right -= slack / 2f
+      }
+      run.words.forEachIndexed { index, word ->
+        word.scaleX = scale
+        word.left = right - word.inkBounds.width() * scale
+        if (index + 1 < count) {
+          right = word.left - (word.target.left - run.words[index + 1].target.right) - extra
+        }
+      }
+    }
+    return pageScale
   }
 
   /**
@@ -348,15 +461,18 @@ class TajweedDrawHelper @Inject constructor(
   private class GlyphOverlay(val glyphIds: IntArray, val positions: FloatArray, val font: Font, val color: Int)
 
   private class MeasuredWord(
+    val position: GlyphPosition,
     val layout: StaticLayout,
     val overlays: List<GlyphOverlay>,
     val inkBounds: Rect,
+    /** The box of the word on the page, in view pixels. */
     val target: RectF,
-    val line: Int,
-    val rawScale: Float,
-    /** The box was cut to resolve an overlap with a neighbour. */
-    val squeezed: Boolean
-  )
+    val run: Run
+  ) {
+    /** Set by [layoutRuns]: the left edge of the ink and its horizontal scale, in view pixels. */
+    var left = 0f
+    var scaleX = 1f
+  }
 
   private fun isMark(ch: Char): Boolean {
     val type = Character.getType(ch)
@@ -367,9 +483,9 @@ class TajweedDrawHelper @Inject constructor(
 
   private fun measure(
     word: TajweedWord,
+    position: GlyphPosition,
     target: RectF,
-    line: Int,
-    squeezed: Boolean,
+    run: Run,
     textPaint: TextPaint,
     night: Boolean
   ): MeasuredWord? {
@@ -439,18 +555,17 @@ class TajweedDrawHelper @Inject constructor(
       .setTextDirection(TextDirectionHeuristics.RTL)
       .setIncludePad(false)
       .build()
-    return MeasuredWord(layout, overlays, inkBounds, target, line, target.width() / inkBounds.width(), squeezed)
+    return MeasuredWord(position, layout, overlays, inkBounds, target, run)
   }
 
-  private fun drawMeasured(canvas: Canvas, item: MeasuredWord, scaleX: Float, scaleY: Float, textPaint: TextPaint) {
+  private fun drawMeasured(canvas: Canvas, item: MeasuredWord, scaleY: Float, textPaint: TextPaint) {
     val layout = item.layout
     val inkBounds = item.inkBounds
     val target = item.target
     val lineLeft = layout.getLineLeft(0)
     val baseline = layout.getLineBaseline(0).toFloat()
-    val inkWidth = inkBounds.width() * scaleX
-    val left = target.left + (target.width() - inkWidth) / 2f
-    val translateX = left - scaleX * (lineLeft + inkBounds.left)
+    val scaleX = item.scaleX
+    val translateX = item.left - scaleX * (lineLeft + inkBounds.left)
     val translateY = target.centerY() - scaleY * (baseline + (inkBounds.top + inkBounds.bottom) / 2f)
     canvas.save()
     canvas.translate(translateX, translateY)
@@ -477,16 +592,20 @@ class TajweedDrawHelper @Inject constructor(
 
     /** Slight emboldening (at [BASE_TEXT_SIZE]) so the text font matches the weight of the page glyphs. */
     private const val STROKE_WIDTH = 2.8f
-    /** Horizontal stretch of a word relative to the page font size (kashida-like justification). */
     /** Marks a character without a tajweed colour (fully transparent is never a rule colour). */
     private const val NO_COLOR = 0
-    private const val MIN_STRETCH = 0.85f
-    /** Words whose box was cut to resolve an overlap may be squeezed further. */
-    private const val MIN_STRETCH_SQUEEZED = 0.6f
+
+    /** Share of the text of a page that is denser than the page font size and gets squeezed. */
+    private const val FONT_QUANTILE = 0.25f
+    /** Horizontal stretch of a run of words relative to the page font size. */
+    private const val MIN_STRETCH = 0.6f
+    private const val MAX_STRETCH = 1.06f
+    /** Room (in em) added between two words before the run is stretched beyond [MAX_STRETCH]. */
+    private const val MAX_EXTRA_GAP = 0.3f
+    private const val LAST_RESORT_STRETCH = 1.45f
     /** Overlap of two neighbouring word boxes (page image pixels) that gets split. */
     private const val MIN_OVERLAP_PX = 4f
     private const val MIN_TARGET_WIDTH_PX = 12f
-    private const val MAX_STRETCH = 1.45f
     private const val MAX_OVERLAYS = 3
   }
 }
